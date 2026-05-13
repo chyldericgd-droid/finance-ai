@@ -16,10 +16,10 @@
 :root{
   --bg:#09090f;--surf:#111118;--surf2:#16161f;--surf3:#1c1c28;
   --brd:#1e1e2e;--brd2:#2a2a3e;
-  --acc:#7c3aed;--acc2:#6366f1;--acc3:#a78bfa;
+  --acc:#8b5cf6;--acc2:#06b6d4;--acc3:#c4b5fd;--acc-glow:rgba(139,92,246,.35);
   --grn:#10b981;--red:#f43f5e;--org:#f97316;--ylw:#fbbf24;
   --txt:#f1f5f9;--txt2:#94a3b8;--mut:#475569;
-  --r:18px;--r2:12px;
+  --r:22px;--r2:16px;--r3:28px;
   --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,'Helvetica Neue',Arial,sans-serif;
   --mono:'JetBrains Mono','SF Mono','Roboto Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
 }
@@ -27,20 +27,20 @@ html,body{height:100%;height:100dvh}
 body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"cv02","cv03","cv04","cv11";letter-spacing:-0.005em}
 
 /* SCROLL */
-.scroll{position:fixed;top:0;left:0;right:0;bottom:64px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.scroll{position:fixed;top:0;left:0;right:0;bottom:84px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .page{max-width:600px;margin:0 auto;padding:14px 14px 24px}
 
 /* NAV */
-.nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(10,10,18,0.97);border-top:1px solid var(--brd);display:flex;align-items:center;justify-content:space-around;padding:0 4px;padding-bottom:max(0px,env(safe-area-inset-bottom));z-index:100;backdrop-filter:blur(20px)}
+.nav{position:fixed;bottom:max(8px,env(safe-area-inset-bottom));left:8px;right:8px;height:64px;background:rgba(20,20,32,0.85);border:1px solid var(--brd2);border-radius:28px;display:flex;align-items:center;justify-content:space-around;padding:0 4px;z-index:100;backdrop-filter:blur(28px) saturate(1.4);-webkit-backdrop-filter:blur(28px) saturate(1.4);box-shadow:0 12px 40px -12px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04) inset}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--mut);font-size:9px;font-weight:700;letter-spacing:.5px;cursor:pointer;padding:6px 10px;border-radius:10px;transition:all .18s;text-transform:uppercase;min-width:44px}
 .ni.on{color:var(--acc3);background:rgba(124,58,237,.12)}
 .ni svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.fab{background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 0 0 4px rgba(124,58,237,.15);transition:transform .12s;margin-top:-20px;flex-shrink:0}
-.fab:active{transform:scale(.9)}
+.fab{background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:20px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 8px 24px -4px var(--acc-glow),0 0 0 4px rgba(139,92,246,.12);transition:transform .12s,border-radius .2s;margin-top:-22px;flex-shrink:0}
+.fab:active{transform:scale(.92);border-radius:28px}
 .fab svg{stroke:#fff;width:22px;height:22px;stroke-width:2.5}
 
 /* CARD */
-.card{background:var(--surf);border:1px solid var(--brd);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card{background:linear-gradient(180deg,var(--surf),var(--surf2));border:1px solid var(--brd);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 8px 24px -16px rgba(0,0,0,.6)}
 .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:10px;font-weight:700;color:var(--mut);letter-spacing:.8px;text-transform:uppercase}
 .card-hero{background:linear-gradient(150deg,#100f24,#0a0a16);border-color:var(--brd2)}
 
@@ -84,7 +84,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 /* MODAL */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .mo.on{display:flex;animation:fi .15s ease}
-.mb{background:var(--surf);border-radius:26px 26px 0 0;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:6px 18px 32px;border-top:2px solid var(--acc)}
+.mb{background:linear-gradient(180deg,var(--surf2),var(--surf));border-radius:32px 32px 0 0;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:6px 20px 36px;border-top:1px solid var(--brd2);box-shadow:0 -20px 60px -10px rgba(0,0,0,.7)}
 .mh{width:36px;height:4px;background:var(--brd2);border-radius:10px;margin:10px auto 14px;cursor:pointer}
 .mb h3{font-size:17px;font-weight:800;margin-bottom:14px}
 
@@ -95,7 +95,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 select.fi{cursor:pointer}
 
 /* BUTTONS */
-.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;border-radius:40px;padding:14px;font-weight:800;font-size:14px;color:#fff;width:100%;cursor:pointer;transition:opacity .15s,transform .1s;font-family:var(--font)}
+.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;border-radius:18px;padding:15px;font-weight:700;font-size:14px;color:#fff;width:100%;cursor:pointer;transition:transform .12s,box-shadow .2s;font-family:var(--font);letter-spacing:.2px;box-shadow:0 4px 14px -4px var(--acc-glow)}
 .btn:active{opacity:.85;transform:scale(.98)}
 .btn-ghost{background:transparent;border:1px solid var(--brd2);color:var(--txt2);font-family:var(--font);font-weight:600;font-size:13px}
 .btn-red{background:linear-gradient(135deg,var(--red),#be185d)}
@@ -134,7 +134,7 @@ select.fi{cursor:pointer}
 /* WEEKBAR */
 .wb{display:flex;align-items:flex-end;gap:5px;height:72px;margin-top:7px}
 .wbc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.wbf{width:100%;border-radius:5px 5px 0 0;min-height:3px;transition:height .5s}
+.wbf{width:100%;border-radius:6px 6px 0 0;min-height:6px;transition:height .5s,background .3s}
 .wbl{font-size:9px;color:var(--mut);font-weight:700}
 
 /* ACC CHIP */
@@ -1013,6 +1013,13 @@ function checkNotifs(){
 // ════════════════════════════════════════
 // MODAL ENGINE
 // ════════════════════════════════════════
+
+function showToast(msg,dur){
+  let t=document.getElementById('lvToast');
+  if(!t){t=document.createElement('div');t.id='lvToast';t.style.cssText='position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:rgba(20,20,32,.95);backdrop-filter:blur(20px);color:var(--txt);padding:12px 18px;border-radius:18px;border:1px solid var(--brd2);font-size:13px;font-weight:600;z-index:300;opacity:0;transition:all .25s;box-shadow:0 12px 40px -8px rgba(0,0,0,.5);max-width:90%;text-align:center';document.body.appendChild(t)}
+  t.textContent=msg;requestAnimationFrame(()=>{t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)'});
+  clearTimeout(t._h);t._h=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)'},dur||2400);
+}
 function openModal(html){
   $('mbc').innerHTML=`<div class="mh" onclick="closeModal()"></div>`+html;
   $('modal').classList.add('on');
@@ -1477,7 +1484,7 @@ function renderAnalytics(){
         const col=intensityColor(ratio);
         return`<div class="wbc">
           <div style="flex:1;display:flex;align-items:flex-end">
-            <div class="wbf" style="height:${Math.max(6,v?(v/maxSub)*60:0)}px;background:${col};opacity:${v>0?1:.4};width:100%"></div>
+            <div class="wbf" style="height:${v>0?Math.max(8,(v/maxSub)*60):8}px;background:${v>0?col:"var(--surf3)"};opacity:1;width:100%"></div>
           </div>
           <div class="wbl" style="white-space:pre-line;font-size:9px">${subLabels[i]}</div>
         </div>`;
@@ -2502,23 +2509,100 @@ async function saveGoal(){
 }
 function openDepositModal(id){
   const g=goals.find(x=>x.id===id);if(!g)return;
+  // Comptes "actifs" qui peuvent fournir l'argent (pas le compte épargne destination)
+  const sources=accs.filter(a=>a.type!=='savings');
+  const savingsAcc=accs.find(a=>a.type==='savings');
   openModal(`
     <h3>💰 ${g.icon} ${g.name}</h3>
-    <div style="color:var(--mut);font-size:12px;margin-bottom:12px">${fmtFull(g.saved)} / ${fmtFull(g.target)}</div>
-    <input id="depAmt" class="fi" type="number" placeholder="Montant à épargner" inputmode="decimal">
-    <button class="btn" onclick="saveDeposit('${id}')">Épargner</button>
+    <div style="color:var(--mut);font-size:12px;margin-bottom:8px">Déjà mis de côté : <b style="color:var(--txt)">${fmtFull(g.saved)}</b> / ${fmtFull(g.target)}</div>
+    <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5">L'argent va sortir du compte choisi et entrer dans <b>${savingsAcc?savingsAcc.icon+' '+savingsAcc.name:'Épargne'}</b>. Ton solde principal va vraiment baisser — c'est fait exprès, pour que ton cerveau voie l'effort.</div>
+    <select id="depFrom" class="fi">
+      ${sources.map(a=>`<option value="${a.id}">${a.icon} ${a.name} — dispo : ${fmtFull(a.balance)}</option>`).join('')}
+    </select>
+    <input id="depAmt" class="fi" type="number" placeholder="Montant à mettre de côté" inputmode="decimal">
+    <button class="btn" onclick="saveDeposit('${id}')">Mettre de côté</button>
+    ${g.saved>0?`<button class="btn btn-ghost" style="margin-top:8px" onclick="openWithdrawGoal('${id}')">↩︎ Reprendre de l'argent de cet objectif</button>`:''}
   `);
 }
 async function saveDeposit(id){
-  const g=goals.find(x=>x.id===id);const amt=parseFloat($('depAmt')?.value);
-  if(!g||!amt)return;
-  g.saved+=amt;
+  const g=goals.find(x=>x.id===id);
+  const amt=parseFloat($('depAmt')?.value);
+  const fromId=$('depFrom')?.value;
+  if(!g||!amt||amt<=0){alert('Montant invalide');return}
+  const from=accs.find(a=>a.id===fromId);
+  let savingsAcc=accs.find(a=>a.type==='savings');
+  if(!from){alert('Choisis un compte source');return}
+  if(from.balance<amt){alert(`Solde insuffisant.\n${from.icon} ${from.name} : ${fmtFull(from.balance)}\nDemandé : ${fmtFull(amt)}\n\nTu ne peux pas mettre de côté de l'argent que tu n'as pas.`);return}
+  // Crée le compte épargne s'il manque (cas extrême)
+  if(!savingsAcc){
+    savingsAcc={id:'savings',name:'Épargne',icon:'💰',type:'savings',balance:0};
+    accs.push(savingsAcc);
+  }
+  // Mouvement réel d'argent
+  from.balance-=amt;
+  savingsAcc.balance+=amt;
+  await dbPut('accounts',from);
+  await dbPut('accounts',savingsAcc);
+  // Mise à jour de l'objectif
+  g.saved=(g.saved||0)+amt;
   if(!g.deposits)g.deposits=[];
-  g.deposits.push({date:new Date().toISOString(),amount:amt});
-  await dbPut('goals',g);closeModal();await render();
+  g.deposits.push({date:new Date().toISOString(),amount:amt,fromAccountId:fromId});
+  await dbPut('goals',g);
+  // Trace cette opération comme transfert pour l'historique
+  await dbPut('transactions',{id:uid(),amount:amt,type:'transfer',categoryId:'transfer',accountId:fromId,toAccountId:savingsAcc.id,date:new Date().toISOString(),note:`→ Objectif : ${g.name}`,goalId:g.id,createdAt:new Date().toISOString()});
+  closeModal();
+  await render();
+  showToast(`✓ ${fmtFull(amt)} mis de côté pour ${g.name}`);
+}
+function openWithdrawGoal(id){
+  const g=goals.find(x=>x.id===id);if(!g)return;
+  const sources=accs.filter(a=>a.type!=='savings');
+  openModal(`
+    <h3>↩︎ Reprendre — ${g.icon} ${g.name}</h3>
+    <div style="color:var(--mut);font-size:12px;margin-bottom:10px">Disponible sur cet objectif : <b style="color:var(--txt)">${fmtFull(g.saved)}</b></div>
+    <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5">L'argent revient depuis l'épargne vers le compte choisi.</div>
+    <select id="wdTo" class="fi">${sources.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
+    <input id="wdAmt" class="fi" type="number" placeholder="Montant à reprendre" inputmode="decimal" max="${g.saved}">
+    <button class="btn btn-red" onclick="doWithdrawGoal('${id}')">Reprendre</button>
+  `);
+}
+async function doWithdrawGoal(id){
+  const g=goals.find(x=>x.id===id);
+  const amt=parseFloat($('wdAmt')?.value);
+  const toId=$('wdTo')?.value;
+  if(!g||!amt||amt<=0){alert('Montant invalide');return}
+  if(amt>g.saved){alert('Tu ne peux pas reprendre plus que ce que tu as mis');return}
+  const savingsAcc=accs.find(a=>a.type==='savings');
+  const to=accs.find(a=>a.id===toId);
+  if(!savingsAcc||!to){alert('Compte introuvable');return}
+  if(savingsAcc.balance<amt){alert('Épargne insuffisante (les comptes ont été modifiés à la main ?)');return}
+  savingsAcc.balance-=amt;to.balance+=amt;
+  await dbPut('accounts',savingsAcc);await dbPut('accounts',to);
+  g.saved-=amt;
+  if(!g.deposits)g.deposits=[];
+  g.deposits.push({date:new Date().toISOString(),amount:-amt,toAccountId:toId});
+  await dbPut('goals',g);
+  await dbPut('transactions',{id:uid(),amount:amt,type:'transfer',categoryId:'transfer',accountId:savingsAcc.id,toAccountId:toId,date:new Date().toISOString(),note:`↩︎ Repris de : ${g.name}`,goalId:g.id,createdAt:new Date().toISOString()});
+  closeModal();await render();
+  showToast(`↩︎ ${fmtFull(amt)} repris de ${g.name}`);
 }
 async function delGoal(id){
-  if(!confirm('Supprimer cet objectif ?'))return;
+  const g=goals.find(x=>x.id===id);if(!g)return;
+  if(g.saved>0){
+    const sources=accs.filter(a=>a.type!=='savings');
+    const def=sources[0];
+    const choice=confirm(`Cet objectif a ${fmtFull(g.saved)} mis de côté.\n\nOK = renvoyer l'argent vers ${def?def.icon+' '+def.name:'le compte principal'} avant suppression.\nAnnuler = supprimer SANS toucher à l'épargne (l'argent reste dans le compte Épargne).`);
+    if(choice && def){
+      const savingsAcc=accs.find(a=>a.type==='savings');
+      if(savingsAcc && savingsAcc.balance>=g.saved){
+        savingsAcc.balance-=g.saved;def.balance+=g.saved;
+        await dbPut('accounts',savingsAcc);await dbPut('accounts',def);
+        await dbPut('transactions',{id:uid(),amount:g.saved,type:'transfer',categoryId:'transfer',accountId:savingsAcc.id,toAccountId:def.id,date:new Date().toISOString(),note:`↩︎ Objectif supprimé : ${g.name}`,createdAt:new Date().toISOString()});
+      }
+    }
+  } else {
+    if(!confirm('Supprimer cet objectif ?'))return;
+  }
   await dbDel('goals',id);await render();
 }
 
