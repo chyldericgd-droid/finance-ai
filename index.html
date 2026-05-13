@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#09090f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Finance AI OS</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#09090f;--surf:#111118;--surf2:#16161f;--surf3:#1c1c28;
+  --brd:#1e1e2e;--brd2:#2a2a3e;
+  --acc:#7c3aed;--acc2:#6366f1;--acc3:#a78bfa;
+  --grn:#10b981;--red:#f43f5e;--org:#f97316;--ylw:#fbbf24;
+  --txt:#f1f5f9;--txt2:#94a3b8;--mut:#475569;
+  --r:18px;--r2:12px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,'Helvetica Neue',Arial,sans-serif;
+  --mono:'JetBrains Mono','SF Mono','Roboto Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+}
+html,body{height:100%;height:100dvh}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"cv02","cv03","cv04","cv11";letter-spacing:-0.005em}
+
+/* SCROLL */
+.scroll{position:fixed;top:0;left:0;right:0;bottom:64px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.page{max-width:600px;margin:0 auto;padding:14px 14px 24px}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(10,10,18,0.97);border-top:1px solid var(--brd);display:flex;align-items:center;justify-content:space-around;padding:0 4px;padding-bottom:max(0px,env(safe-area-inset-bottom));z-index:100;backdrop-filter:blur(20px)}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--mut);font-size:9px;font-weight:700;letter-spacing:.5px;cursor:pointer;padding:6px 10px;border-radius:10px;transition:all .18s;text-transform:uppercase;min-width:44px}
+.ni.on{color:var(--acc3);background:rgba(124,58,237,.12)}
+.ni svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.fab{background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 0 0 4px rgba(124,58,237,.15);transition:transform .12s;margin-top:-20px;flex-shrink:0}
+.fab:active{transform:scale(.9)}
+.fab svg{stroke:#fff;width:22px;height:22px;stroke-width:2.5}
+
+/* CARD */
+.card{background:var(--surf);border:1px solid var(--brd);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:10px;font-weight:700;color:var(--mut);letter-spacing:.8px;text-transform:uppercase}
+.card-hero{background:linear-gradient(150deg,#100f24,#0a0a16);border-color:var(--brd2)}
+
+/* BALANCE */
+.bal{font-family:var(--mono);font-size:clamp(24px,7vw,34px);font-weight:700;letter-spacing:-1px;line-height:1}
+.badge{background:rgba(124,58,237,.15);border:1px solid var(--acc);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--acc3);font-weight:700}
+
+/* KPI */
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.kt{background:var(--surf2);border-radius:var(--r2);padding:12px;border:1px solid var(--brd);cursor:pointer;transition:border-color .2s}
+.kt:active{border-color:var(--acc)}
+.kl{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.kv{font-size:16px;font-weight:800;margin-top:4px;font-family:var(--mono)}
+.ks{font-size:10px;color:var(--mut);margin-top:2px}
+
+/* BAR */
+.bar{height:4px;background:var(--surf3);border-radius:10px;overflow:hidden;margin:5px 0}
+.bf{height:100%;border-radius:10px;transition:width .5s ease}
+
+/* ALERTS */
+.al{padding:9px 12px;border-radius:12px;margin-bottom:7px;font-size:12px;font-weight:600;line-height:1.45;border-left:3px solid}
+.al-d{background:rgba(244,63,94,.07);border-color:var(--red)}
+.al-w{background:rgba(251,191,36,.07);border-color:var(--ylw)}
+.al-g{background:rgba(16,185,129,.07);border-color:var(--grn)}
+.al-i{background:rgba(124,58,237,.08);border-color:var(--acc)}
+
+/* TX */
+.txi{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--brd)}
+.txi:last-child{border-bottom:none}
+.txic{width:38px;height:38px;border-radius:11px;background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.txin{flex:1;min-width:0}
+.txn{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.txm{font-size:10px;color:var(--mut);margin-top:2px}
+.txa{font-family:var(--mono);font-size:13px;font-weight:700;white-space:nowrap}
+
+/* HEATMAP */
+.hg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
+.hd{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;position:relative;transition:transform .1s;color:rgba(255,255,255,.7)}
+.hd:active{transform:scale(.85)}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.mo.on{display:flex;animation:fi .15s ease}
+.mb{background:var(--surf);border-radius:26px 26px 0 0;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:6px 18px 32px;border-top:2px solid var(--acc)}
+.mh{width:36px;height:4px;background:var(--brd2);border-radius:10px;margin:10px auto 14px;cursor:pointer}
+.mb h3{font-size:17px;font-weight:800;margin-bottom:14px}
+
+/* INPUTS */
+.fi{width:100%;background:var(--surf2);border:1px solid var(--brd);border-radius:var(--r2);padding:13px 14px;color:var(--txt);font-family:var(--font);font-size:14px;font-weight:600;margin-bottom:9px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+.fi:focus{border-color:var(--acc)}
+.fi::placeholder{color:var(--mut);font-weight:400}
+select.fi{cursor:pointer}
+
+/* BUTTONS */
+.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;border-radius:40px;padding:14px;font-weight:800;font-size:14px;color:#fff;width:100%;cursor:pointer;transition:opacity .15s,transform .1s;font-family:var(--font)}
+.btn:active{opacity:.85;transform:scale(.98)}
+.btn-ghost{background:transparent;border:1px solid var(--brd2);color:var(--txt2);font-family:var(--font);font-weight:600;font-size:13px}
+.btn-red{background:linear-gradient(135deg,var(--red),#be185d)}
+.btn-grn{background:linear-gradient(135deg,var(--grn),#059669)}
+.btn-sm{padding:8px 14px;width:auto;font-size:12px;border-radius:20px}
+
+/* TYPE TABS */
+.ttabs{display:flex;gap:7px;margin-bottom:12px}
+.tt{flex:1;padding:12px;border-radius:12px;border:1px solid var(--brd);background:var(--surf2);color:var(--mut);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.tt.te{border-color:var(--red);color:var(--red);background:rgba(244,63,94,.08)}
+.tt.ti{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.08)}
+.tt.tt2{border-color:var(--acc2);color:var(--acc2);background:rgba(99,102,241,.08)}
+
+/* CHAT */
+.chat{height:240px;overflow-y:auto;padding:10px;background:var(--surf2);border-radius:14px;margin-bottom:10px;display:flex;flex-direction:column;gap:7px;scroll-behavior:smooth}
+.bub{max-width:88%;padding:9px 13px;border-radius:14px;font-size:12px;line-height:1.5;font-weight:500}
+.bai{background:var(--surf3);border:1px solid var(--brd2);border-bottom-left-radius:3px;align-self:flex-start}
+.bus{background:linear-gradient(135deg,var(--acc),var(--acc2));border-bottom-right-radius:3px;align-self:flex-end}
+.cirow{display:flex;gap:7px;align-items:center}
+.cirow .fi{margin-bottom:0;flex:1;padding:10px 13px}
+.sbtn{background:linear-gradient(135deg,var(--acc),var(--acc2));border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.sbtn svg{stroke:#fff;width:16px;height:16px}
+.ald{display:flex;gap:4px;padding:9px 13px}
+.add{width:6px;height:6px;border-radius:50%;background:var(--acc3);animation:dp 1.2s ease-in-out infinite}
+.add:nth-child(2){animation-delay:.2s}
+.add:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+/* GOAL */
+.gi{margin-bottom:12px}
+.gh{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.gn{font-size:13px;font-weight:700}
+.gp{font-size:11px;color:var(--mut);font-family:var(--mono)}
+.geta{font-size:10px;color:var(--acc3);margin-top:3px}
+
+/* WEEKBAR */
+.wb{display:flex;align-items:flex-end;gap:5px;height:72px;margin-top:7px}
+.wbc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.wbf{width:100%;border-radius:5px 5px 0 0;min-height:3px;transition:height .5s}
+.wbl{font-size:9px;color:var(--mut);font-weight:700}
+
+/* ACC CHIP */
+.ach{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:13px;background:var(--surf2);border:1px solid var(--brd);margin-bottom:7px;cursor:pointer;transition:border-color .2s}
+.ach:active{border-color:var(--acc)}
+
+/* SCORE */
+.sring{display:flex;flex-direction:column;align-items:center;gap:5px}
+
+/* SYNC */
+.scode{font-family:var(--mono);font-size:12px;letter-spacing:2px;background:var(--surf2);border:1px solid var(--acc);border-radius:12px;padding:14px;text-align:center;color:var(--acc3);word-break:break-all}
+
+/* ANIMS */
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes su{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.fin{animation:su .2s ease}
+
+/* MISC */
+.flex{display:flex;align-items:center;gap:8px}
+.sb{justify-content:space-between}
+.tg{color:var(--grn)}.tr{color:var(--red)}.ta{color:var(--acc3)}.tm{color:var(--mut)}
+.mono{font-family:var(--mono)}.fw8{font-weight:800}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}
+.div{height:1px;background:var(--brd);margin:10px 0}
+.pill{background:var(--surf2);border:1px solid var(--brd);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700}
+
+/* TX filter tabs */
+.ftabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.ftab{padding:6px 14px;border-radius:20px;border:1px solid var(--brd);background:var(--surf2);color:var(--mut);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.ftab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* SECTION TITLE */
+.stitle{font-size:20px;font-weight:800;margin-bottom:14px;letter-spacing:-.3px}
+.ssub{font-size:12px;color:var(--mut);margin-bottom:14px;margin-top:-8px}
+
+/* ONLINE BADGE - bulletproof fixed (iOS WebKit safe) */
+.online-badge{position:fixed !important;top:calc(8px + env(safe-area-inset-top));right:12px;z-index:9999;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.5px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity .2s;pointer-events:none;transform:translateZ(0);-webkit-transform:translate3d(0,0,0);will-change:auto;contain:layout style}
+.mo.on ~ .online-badge,body.modal-open .online-badge{opacity:0;transform:translateY(-6px)}
+.ob-on{background:rgba(16,185,129,.15);border:1px solid var(--grn);color:var(--grn)}
+.ob-off{background:rgba(244,63,94,.15);border:1px solid var(--red);color:var(--red)}
+
+
+/* AI FLOAT */
+.aifab{position:fixed;right:14px;bottom:78px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:90;
+  width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  box-shadow:0 6px 20px rgba(124,58,237,.45),0 0 0 3px rgba(124,58,237,.18);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  transition:transform .15s,opacity .25s;animation:pulseAI 2.4s ease-in-out infinite}
+.aifab:active{transform:scale(.9)}
+.aifab.off{opacity:.45;animation:none}
+.aifab .dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--grn);
+  box-shadow:0 0 8px var(--grn)}
+.aifab.off .dot{background:var(--mut);box-shadow:none}
+@keyframes pulseAI{0%,100%{box-shadow:0 6px 20px rgba(124,58,237,.45),0 0 0 3px rgba(124,58,237,.18)}
+  50%{box-shadow:0 6px 24px rgba(124,58,237,.65),0 0 0 6px rgba(124,58,237,.10)}}
+.mo.on ~ .aifab{opacity:0;pointer-events:none}
+
+/* AI INSIGHT CARD on home */
+.ai-insight{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(99,102,241,.05));
+  border:1px solid rgba(167,139,250,.35);border-radius:var(--r);padding:14px;margin-bottom:12px;position:relative;overflow:hidden}
+.ai-insight::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(167,139,250,.12),transparent 70%);pointer-events:none}
+.ai-insight .ai-h{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--acc3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.ai-insight .ai-b{font-size:13px;line-height:1.55;color:var(--txt);font-weight:500;position:relative}
+.ai-insight .ai-loading{display:inline-block;width:8px;height:8px;background:var(--acc3);border-radius:50%;
+  animation:dp 1.2s infinite}
+
+/* TREND CHART */
+.trend-svg{width:100%;height:130px;display:block}
+.trend-svg .area{fill:url(#trendGrad);opacity:.6}
+.trend-svg .line{fill:none;stroke:var(--acc3);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.trend-svg .pt{fill:var(--acc3);stroke:var(--bg);stroke-width:2}
+.trend-svg .axis{stroke:var(--brd);stroke-width:1;stroke-dasharray:2 4}
+.trend-svg .lbl{fill:var(--mut);font-size:9px;font-family:var(--mono);font-weight:700}
+
+/* CELEBRATION TOAST */
+.celebration{position:fixed;left:50%;top:80px;transform:translateX(-50%);z-index:300;
+  background:linear-gradient(135deg,rgba(16,185,129,.95),rgba(124,58,237,.92));
+  color:#fff;padding:14px 20px;border-radius:16px;
+  font-size:13px;font-weight:700;line-height:1.4;max-width:88%;text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 0 3px rgba(255,255,255,.08);
+  animation:celIn .3s cubic-bezier(.2,.9,.3,1.2),celOut .25s ease 3.2s forwards}
+@keyframes celIn{from{opacity:0;transform:translate(-50%,-20px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes celOut{to{opacity:0;transform:translate(-50%,-10px) scale(.95)}}
+.celebration small{display:block;font-weight:500;opacity:.9;font-size:11px;margin-top:3px}
+
+/* SEARCH */
+.search-box{display:flex;align-items:center;gap:8px;background:var(--surf2);border:1px solid var(--brd);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.search-box input{flex:1;background:none;border:none;color:var(--txt);font-size:14px;outline:none;font-family:var(--font)}
+.search-box input::placeholder{color:var(--mut)}
+.search-box svg{stroke:var(--mut);width:16px;height:16px;flex-shrink:0;fill:none;stroke-width:2}
+</style>
+</head>
+<body>
+
+<div class="scroll" id="scrollArea">
+  <div id="root" class="page"></div>
+</div>
+<nav class="nav" id="nav"></nav>
+<div class="online-badge" id="onlineBadge"></div>
+<button class="aifab off" id="aiFab" aria-label="Assistant IA" onclick="openAIQuick()"><span>✨</span><span class="dot"></span></button>
+<div class="mo" id="modal"><div class="mb" id="mbc"></div></div>
+
+<script>
+'use strict';
+// ════════════════════════════════════════
+// INDEXEDDB
+// ════════════════════════════════════════
+const DB='FinOS_v3';let db=null;
+function openDB(){return new Promise((res,rej)=>{
+  const r=indexedDB.open(DB,2);
+  r.onerror=()=>rej(r.error);
+  r.onsuccess=()=>{db=r.result;res(db)};
+  r.onupgradeneeded=e=>{
+    const d=e.target.result;
+    ['transactions','accounts','categories','goals','settings'].forEach(s=>{
+      if(!d.objectStoreNames.contains(s)){
+        const st=d.createObjectStore(s,{keyPath:s==='settings'?'key':'id'});
+        if(s==='transactions'){st.createIndex('date','date');st.createIndex('type','type')}
+      }
+    });
+  };
+});}
+async function dbAll(s){if(!db)await openDB();return new Promise((res,rej)=>{const t=db.transaction(s,'readonly');const r=t.objectStore(s).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+async function dbPut(s,d){if(!db)await openDB();return new Promise((res,rej)=>{const t=db.transaction(s,'readwrite');const r=t.objectStore(s).put(d);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+async function dbDel(s,id){if(!db)await openDB();return new Promise(res=>{const t=db.transaction(s,'readwrite');t.objectStore(s).delete(id);t.oncomplete=()=>res()})}
+async function dbClear(s){if(!db)await openDB();return new Promise(res=>{const t=db.transaction(s,'readwrite');t.objectStore(s).clear();t.oncomplete=()=>res()})}
+
+// ════════════════════════════════════════
+// DEFAULTS
+// ════════════════════════════════════════
+const DEF_ACCS=[
+  {id:'main',name:'Compte principal',icon:'🏦',type:'main',balance:0},
+  {id:'savings',name:'Épargne',icon:'💰',type:'savings',balance:0},
+  {id:'cash',name:'Espèces',icon:'💵',type:'cash',balance:0},
+  {id:'mobile',name:'Mobile Money',icon:'📱',type:'mobile',balance:0},
+];
+const DEF_CATS=[
+  {id:'salary',name:'Salaire',icon:'💼',type:'income'},
+  {id:'youtube',name:'YouTube',icon:'🎬',type:'income'},
+  {id:'freelance',name:'Freelance',icon:'🖥️',type:'income'},
+  {id:'business',name:'Business',icon:'🏪',type:'income'},
+  {id:'invest_inc',name:'Investissement',icon:'📈',type:'income'},
+  {id:'other_inc',name:'Autre revenu',icon:'✨',type:'income'},
+  {id:'food',name:'Alimentation',icon:'🍔',type:'expense'},
+  {id:'transport',name:'Transport',icon:'🚕',type:'expense'},
+  {id:'housing',name:'Logement',icon:'🏠',type:'expense'},
+  {id:'health',name:'Santé',icon:'💊',type:'expense'},
+  {id:'tech',name:'Tech & Prod.',icon:'📱',type:'expense'},
+  {id:'studies',name:'Études',icon:'📚',type:'expense'},
+  {id:'leisure',name:'Loisirs',icon:'🎮',type:'expense'},
+  {id:'clothes',name:'Vêtements',icon:'👕',type:'expense'},
+  {id:'bills',name:'Factures',icon:'📄',type:'expense'},
+  {id:'unforeseen',name:'Imprévus',icon:'⚠️',type:'expense'},
+  {id:'other_exp',name:'Autre dépense',icon:'💸',type:'expense'},
+];
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+let txs=[],accs=[],cats=[],goals=[],settings={};
+let screen='home',aiMsgs=[],aiTyping=false;
+let txFilter='all',searchQ='';
+
+async function loadAll(){
+  if(!db)await openDB();
+  [txs,accs,cats,goals]=await Promise.all([dbAll('transactions'),dbAll('accounts'),dbAll('categories'),dbAll('goals')]);
+  const sa=await dbAll('settings');sa.forEach(s=>settings[s.key]=s.value);
+  txs.sort((a,b)=>new Date(b.date)-new Date(a.date));
+}
+
+async function initData(){
+  const [a,c]=await Promise.all([dbAll('accounts'),dbAll('categories')]);
+  if(!a.length)for(const x of DEF_ACCS)await dbPut('accounts',x);
+  if(!c.length)for(const x of DEF_CATS)await dbPut('categories',x);
+}
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const $=id=>document.getElementById(id);
+const uid=()=>Date.now()+'-'+Math.random().toString(36).slice(2,7);
+const cur=()=>settings.currency||'FC';
+function fmt(n){
+  const a=Math.abs(Math.round(n));
+  if(a>=1e6)return(n/1e6).toFixed(1)+'M '+cur();
+  if(a>=1e3)return Math.round(n/1e3).toLocaleString('fr-FR')+'k '+cur();
+  return Math.round(n).toLocaleString('fr-FR')+' '+cur();
+}
+function fmtFull(n){return Math.round(n).toLocaleString('fr-FR')+' '+cur()}
+function ago(d){
+  const s=(Date.now()-new Date(d))/1e3;
+  if(s<60)return 'maintenant';
+  if(s<3600)return Math.floor(s/60)+'min';
+  if(s<86400)return Math.floor(s/3600)+'h';
+  if(s<604800)return Math.floor(s/86400)+'j';
+  return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+}
+function monthTxs(){
+  const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1);
+  return txs.filter(t=>new Date(t.date)>=start);
+}
+function catById(id){return cats.find(c=>c.id===id)||{icon:'💸',name:id}}
+function accById(id){return accs.find(a=>a.id===id)||{icon:'?',name:'?'}}
+
+// ════════════════════════════════════════
+// KPIs — Modèle Cashflow Dynamique (Rolling)
+// Abandonne le calendrier mensuel (1→30).
+// Tout est calculé sur des fenêtres glissantes
+// de 7j et 30j pour coller aux flux journaliers.
+// ════════════════════════════════════════
+function txsInWindow(days){
+  const cutoff=new Date(Date.now()-days*86400000);
+  return txs.filter(t=>new Date(t.date)>=cutoff);
+}
+
+function computeKPIs(){
+  const now=new Date();
+  // ── Fenêtre adaptative — si moins de 14j de données, on calcule sur les jours réels ──
+  const firstTxDate=txs.length?new Date(txs[txs.length-1].date):now;
+  const dataDays=Math.max(1,Math.min(30,Math.ceil((now-firstTxDate)/86400000)+1));
+  const isShortHistory=dataDays<14;
+  const win30=isShortHistory?dataDays:30;
+  const win7 =Math.min(7,dataDays);
+  // ── Fenêtres glissantes ──────────────────
+  const w7 =txsInWindow(win7);
+  const w30=txsInWindow(win30);
+
+  const inc7 =w7 .filter(t=>t.type==='income' ).reduce((s,t)=>s+t.amount,0);
+  const exp7 =w7 .filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const inc30=w30.filter(t=>t.type==='income' ).reduce((s,t)=>s+t.amount,0);
+  const exp30=w30.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+
+  // ── Comptes ─────────────────────────────
+  const activeBalance=accs.filter(a=>a.type!=='savings').reduce((s,a)=>s+a.balance,0);
+  const savingsBalance=accs.filter(a=>a.type==='savings').reduce((s,a)=>s+a.balance,0);
+  const balance=activeBalance;
+
+  // ── Burn rate lissé — fenêtre adaptative ─────────────
+  // "Si rien n'entre demain, tu tiens X jours."
+  const burnRate=exp30/win30;   // moyenne journalière sur la fenêtre disponible
+  // ── Revenus attendus (Cushion prévisionnel) ─────────
+  const expectedIncome7d=parseFloat(settings.expectedIncome7d)||0;
+  const safetyDays=burnRate>0?Math.floor(balance/burnRate):9999;
+  const safetyDaysWithSavings=burnRate>0?Math.floor((balance+savingsBalance+expectedIncome7d)/burnRate):9999;
+
+  // ── Taux de Rétention — fenêtre adaptative ──
+  const retention=inc30>0?Math.max(0,Math.round(((inc30-exp30)/inc30)*100)):null;
+
+  // ── Indice de Pression — désactivé si historique court ────
+  let pressureIdx=0;
+  if(!isShortHistory){
+    const dailyAvg30=exp30/win30;
+    const dailyAvg7 =exp7/win7;
+    pressureIdx=dailyAvg30>0?Math.round(((dailyAvg7-dailyAvg30)/dailyAvg30)*100):0;
+  }
+
+  // ── Vélocité post-revenu ─────────────────
+  // Dans les 48h après une entrée d'argent, combien est déjà parti ?
+  let evaporationRate=0;
+  const incomeEvents=txs.filter(t=>t.type==='income').slice(0,5);
+  if(incomeEvents.length){
+    const samples=incomeEvents.map(inc=>{
+      const t0=new Date(inc.date).getTime();
+      const spent48h=txs.filter(t=>t.type==='expense'&&new Date(t.date).getTime()>=t0&&new Date(t.date).getTime()<=t0+172800000).reduce((s,t)=>s+t.amount,0);
+      return inc.amount>0?spent48h/inc.amount:0;
+    });
+    evaporationRate=Math.round((samples.reduce((s,v)=>s+v,0)/samples.length)*100);
+  }
+
+  // ── Dopamine Index ───────────────────────
+  // Ratio dépenses impulsion (loisirs/resto/imprévus/vêtements) vs investissement (tech/études)
+  // 'food' retiré du défaut — manger n'est pas une impulsion sauf snack/livraison
+  const IMPULSE_CATS=['leisure','clothes','unforeseen','other_exp'];
+  const FOOD_IMPULSE_KEYWORDS=/snack|fast.?food|livraison|delivery|resto|burger|pizza|glace|bonbon/i;
+  const isFoodImpulse=t=>t.categoryId==='food' && t.note && FOOD_IMPULSE_KEYWORDS.test(t.note);
+  const INVEST_CATS=['tech','studies','invest_inc','youtube'];
+  const impulseSpend=w30.filter(t=>t.type==='expense'&&(IMPULSE_CATS.includes(t.categoryId)||isFoodImpulse(t))).reduce((s,t)=>s+t.amount,0);
+  const investSpend=w30.filter(t=>t.type==='expense'&&INVEST_CATS.includes(t.categoryId)).reduce((s,t)=>s+t.amount,0);
+  const dopamineIdx=exp30>0?Math.round((impulseSpend/exp30)*100):0;
+  const investIdx  =exp30>0?Math.round((investSpend/exp30)*100):0;
+  // ── Effet Fourmi — petites tx <200 cumulées 30j ──
+  const ANT_THRESHOLD=parseFloat(settings.antThreshold)||200;
+  const antTotal=w30.filter(t=>t.type==='expense'&&t.amount<=ANT_THRESHOLD).reduce((s,t)=>s+t.amount,0);
+  const antCount=w30.filter(t=>t.type==='expense'&&t.amount<=ANT_THRESHOLD).length;
+  // ── Mode fin de mois ──
+  const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const isEndOfMonth=(dim-now.getDate())<=4;
+
+  // ── Empreinte chrono (dépenses nocturnes) ─
+  // Transactions entre 21h et 5h = fatigue cognitive / compensation
+  const nightTxs=w30.filter(t=>{const h=new Date(t.date).getHours();return t.type==='expense'&&(h>=21||h<5)});
+  const nightSpend=nightTxs.reduce((s,t)=>s+t.amount,0);
+  const nightPct=exp30>0?Math.round((nightSpend/exp30)*100):0;
+
+  // ── Cat breakdown (30j) ──────────────────
+  const catSpend={};
+  w30.filter(t=>t.type==='expense').forEach(t=>{catSpend[t.categoryId]=(catSpend[t.categoryId]||0)+t.amount});
+  const topCatId=Object.keys(catSpend).sort((a,b)=>catSpend[b]-catSpend[a])[0];
+  const topCat=topCatId?catById(topCatId):null;
+
+  // ── Compatibilité rétrograde (écrans qui lisent income/expense/discipline) ──
+  const mt=monthTxs();
+  const income=mt.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense=mt.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const daysPassed=Math.max(1,now.getDate());
+  const daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const daysLeft=daysInMonth-daysPassed;
+  const projExp=burnRate*daysInMonth;
+  const projDelta=income-projExp;
+  // Discipline = Rétention sur 30j (ou score basique si pas de revenu)
+  const discipline=retention!==null?Math.min(100,Math.max(0,30+retention)):50;
+  const stability=50; // gardé pour compatibilité, non utilisé dans les nouvelles alertes
+
+  // ── SCORE DE FRICTION (Ivy) ──────────────
+  // Mesure la cohérence entre tes dépenses et ton OBJECTIF prioritaire.
+  // 100 = en ligne avec ton rêve. 0 = tu trahis ta trajectoire.
+  // Composantes : (a) marge vs surplus requis, (b) dopamine, (c) nuit, (d) pression 7j
+  let frictionScore=70; // neutre par défaut
+  try{
+    const pg=(typeof getPriorityGoal==='function')?getPriorityGoal():null;
+    let alignment=70;
+    if(pg && pg.deadline){
+      const gap=pg.target-pg.saved;
+      const joursDeadline=Math.max(1,Math.ceil((new Date(pg.deadline)-Date.now())/86400000));
+      const surplusRequis=gap/joursDeadline;
+      const surplusReel=Math.max(0,(inc30/30)-burnRate);
+      // ratio >=1 = tu tiens le cap ; <1 = tu dérives
+      const ratio=surplusRequis>0?surplusReel/surplusRequis:1;
+      alignment=Math.max(0,Math.min(100,Math.round(ratio*70)));
+    }
+    // Pénalités comportementales (cerveau dérapant)
+    const penDopamine=Math.max(0,(dopamineIdx-40))*0.4;   // au-delà de 40% ça pique
+    const penNight   =Math.max(0,(nightPct  -15))*0.6;    // au-delà de 15% nuit
+    const penPressure=Math.max(0,pressureIdx)*0.3;        // accélération récente
+    frictionScore=Math.max(0,Math.min(100,Math.round(alignment - penDopamine - penNight - penPressure)));
+  }catch(e){}
+
+  return{
+    // Comptes + flux prévu
+    balance,activeBalance,savingsBalance,expectedIncome7d,
+    // Méta historique
+    dataDays,isShortHistory,isEndOfMonth,
+    // Effet Fourmi
+    antTotal,antCount,antThreshold:ANT_THRESHOLD,
+    safetyDaysWithSavings,
+    // Rolling
+    inc7,exp7,inc30,exp30,
+    // Core KPIs dynamiques
+    burnRate,safetyDays,
+    retention,pressureIdx,evaporationRate,
+    dopamineIdx,investIdx,
+    nightSpend,nightPct,
+    // Catégories
+    catSpend,topCat,
+    // Rétrocompat écrans existants
+    income,expense,discipline,stability,
+    projDelta,projExp,daysLeft,daysInMonth,daysPassed,
+    frictionScore
+  };
+}
+
+// ════════════════════════════════════════
+// RISK
+// ════════════════════════════════════════
+function riskLevel(kpi){
+  if(kpi.safetyDays<7||kpi.projDelta<-kpi.income*.3)return{l:'CRITIQUE',c:'var(--red)'};
+  if(kpi.safetyDays<15||kpi.projDelta<0)return{l:'ÉLEVÉ',c:'var(--org)'};
+  if(kpi.safetyDays<30)return{l:'MOYEN',c:'var(--ylw)'};
+  return{l:'FAIBLE',c:'var(--grn)'};
+}
+
+// ════════════════════════════════════════
+// ONLINE STATUS
+// ════════════════════════════════════════
+function updateOnlineStatus(){
+  const on=navigator.onLine;
+  const b=$('onlineBadge');
+  if(b){
+    if(on){b.className='online-badge ob-on';b.textContent='● EN LIGNE'}
+    else{b.className='online-badge ob-off';b.textContent='○ HORS LIGNE'}
+  }
+  const fab=$('aiFab');
+  if(fab){
+    const hasKey=!!getGroqKey();
+    if(on && hasKey){fab.classList.remove('off');fab.title='IA active'}
+    else{fab.classList.add('off');fab.title=on?'Pas de clé Groq':'Hors ligne'}
+  }
+  document.body.classList.toggle('online',on);
+  document.body.classList.toggle('offline',!on);
+}
+window.addEventListener('online',()=>{try{updateOnlineStatus();maybeAutoInsight()}catch(e){}});
+window.addEventListener('offline',()=>{try{updateOnlineStatus()}catch(e){}});
+
+// ════════════════════════════════════════
+// AI — GEMINI (hybrid local/cloud)
+// ════════════════════════════════════════
+// Clé Groq dynamique (modifiable dans Config)
+function getGroqKey(){
+  return localStorage.getItem('groq_api_key')||'';
+}
+
+function buildCtx(){
+  const k=computeKPIs();
+
+  // ── 50 dernières transactions avec métadonnées comportementales ──
+  const recentRaw=txs.slice(0,50).map(t=>{
+    const d=new Date(t.date);
+    return{
+      montant:t.amount,
+      type:t.type,
+      categorie:catById(t.categoryId).name,
+      heure:d.getHours(),
+      jourSemaine:['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][d.getDay()],
+      note:t.note||''
+    };
+  });
+
+  // ── Analyse chrono : clusters horaires ──
+  const hourBuckets={matin:[],apresmidi:[],soir:[],nuit:[]};
+  recentRaw.filter(t=>t.type==='expense').forEach(t=>{
+    if(t.heure>=6&&t.heure<12)hourBuckets.matin.push(t.montant);
+    else if(t.heure>=12&&t.heure<18)hourBuckets.apresmidi.push(t.montant);
+    else if(t.heure>=18&&t.heure<21)hourBuckets.soir.push(t.montant);
+    else hourBuckets.nuit.push(t.montant);
+  });
+  const bucketSum=b=>b.reduce((s,v)=>s+v,0);
+
+  // ── Détection de l'Effet Domino ──
+  // Cherche si une grosse dépense (>2x burn rate) est suivie d'une hausse dans les 48h
+  const BIG_TX_THRESHOLD=k.burnRate*2;
+  const dominoEvents=[];
+  txs.filter(t=>t.type==='expense'&&t.amount>BIG_TX_THRESHOLD).slice(0,5).forEach(big=>{
+    const t0=new Date(big.date).getTime();
+    const after48h=txs.filter(t=>t.type==='expense'&&new Date(t.date).getTime()>t0&&new Date(t.date).getTime()<=t0+172800000);
+    if(after48h.length>=2){
+      dominoEvents.push({
+        declencheur:catById(big.categoryId).name,
+        montant:big.amount,
+        depensesSubsequentes:after48h.length,
+        totalApres:after48h.reduce((s,t)=>s+t.amount,0)
+      });
+    }
+  });
+
+  // ── Mots-clés récurrents dans les notes ──
+  const allNotes=txs.filter(t=>t.note&&t.note.length>2).map(t=>t.note.toLowerCase());
+  const wordFreq={};
+  allNotes.forEach(note=>note.split(/\s+/).forEach(w=>{if(w.length>3)wordFreq[w]=(wordFreq[w]||0)+1}));
+  const topKeywords=Object.entries(wordFreq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([w,n])=>`${w}(×${n})`);
+
+  // ── Objectif prioritaire (deadline la plus proche) ──────────
+  const pg=getPriorityGoal();
+  let objectifPrioritaire=null;
+  if(pg){
+    const gap=pg.target-pg.saved;
+    const dailySurplus=Math.max(0,(k.inc30/30)-k.burnRate);
+    const joursRestantsBudget=dailySurplus>0?Math.ceil(gap/dailySurplus):null;
+    const joursRestantsDeadline=pg.deadline?Math.ceil((new Date(pg.deadline)-Date.now())/86400000):null;
+    const enRetard=joursRestantsBudget&&joursRestantsDeadline&&joursRestantsBudget>joursRestantsDeadline;
+    objectifPrioritaire={
+      nom:pg.name,
+      cible:pg.target,
+      epargneActuelle:pg.saved,
+      gapRestant:gap,
+      deadline:pg.deadline||'non définie',
+      joursAvantDeadline:joursRestantsDeadline,
+      joursNecessairesAuRythmeActuel:joursRestantsBudget,
+      surplusJournalierDisponible:Math.round(dailySurplus),
+      statut:enRetard?'EN RETARD — rythme insuffisant':'sur la trajectoire',
+    };
+  }
+
+  // ── Tous les comptes (vue patrimoine totale) ──
+  const allAccounts=accs.map(a=>({nom:a.name,type:a.type,solde:a.balance||0}));
+
+  // ── Tous les objectifs (pas seulement le prioritaire) ──
+  const allGoals=goals.map(g=>({
+    nom:g.name,
+    cible:g.target,
+    epargne:g.saved||0,
+    progression:g.target?Math.round(((g.saved||0)/g.target)*100)+'%':'0%',
+    deadline:g.deadline||'aucune',
+  }));
+
+  // ── Top 5 catégories de dépense ce mois (avec montants) ──
+  const monthExp=monthTxs().filter(t=>t.type==='expense');
+  const catTotals={};
+  monthExp.forEach(t=>{const n=catById(t.categoryId).name;catTotals[n]=(catTotals[n]||0)+t.amount});
+  const topCategories=Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,5)
+    .map(([n,v])=>`${n}: ${Math.round(v)} ${cur()}`);
+
+  // ── Payload JSON structuré pour l'IA ──────
+  const payload={
+    devise:cur(),
+    objectifPrioritaire,
+    tousLesObjectifs:allGoals,
+    comptes:allAccounts,
+    indicateurs:{
+      capitalActif:k.activeBalance,
+      epargne:k.savingsBalance,
+      patrimoineTotal:(k.activeBalance||0)+(k.savingsBalance||0),
+      joursDeDonneesDisponibles:k.dataDays,
+      historiqueCourtAttention:k.isShortHistory?'Oui — moins de 14j de données, n\'utilise PAS de comparaison sur 30j':'Non',
+      safetyDays:k.safetyDays===9999?'infini':k.safetyDays,
+      safetyDaysAvecEpargneEtRevenusAttendus:k.safetyDaysWithSavings===9999?'infini':k.safetyDaysWithSavings,
+      revenusAttendus7j:k.expectedIncome7d||0,
+      modeFinDeMois:k.isEndOfMonth?'ACTIF — fatigue de décision élevée':'Non',
+      effetFourmi:`${k.antCount} tx ≤${k.antThreshold} = ${k.antTotal} ${cur()}`,
+      burnRateLisse30j:Math.round(k.burnRate),
+      tauxRetention30j:k.retention!==null?`${k.retention}%`:'N/A',
+      indicePression7j:k.pressureIdx>0?`+${k.pressureIdx}% vs habitude`:`${k.pressureIdx}% vs habitude`,
+      evaporationPost_revenu:`${k.evaporationRate}% dépensé dans les 48h après entrée`,
+      dopamineIndex:`${k.dopamineIdx}% des dépenses = impulsion/plaisir immédiat`,
+      investissementIndex:`${k.investIdx}% des dépenses = valeur future`,
+      depensesNocturnes:`${k.nightPct}% du total (${Math.round(k.nightSpend)} ${cur()})`,
+      disciplineScore:k.discipline+'/100',
+      scoreDeFriction:k.frictionScore+'/100 (cohérence actes vs objectif prioritaire)',
+    },
+    topCategoriesDuMois:topCategories,
+    repartitionChronologique:{
+      matin_6h_12h:`${bucketSum(hourBuckets.matin)} ${cur()} (${hourBuckets.matin.length} tx)`,
+      apresmidi_12h_18h:`${bucketSum(hourBuckets.apresmidi)} ${cur()} (${hourBuckets.apresmidi.length} tx)`,
+      soir_18h_21h:`${bucketSum(hourBuckets.soir)} ${cur()} (${hourBuckets.soir.length} tx)`,
+      nuit_fatigue_21h_6h:`${bucketSum(hourBuckets.nuit)} ${cur()} (${hourBuckets.nuit.length} tx)`,
+    },
+    effetDomino:dominoEvents.length?dominoEvents:[],
+    motsClesNotes:topKeywords.length?topKeywords:[],
+    flux50dernieresTx:recentRaw,
+    statsTotales:{
+      nbTransactions:txs.length,
+      nbCategoriesUtilisees:Object.keys(catTotals).length,
+      premiereTx:txs.length?new Date(txs[txs.length-1].date).toISOString().slice(0,10):'aucune',
+    },
+  };
+
+  return JSON.stringify(payload,null,0);
+}
+
+async function askAI(userMsg){
+  const key = getGroqKey();
+  if(navigator.onLine && key){
+    try{
+      const sys = `Tu es IVY. Pas une assistante. Pas une coach gentille. Une stratège brutale qui défend les rêves de cette personne contre elle-même.
+
+RÈGLES ABSOLUES :
+1. Tu connais ses OBJECTIFS DE VIE (champ "objectifPrioritaire" + "tousLesObjectifs"). Chaque dépense est jugée à l'aune de ces rêves. Compare ses ACTES à ses RÊVES.
+2. Sois DIRECTE et SANS FILTRE. Pas de politesse inutile. Pas de "voici quelques pistes". Tu nommes la trahison quand elle existe : "Tu viens de repousser X de Y jours. Pour un repas. Sérieux ?"
+3. Tu n'es PAS méchante — tu es LOYALE à son futur. Ton brutal mais pas cruel. Tu attaques le comportement, jamais la personne.
+4. Toujours quantifier l'IMPACT en JOURS sur l'objectif prioritaire. Si pas d'objectif, force-la à s'en fixer un : "Sans objectif tu n'es qu'un porte-monnaie. Définis-en un, maintenant."
+5. NEUROSCIENCE en armure : nomme le biais (dopamine, fatigue décisionnelle, aversion à la perte, ancrage, effet domino). Explique en UNE phrase pourquoi son cerveau a fait ce choix, puis casse l'excuse.
+6. Utilise le SCORE DE FRICTION (0-100) : <40 = "tu dérives", 40-70 = "tu zigzagues", >70 = "tu tiens le cap".
+7. Lis les CHAMPS COMPORTEMENTAUX (humeur, lieu, heure, note) pour identifier le déclencheur réel : "Tu craques toujours fatigué. C'est pas l'envie, c'est l'épuisement."
+8. STRUCTURE : (a) ce que tu vois (chiffres précis), (b) la trahison ou la victoire (en jours d'objectif), (c) UN ordre concret pour aujourd'hui — pas une suggestion, un ordre.
+9. 4-6 phrases max. Mono-emoji autorisé en signature (⚡, 🎯, 🔥). Français direct, zéro jargon.
+
+Tu es la voix qui empêche cette personne de mourir médiocre.`;
+      const history = aiMsgs.slice(-6).map(m=>({role: m.r==='ai'?'assistant':'user', content: m.c}));
+      const prompt = 'DONNÉES COMPORTEMENTALES:\n'+buildCtx()+'\n\nQuestion: '+userMsg;
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({
+          model:'llama-3.1-8b-instant',
+          max_tokens:400,
+          temperature:0.3,
+          messages:[
+            {role:'system',content:sys},
+            ...history,
+            {role:'user',content:prompt}
+          ]
+        })
+      });
+      const d = await resp.json();
+      if(!resp.ok){
+        const msg = d.error?.message||'Erreur API';
+        const isKey = msg.includes('401')||msg.includes('invalid')||msg.includes('key');
+        const advice = isKey ? '\n\n🔑 Clé invalide. Va dans Config → entre ta clé Groq depuis console.groq.com' : '';
+        return{text:'⚠️ Groq: '+msg+advice+'\n\n'+localAI(userMsg), src:'Erreur'};
+      }
+      const t = d.choices?.[0]?.message?.content;
+      if(t) return{text:t, src:'Groq AI'};
+    }catch(e){
+      console.warn('Groq failed:',e);
+      const isSandbox = window.location.href.includes('claude.ai');
+      if(isSandbox) return{text:'🔒 Preview Claude.ai — API bloquée par sandbox. Sur Netlify ça marche.\n\n'+localAI(userMsg), src:'Sandbox'};
+      return{text:'⚠️ Réseau indisponible.\n\n'+localAI(userMsg), src:'Local'};
+    }
+  }
+  if(!key && navigator.onLine){
+    return{text:'🔑 Clé API manquante. Va dans Config → entre ta clé Groq gratuite (console.groq.com).\n\n'+localAI(userMsg), src:'Local'};
+  }
+  return{text:'📴 Hors-ligne — '+localAI(userMsg), src:'Local'};
+}
+
+
+function localAI(q){
+  const k=computeKPIs();const ql=q.toLowerCase();
+  // Mini coach hors-ligne — français simple + explication "pourquoi"
+  if(ql.includes('risque')||ql.includes('projection')||ql.includes('fin de mois')){
+    const r=riskLevel(k);
+    const safe=k.safetyDays===9999?'illimité':k.safetyDays+' jours';
+    const sens=k.projDelta>=0?'tu finiras le mois en positif':'tu finiras le mois dans le rouge';
+    return`🧭 Risque: ${r.l}.\nÀ ce rythme, ${sens} (${k.projDelta>=0?'+':''}${fmtFull(k.projDelta)}).\nTu dépenses en moyenne ${fmtFull(k.burnRate)} par jour. Avec ce que tu as, tu tiens ${safe} sans nouveau revenu.\n💡 Pourquoi ça compte: ton cerveau sous-estime les petites dépenses répétées (biais de fragmentation). Cumulées, elles font le trou.`;
+  }
+  if(ql.includes('dépense')||ql.includes('catégorie')){
+    if(!k.topCat)return'Aucune dépense ce mois pour le moment. Note la première dès que tu en fais une — ton cerveau oublie 60% des achats en 3 jours.';
+    return`💸 Ta plus grosse catégorie ce mois: ${k.topCat.icon} ${k.topCat.name}.\nTotal dépensé: ${fmtFull(k.expense)} (${fmtFull(k.burnRate)}/jour en moyenne).\n💡 Pourquoi cette catégorie domine: c'est souvent là où ton cerveau cherche du plaisir rapide (dopamine). Réduire de 10% ici libère ${fmtFull(k.expense*0.1)} sans douleur.`;
+  }
+  if(ql.includes('solde')||ql.includes('patrimoine')||ql.includes('argent')){
+    return`💰 Tu as ${fmtFull(k.activeBalance||k.balance)} disponibles + ${fmtFull(k.savingsBalance||0)} en épargne verrouillée.\nCe mois: ${fmtFull(k.income)} entrés, ${fmtFull(k.expense)} sortis.\nTu peux tenir ${k.safetyDays===9999?'longtemps':k.safetyDays+' jours'} sans rentrée d'argent.\n💡 L'épargne verrouillée est invisible pour ton cerveau, c'est volontaire — ça t'évite de la dépenser sur un coup de tête.`;
+  }
+  if(ql.includes('discipline')||ql.includes('score')){
+    const txt=k.discipline<60?'Ton cerveau a besoin de routines. Note tes dépenses chaque soir — 30 secondes suffisent. C\'est ce qui crée le contrôle, pas les chiffres.':'Bon rythme. Continuer à noter, c\'est ce qui rend la suite automatique (les neurones renforcent l\'habitude après ~21 jours).';
+    return`🎯 Discipline: ${k.discipline}/100.\nStabilité de tes revenus: ${Math.round(k.stability)}/100.\n💡 ${txt}`;
+  }
+  if(ql.includes('conseil')||ql.includes('améliorer')||ql.includes('aide')){
+    const issues=[];
+    if(k.burnRate>k.income/25)issues.push(`tu brûles ${fmtFull(k.burnRate)}/j, plus rapide que tes revenus`);
+    if(k.projDelta<0)issues.push(`un déficit de ${fmtFull(Math.abs(k.projDelta))} arrive en fin de mois`);
+    if(k.discipline<60)issues.push('tu notes tes dépenses de façon irrégulière');
+    if(k.dopamineIdx>50)issues.push(`${k.dopamineIdx}% de tes dépenses sont du plaisir immédiat (dopamine)`);
+    if(k.nightPct>15)issues.push(`${k.nightPct}% de tes dépenses sont la nuit (fatigue décisionnelle)`);
+    if(!issues.length)return`✅ Tout va bien. Tu brûles ${fmtFull(k.burnRate)}/j, c'est sous contrôle.\n💡 Conseil: profite-en pour augmenter ton épargne automatique de 5%. Ton cerveau ne sentira pas la différence.`;
+    return`👀 Points à regarder:\n• ${issues.join('\n• ')}\n💡 Choisis-en UN seul à corriger cette semaine. Le cerveau ne change qu'une habitude à la fois — sinon il abandonne tout.`;
+  }
+  return`📊 État rapide:\n• Disponible: ${fmtFull(k.activeBalance||k.balance)}\n• Dépensé ce mois: ${fmtFull(k.expense)}\n• Discipline: ${k.discipline}/100\n💡 Pose une question précise (risque, dépenses, conseil, solde, discipline) — je t'expliquerai aussi le "pourquoi".`;
+}
+
+
+// ════════════════════════════════════════
+// AI INSIGHT (home + global access)
+// ════════════════════════════════════════
+let _lastInsight = '';
+let _lastInsightTime = 0;
+async function fetchHomeInsight(){
+  if(!navigator.onLine || !getGroqKey()) return null;
+  // Cache 10 min
+  if(_lastInsight && Date.now()-_lastInsightTime < 600000) return _lastInsight;
+  try{
+    const sys = "Tu es un coach financier qui parle à un ami — utilise toujours \"tu\". En UNE phrase de 25 mots maximum, dis-lui le truc le plus important à savoir maintenant : impact sur son objectif, ou comportement de cerveau le plus risqué (dopamine, fatigue du soir, effet domino, effet fourmi). Si dataDays<14 dans les données, NE compare PAS sur 30j — parle uniquement des jours réels disponibles. Français simple, chiffres précis, pas de jargon, pas de salutation.";
+    const ctx = buildCtx();
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+getGroqKey()},
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        max_tokens:60,
+        temperature:0.4,
+        messages:[{role:'system',content:sys},{role:'user',content:ctx+'\n\nDonne UN insight ciblé.'}]
+      })
+    });
+    if(!resp.ok) return null;
+    const d = await resp.json();
+    const t = d.choices?.[0]?.message?.content?.trim();
+    if(t){_lastInsight=t;_lastInsightTime=Date.now();return t}
+    return null;
+  }catch(e){return null}
+}
+async function maybeAutoInsight(){
+  if(screen!=='home') return;
+  const el = $('aiInsightBody');
+  if(!el) return;
+  const txt = await fetchHomeInsight();
+  if(txt && el && screen==='home'){
+    el.innerHTML = '💡 '+txt;
+  }
+}
+function openAIQuick(){
+  if(!navigator.onLine){
+    openModal(`<h3>📴 Hors ligne</h3><p style="color:var(--mut);font-size:13px;line-height:1.6;margin-bottom:14px">L'IA Groq nécessite une connexion. En offline, va sur l'écran <strong>IA</strong> pour utiliser l'analyse locale.</p><button class="btn" onclick="closeModal();go('ai')">Ouvrir IA Local</button>`);
+    return;
+  }
+  if(!getGroqKey()){
+    openModal(`<h3>🔑 Clé Groq manquante</h3><p style="color:var(--mut);font-size:13px;line-height:1.6;margin-bottom:14px">Pour activer l'IA, configure ta clé Groq (gratuite) dans Config.</p><button class="btn" onclick="closeModal();go('settings')">Aller dans Config</button>`);
+    return;
+  }
+  openModal(`
+    <h3>✨ Assistant IA Rapide</h3>
+    <div style="font-size:11px;color:var(--mut);margin-bottom:10px">Pose ta question — réponse instantanée basée sur tes données.</div>
+    <div id="quickAIArea" style="min-height:80px;padding:12px;background:var(--surf2);border-radius:12px;margin-bottom:10px;font-size:13px;line-height:1.55"><div style="color:var(--mut);font-size:12px">En attente de ta question...</div></div>
+    <input id="quickAIInput" class="fi" placeholder="Ex: J'ai trop dépensé ?" autocomplete="off">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+      <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Risque ce mois ?')">Risque ?</button>
+      <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Top dépense ?')">Top dépense ?</button>
+      <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Conseil principal ?')">Conseil ?</button>
+      <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Puis-je épargner +?')">Épargne ?</button>
+    </div>
+    <button class="btn" onclick="quickAISubmit()">Demander</button>
+  `);
+  setTimeout(()=>{const i=$('quickAIInput');if(i){i.focus();i.onkeydown=e=>{if(e.key==='Enter')quickAISubmit()}}},80);
+}
+async function quickAISubmit(){
+  const i=$('quickAIInput');const a=$('quickAIArea');
+  const q=i?.value.trim();if(!q||!a)return;
+  a.innerHTML='<div class="ald" style="padding:0"><div class="add"></div><div class="add"></div><div class="add"></div></div>';
+  i.value='';
+  const r=await askAI(q);
+  a.innerHTML='<strong style="color:var(--acc3);font-size:11px;text-transform:uppercase;letter-spacing:.5px">'+(r.src||'IA')+'</strong><br>'+r.text.replace(/\n/g,'<br>');
+}
+function quickAIAsk(q){const i=$('quickAIInput');if(i){i.value=q;quickAISubmit()}}
+
+// ════════════════════════════════════════
+// ALERTES COMPORTEMENTALES (Nudges)
+// Basées sur les indicateurs dynamiques,
+// pas sur le calendrier mensuel.
+// ════════════════════════════════════════
+function getAlerts(kpi){
+  // Pool large d'alertes possibles — on en montre 2-3 max, rotation journalière
+  const pool=[];
+
+  // — Critiques (toujours prioritaires, jamais en rotation) —
+  const critical=[];
+  if(!txs.length){
+    return [{t:'i',m:`📝 Aucune transaction encore. Tape le <strong>+</strong> pour saisir ta première — sans données je peux rien analyser.`}];
+  }
+  if(kpi.isShortHistory){
+    pool.push({t:'i',m:`📅 Tu as ${kpi.dataDays} jour${kpi.dataDays>1?'s':''} de données. Les analyses se calent là-dessus — la pression vs habitude attendra ${14-kpi.dataDays}j de plus pour avoir du sens.`,prio:1});
+  }
+  if(kpi.safetyDays!==9999&&kpi.safetyDays<7){
+    const ext=kpi.safetyDaysWithSavings>kpi.safetyDays?` Avec ton épargne tu montes à <strong>${kpi.safetyDaysWithSavings}j</strong>.`:'';
+    critical.push({t:'d',m:`🚨 ${kpi.safetyDays} jour${kpi.safetyDays>1?'s':''} d'argent actif si rien n'entre.${ext} Tu brûles ${fmtFull(kpi.burnRate)}/j. Coupe une dépense aujourd'hui.`});
+  }
+  if(!kpi.isShortHistory && kpi.pressureIdx>40)
+    critical.push({t:'d',m:`🔥 +${kpi.pressureIdx}% cette semaine vs ton habitude. Effet "spirale" — ton cerveau s'habitue. Pause de 24h sur le non essentiel.`});
+  if(kpi.isEndOfMonth)
+    critical.push({t:'w',m:`🌒 Mode fin de mois actif. La fatigue de décision s'accumule — tes prochains achats coûtent plus cher au cerveau qu'en début de mois.`});
+
+  // — Pool rotatif (chacune éligible si condition remplie) —
+  if(!kpi.isShortHistory && kpi.pressureIdx>20 && kpi.pressureIdx<=40)
+    pool.push({t:'w',m:`⚠️ +${kpi.pressureIdx}% de dépenses cette semaine vs habitude. Pas grave si prévu — sinon, freine doucement.`,prio:2});
+  if(kpi.exp7>kpi.inc7 && kpi.inc7>0)
+    pool.push({t:'w',m:`📉 Cette semaine: ${fmtFull(kpi.exp7)} sortis vs ${fmtFull(kpi.inc7)} entrés. Tu vis sur la réserve.`,prio:2});
+  if(kpi.evaporationRate>50)
+    pool.push({t:'w',m:`💸 ${kpi.evaporationRate}% de chaque revenu disparaît en 48h. Astuce : vire 20% en épargne dès l'entrée.`,prio:3});
+  if(kpi.nightPct>20)
+    pool.push({t:'w',m:`🌙 ${kpi.nightPct}% de tes dépenses après 21h. Cortex fatigué = oui facile. Délai de 12h sur les achats tard.`,prio:3});
+  if(kpi.dopamineIdx>60)
+    pool.push({t:'w',m:`🎯 ${kpi.dopamineIdx}% de tes dépenses = plaisir immédiat. Seulement ${kpi.investIdx}% vers le futur. L'équilibre 50/50 dure plus longtemps.`,prio:3});
+  if(kpi.antCount>=10 && kpi.antTotal>=kpi.antThreshold*5)
+    pool.push({t:'i',m:`🐜 Effet Fourmi : ${kpi.antCount} petites dépenses (≤${fmtFull(kpi.antThreshold)}) = <strong>${fmtFull(kpi.antTotal)}</strong> sur ${kpi.dataDays}j. Invisible à l'œil, lourd au cumul.`,prio:3});
+  if(kpi.retention!==null && kpi.retention>=25 && kpi.pressureIdx<=10)
+    pool.push({t:'g',m:`✅ Tu gardes ${kpi.retention}% de ce qui entre. ${kpi.safetyDays===9999?'Tu tiens très longtemps':'Tu tiens '+kpi.safetyDays+'j'} sans nouveau revenu.`,prio:3});
+  if(!kpi.isShortHistory && kpi.pressureIdx<=-15)
+    pool.push({t:'g',m:`📉 Dépenses ${Math.abs(kpi.pressureIdx)}% sous ta moyenne cette semaine. Profite — c'est le moment où le cerveau accepte une nouvelle automatisation d'épargne.`,prio:3});
+  // Détection licence morale : 7j de bonne rétention puis aujourd'hui ça dérape
+  if(kpi.retention!==null && kpi.retention>=70 && kpi.exp7>0){
+    const todayExp=txs.filter(t=>t.type==='expense'&&new Date(t.date).toDateString()===new Date().toDateString()).reduce((s,t)=>s+t.amount,0);
+    if(todayExp>kpi.burnRate*1.5)
+      pool.push({t:'w',m:`🪞 Tu as bien tenu cette semaine. Aujourd'hui : ${fmtFull(todayExp)} sortis (${Math.round(todayExp/kpi.burnRate)}× ta moyenne). C'est la "licence morale" — quand on se récompense d'avoir été sage.`,prio:1});
+  }
+
+  // Rotation : seed = jour de l'année → ordre stable dans la journée mais change demain
+  const seed=Math.floor(Date.now()/86400000);
+  const shuffled=pool.map((a,i)=>({a,r:((seed+i*31)%97)})).sort((x,y)=>x.a.prio-y.a.prio||x.r-y.r).map(x=>x.a);
+
+  // Max 3 alertes : critiques d'abord, puis 1-2 du pool rotatif
+  const out=[...critical];
+  for(const a of shuffled){
+    if(out.length>=3) break;
+    out.push(a);
+  }
+  return out.length?out:[{t:'g',m:`✅ Rien d'urgent. Burn rate ${fmtFull(kpi.burnRate)}/j, safety ${kpi.safetyDays===9999?'∞':kpi.safetyDays}j. Profites-en pour avancer ton objectif.`}];
+}
+
+// ════════════════════════════════════════
+// NOTIFICATIONS
+// ════════════════════════════════════════
+async function initNotifs(){
+  try{
+    if(!('Notification' in window))return;
+    // Don't auto-request — wait for user gesture (Android offline crash fix)
+    setInterval(()=>{try{checkNotifs()}catch(e){}},60000);
+    setTimeout(()=>{try{checkNotifs()}catch(e){}},3000);
+  }catch(e){console.warn('initNotifs',e)}
+}
+function sendNotif(title,body,tag){
+  if(Notification.permission!=='granted')return;
+  const opts={
+    body,
+    tag:tag||'finos',
+    icon:'./icon-192.png',
+    badge:'./icon-96.png',
+    vibrate:[200,100,200,100,300],  // son + vibration sur Android
+    requireInteraction:false,
+    silent:false,
+    data:{url:'./index.html'}
+  };
+  // Priorité SW (fonctionne en arrière-plan, lock screen, son réel)
+  if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+    navigator.serviceWorker.ready.then(reg=>{
+      reg.showNotification(title,opts);
+    }).catch(()=>{ try{new Notification(title,{body,tag,silent:false})}catch(e){} });
+  } else {
+    // Fallback direct (app ouverte seulement)
+    try{ new Notification(title,{body,tag,icon:'./icon-192.png',silent:false}) }catch(e){}
+  }
+}
+function checkNotifs(){
+  if(!('Notification' in window)||Notification.permission!=='granted')return;
+  const now=new Date(),h=now.getHours(),m=now.getMinutes(),today=now.toDateString();
+  const kpi=computeKPIs();
+
+  // ── 1. Rappel saisie journalière ─────────────────────────────
+  const rh=parseInt(settings.remindHour||20);
+  if(h===rh&&m<5){
+    const todayTxs=txs.filter(t=>new Date(t.date).toDateString()===today);
+    if(!todayTxs.length)sendNotif('Finance AI OS','✋ Aucune transaction aujourd\'hui. Mets à jour.','daily');
+  }
+
+  // ── 2. Réserve critique ──────────────────────────────────────
+  if(kpi.safetyDays!==9999&&kpi.safetyDays<5&&h===8&&m<5){
+    const k='safetyAlert'+today;
+    if(!localStorage.getItem(k)){sendNotif('🚨 Réserve critique',`${kpi.safetyDays} jours de réserve au rythme actuel.`,'safety');localStorage.setItem(k,'1')}
+  }
+
+  // ── 3. Surchauffe court terme ────────────────────────────────
+  if(kpi.pressureIdx>35&&h===12&&m<5){
+    const k='pressureAlert'+today;
+    if(!localStorage.getItem(k)){sendNotif('🔥 Surchauffe détectée',`Tes dépenses cette semaine sont +${kpi.pressureIdx}% vs ton habitude. Contrôle.`,'pressure');localStorage.setItem(k,'1')}
+  }
+
+  // ── 4. Sentinelle "Fenêtre de risque" ────────────────────────
+  // Basée sur les patterns horaires réels (nightPct élevé = risque le soir)
+  // On prévient 1h avant la zone à risque détectée
+  if(kpi.nightPct>20){
+    // L'utilisateur dépense souvent après 21h → alerte à 20h
+    if(h===20&&m<5){
+      const k='riskWindow'+today;
+      const pg=getPriorityGoal();
+      const body=pg
+        ? `Fenêtre de risque d'impulsion approche. Rappelle-toi : "${pg.name}" — il manque encore ${fmtFull(pg.target-pg.saved)}.`
+        : `Tes dépenses nocturnes représentent ${kpi.nightPct}% de ton total. Reste vigilant ce soir.`;
+      if(!localStorage.getItem(k)){sendNotif('🌙 Fenêtre de risque',body,'riskWindow');localStorage.setItem(k,'1')}
+    }
+  }
+
+  // ── 5. Objectif en retard — alerte matinale ──────────────────
+  if(h===7&&m<5){
+    const pg=getPriorityGoal();
+    if(pg&&pg.deadline){
+      const joursDeadline=Math.ceil((new Date(pg.deadline)-Date.now())/86400000);
+      const gap=pg.target-pg.saved;
+      const dailySurplus=Math.max(0,(kpi.inc30/30)-kpi.burnRate);
+      const joursNecessaires=dailySurplus>0?Math.ceil(gap/dailySurplus):null;
+      if(joursNecessaires&&joursNecessaires>joursDeadline){
+        const k='goalAlert'+today;
+        if(!localStorage.getItem(k)){
+          sendNotif(`⏳ "${pg.name}" en retard`,`Il te faut ${joursNecessaires}j au rythme actuel mais la deadline est dans ${joursDeadline}j.`,'goalAlert');
+          localStorage.setItem(k,'1');
+        }
+      }
+    }
+  }
+
+  // ── 6. Bilan de cohérence du soir ───────────────────────────
+  if(h===22&&m<5){
+    const pg=getPriorityGoal();
+    if(pg){
+      const todayDopamine=txs.filter(t=>{
+        const d=new Date(t.date);
+        return t.type==='expense'&&isDopamineTx(t)&&d.toDateString()===today;
+      }).reduce((s,t)=>s+t.amount,0);
+      if(todayDopamine>0){
+        const days=opportunityCostDays(todayDopamine);
+        const k='coherence'+today;
+        if(!localStorage.getItem(k)&&days&&days>=0.5){
+          sendNotif('📊 Bilan du jour',`${fmtFull(todayDopamine)} en dépenses impulsion aujourd'hui = ${days}j de retard sur "${pg.name}".`,'coherence');
+          localStorage.setItem(k,'1');
+        }
+      }
+    }
+  }
+}
+
+// ════════════════════════════════════════
+// MODAL ENGINE
+// ════════════════════════════════════════
+function openModal(html){
+  $('mbc').innerHTML=`<div class="mh" onclick="closeModal()"></div>`+html;
+  $('modal').classList.add('on');
+  $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
+}
+function closeModal(){$('modal').classList.remove('on')}
+
+// ════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════
+const NAV_ITEMS=[
+  {id:'home',l:'Home',svg:'<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'},
+  {id:'txlist',l:'Txns',svg:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'},
+  {id:'analytics',l:'Analyse',svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'},
+  {id:'ai',l:'IA',svg:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>'},
+  {id:'settings',l:'Config',svg:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>'},
+];
+
+function renderNav(){
+  const items=NAV_ITEMS;
+  $('nav').innerHTML=items.map((n,i)=>{
+    if(i===2)return `${ni(items[1],1)}<button class="fab" onclick="openAddModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>${ni(items[2],2)}`;
+    if(i===1)return '';
+    return ni(n,i);
+  }).join('');
+}
+function ni(n,i){return`<button class="ni ${screen===n.id?'on':''}" onclick="go('${n.id}')"><svg viewBox="0 0 24 24">${n.svg}</svg><span>${n.l}</span></button>`}
+function go(s){screen=s;render()}
+
+// ════════════════════════════════════════
+// RENDER ROUTER
+// ════════════════════════════════════════
+async function render(){
+  try{await loadAll()}catch(e){console.warn('loadAll',e)}
+  const screens={home:renderHome,txlist:renderTxList,analytics:renderAnalytics,ai:renderAI,settings:renderSettings};
+  let html='';
+  try{html=(screens[screen]||renderHome)()}
+  catch(e){console.error('render screen',e);html='<div class="card"><div class="ch">⚠️ Erreur</div><div style="font-size:12px;color:var(--mut)">'+(e.message||e)+'</div><button class="btn" style="margin-top:10px" onclick="screen=\'home\';render()">Retour accueil</button></div>'}
+  $('root').innerHTML='<div class="fin">'+html+'</div>';
+  try{renderNav()}catch(e){console.warn(e)}
+  try{updateOnlineStatus()}catch(e){console.warn(e)}
+  if(screen==='ai'){try{setupChat()}catch(e){console.warn(e)}}
+  if(screen==='home'){setTimeout(()=>{try{maybeAutoInsight()}catch(e){};try{checkCelebrations()}catch(e){}},150)}
+}
+
+// ════════════════════════════════════════
+// HOME SCREEN
+// ════════════════════════════════════════
+function renderHome(){
+  const kpi=computeKPIs(),risk=riskLevel(kpi),alerts=getAlerts(kpi);
+  const now=new Date();
+  const mn=now.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const burnPct=kpi.income>0?Math.min(100,(kpi.expense/kpi.income)*100):0;
+
+  return`
+  <!-- HERO -->
+  <div class="card card-hero" style="padding:18px;margin-bottom:12px">
+    <div class="flex sb mb8">
+      <div onclick="openKPIModal('balance')" style="cursor:pointer">
+        <div style="font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.8px;text-transform:uppercase">Capital disponible</div>
+        <div class="bal ${kpi.activeBalance>=0?'tg':'tr'}" style="margin-top:4px">${fmtFull(kpi.activeBalance)}</div>
+        <div style="font-size:10px;color:var(--mut);margin-top:3px">tap pour détails</div>
+      </div>
+      <div style="text-align:right">
+        <div class="badge" style="border-color:${risk.c};color:${risk.c};background:${risk.c}20">${risk.l}</div>
+        <div style="font-size:10px;color:var(--mut);margin-top:6px">${mn}</div>
+      </div>
+    </div>
+    <div class="flex sb" style="font-size:12px;margin:4px 0">
+      <span class="tg">↑ ${fmtFull(kpi.income)}</span>
+      <span class="tm">Revenus · Dépenses</span>
+      <span class="tr">↓ ${fmtFull(kpi.expense)}</span>
+    </div>
+    <div class="bar" style="height:6px;margin:8px 0"><div class="bf" style="width:${burnPct}%;background:${burnPct>90?'var(--red)':burnPct>70?'var(--org)':'var(--acc2)'}"></div></div>
+    <div class="kgrid">
+      <div class="kt" onclick="openKPIModal('burn')">
+        <div class="kl">Burn Rate</div>
+        <div class="kv">${fmtFull(kpi.burnRate)}</div>
+        <div class="ks">par jour · lissé 30j</div>
+      </div>
+      <div class="kt" onclick="openKPIModal('safety')">
+        <div class="kl">Safety Days</div>
+        <div class="kv" style="color:${kpi.safetyDays<7?'var(--red)':kpi.safetyDays<15?'var(--org)':'var(--grn)'}">${kpi.safetyDays===9999?'∞':kpi.safetyDays}</div>
+        <div class="ks">${kpi.safetyDaysWithSavings>kpi.safetyDays?`+${kpi.safetyDaysWithSavings-kpi.safetyDays}j avec épargne`:'jours · rythme actuel'}</div>
+      </div>
+      <div class="kt" onclick="openKPIModal('pressure')">
+        <div class="kl">Pression 7j</div>
+        <div class="kv" style="color:${kpi.pressureIdx>20?'var(--red)':kpi.pressureIdx>0?'var(--org)':'var(--grn)'}">${kpi.pressureIdx>0?'+':''}${kpi.pressureIdx}%</div>
+        <div class="ks">vs habitude 30j</div>
+      </div>
+      <div class="kt" onclick="go('ai')">
+        <div class="kl">Friction · Ivy</div>
+        <div class="kv" style="color:${kpi.frictionScore>=70?'var(--grn)':kpi.frictionScore>=40?'var(--ylw)':'var(--red)'}">${kpi.frictionScore}<span style="font-size:11px;color:var(--mut);font-weight:600">/100</span></div>
+        <div class="ks">${kpi.frictionScore>=70?'tu tiens le cap':kpi.frictionScore>=40?'tu zigzagues':'tu dérives'}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODE FIN DE MOIS -->
+  ${kpi.isEndOfMonth?`<div style="margin-bottom:12px;padding:10px 14px;background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(249,115,22,.05));border:1px solid rgba(251,191,36,.3);border-radius:12px;font-size:12px;color:var(--ylw);font-weight:600">🌒 <strong>Mode fin de mois</strong> — la fatigue de décision s'accumule. Tes prochains achats coûtent plus cher au cerveau.</div>`:''}
+
+  <!-- EFFET FOURMI -->
+  ${kpi.antCount>=8?`<div style="margin-bottom:12px;padding:10px 14px;background:var(--surf2);border:1px solid var(--brd);border-radius:12px;font-size:12px;color:var(--txt2);display:flex;justify-content:space-between;align-items:center"><span>🐜 <strong>${kpi.antCount}</strong> petites dépenses (≤${fmtFull(kpi.antThreshold)})</span><span class="mono fw8" style="color:var(--org)">${fmtFull(kpi.antTotal)}</span></div>`:''}
+
+  <!-- AI INSIGHT (online only) -->
+  ${navigator.onLine && getGroqKey()?`<div class="ai-insight" onclick="openAIQuick()" style="cursor:pointer">
+    <div class="ai-h">✨ Assistant IA <span style="margin-left:auto;font-size:10px;color:var(--mut);font-weight:600;text-transform:none;letter-spacing:0">tap pour discuter</span></div>
+    <div class="ai-b" id="aiInsightBody">${_lastInsight?'💡 '+_lastInsight:'<span class="ai-loading"></span> Analyse en cours...'}</div>
+  </div>`:''}
+
+  <!-- ALERTS -->
+  <div class="card">
+    <div class="ch">🔔 Alertes intelligentes <span class="pill">${alerts.length}</span></div>
+    ${alerts.map(a=>`<div class="al al-${a.t}">${a.m}</div>`).join('')}
+  </div>
+
+  <!-- RECENT TX -->
+  <div class="card">
+    <div class="ch">Transactions récentes <button class="btn btn-ghost btn-sm" onclick="go('txlist')">Voir tout</button></div>
+    ${txs.slice(0,5).map(txItem).join('')||'<div class="tm" style="font-size:12px;padding:8px 0">Aucune transaction. Appuie sur + pour commencer.</div>'}
+  </div>
+
+  <!-- ACCOUNTS -->
+  <div class="card">
+    <div class="ch">Comptes <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">+ Ajouter</button></div>
+    ${accs.map(a=>`<div class="ach" onclick="openEditAccountModal('${a.id}')">
+      <span style="font-size:20px">${a.icon}</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${a.name}</div><div style="font-size:10px;color:var(--mut)">${a.type.toUpperCase()}</div></div>
+      <div class="mono fw8 ${a.balance<0?'tr':'tg'}">${fmtFull(a.balance)}</div>
+    </div>`).join('')}
+  </div>
+
+  <!-- GOALS QUICK -->
+  ${goals.length?`<div class="card">
+    <div class="ch">Objectifs <button class="btn btn-ghost btn-sm" onclick="go('settings')">Gérer</button></div>
+    ${goals.slice(0,3).map(g=>{
+      const pct=Math.min(100,(g.saved/g.target)*100);
+      const gap=g.target-g.saved;
+      const dailySurplus=Math.max(0,(kpi.inc30/30)-kpi.burnRate);
+      const joursNec=dailySurplus>0?Math.ceil(gap/dailySurplus):null;
+      const joursDeadline=g.deadline?Math.ceil((new Date(g.deadline)-Date.now())/86400000):null;
+      const enRetard=joursNec&&joursDeadline&&joursNec>joursDeadline;
+      const isPriority=getPriorityGoal()?.id===g.id;
+      return`<div class="gi" style="${isPriority?'border-left:3px solid var(--acc3);padding-left:10px;margin-left:-2px':''}">
+        <div class="gh">
+          <div class="gn">${isPriority?'⚡ ':''}${g.icon||'🎯'} ${g.name}</div>
+          <div style="font-size:11px;font-weight:800;color:${enRetard?'var(--red)':pct>=100?'var(--grn)':'var(--mut)'}">${Math.round(pct)}%</div>
+        </div>
+        <div class="bar"><div class="bf" style="width:${pct}%;background:${pct>=100?'var(--grn)':enRetard?'var(--red)':'var(--acc2)'}"></div></div>
+        <div class="flex sb" style="font-size:10px;color:var(--mut);margin-top:3px">
+          <span>${fmtFull(g.saved)} / ${fmtFull(g.target)}</span>
+          ${enRetard?`<span style="color:var(--red)">⚠️ retard ${joursNec-joursDeadline}j</span>`
+            :joursNec?`<span style="color:var(--acc3)">~${joursNec}j</span>`:''}
+        </div>
+        ${(()=>{const eta=goalETA(g);if(!eta||eta.done)return'';if(eta.impossible)return`<div style="font-size:10px;color:var(--red);margin-top:4px;font-weight:700">⛔ Compteur de Destin : impossible au rythme actuel — burn rate > revenus</div>`;const ds=eta.date.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});return`<div style="font-size:10px;color:var(--acc3);margin-top:4px;font-weight:700">🎯 Compteur de Destin : atteint le <strong>${ds}</strong> (${eta.days}j)</div>`;})()}
+        ${(()=>{const m=goalMonthly(g);if(!m||m.done)return'';const c=m.pct>=100?'var(--grn)':m.pct>=50?'var(--ylw)':'var(--mut)';return`<div style="margin-top:6px;padding:6px 8px;background:var(--surf2);border-radius:8px"><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--mut);margin-bottom:3px"><span>📅 Jalon ce mois</span><span style="color:${c}">${fmtFull(m.savedThisMonth)} / ${fmtFull(m.monthlyTarget)}</span></div><div style="height:3px;background:var(--surf3);border-radius:3px;overflow:hidden"><div style="height:100%;width:${m.pct}%;background:${c};transition:width .5s"></div></div></div>`;})()}
+      </div>`;
+    }).join('')}
+  </div>`:''}
+  `;
+}
+
+function miniRing(score,color){
+  const r=17,c=2*Math.PI*r,fill=c-(c*score/100);
+  return`<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+    <svg width="42" height="42" viewBox="0 0 42 42">
+      <circle cx="21" cy="21" r="${r}" fill="none" stroke="var(--surf3)" stroke-width="3"/>
+      <circle cx="21" cy="21" r="${r}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${c}" stroke-dashoffset="${fill}" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/>
+    </svg>
+    <div><div class="kv" style="color:${color}">${score}</div><div class="ks">/100</div></div>
+  </div>`;
+}
+
+function timeOf(amt){
+  const r=parseFloat(settings.hourlyRate)||0;
+  if(!r||!amt) return '';
+  const h=amt/r;
+  if(h<1) return Math.round(h*60)+'min';
+  if(h<8) return h.toFixed(1).replace('.0','')+'h';
+  const d=h/8;
+  if(d<5) return d.toFixed(1).replace('.0','')+'j travail';
+  return Math.round(d)+'j travail';
+}
+function txItem(t){
+  const cat=catById(t.categoryId),acc=accById(t.accountId);
+  const isExp=t.type==='expense',isTrans=t.type==='transfer';
+  const color=isExp?'var(--red)':isTrans?'var(--acc3)':'var(--grn)';
+  const sign=isExp?'-':isTrans?'⇄':'+';
+  return`<div class="txi" onclick="openTxDetailModal('${t.id}')">
+    <div class="txic">${cat.icon}</div>
+    <div class="txin">
+      <div class="txn">${cat.name}${t.note?' · '+t.note:''}</div>
+      <div class="txm">${acc.name} · ${ago(t.date)}${t.type==='expense'&&timeOf(t.amount)?' · <span style="color:var(--acc3)">≈ '+timeOf(t.amount)+'</span>':''}</div>
+    </div>
+    <div class="txa" style="color:${color}">${sign}${fmt(t.amount)}</div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+// TX LIST SCREEN
+// ════════════════════════════════════════
+function renderTxList(){
+  let filtered=txs;
+  if(txFilter!=='all')filtered=filtered.filter(t=>t.type===txFilter);
+  if(searchQ)filtered=filtered.filter(t=>{
+    const cat=catById(t.categoryId),acc=accById(t.accountId);
+    const q=searchQ.toLowerCase();
+    return cat.name.toLowerCase().includes(q)||acc.name.toLowerCase().includes(q)||(t.note||'').toLowerCase().includes(q)||String(t.amount).includes(q);
+  });
+
+  // Group by date
+  const groups={};
+  filtered.forEach(t=>{
+    const d=new Date(t.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+    if(!groups[d])groups[d]=[];
+    groups[d].push(t);
+  });
+
+  return`
+  <div class="stitle">Transactions</div>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="searchInput" placeholder="Rechercher..." value="${searchQ}" oninput="searchQ=this.value;render()">
+  </div>
+  <div class="ftabs">
+    ${['all','income','expense','transfer'].map(f=>`<button class="ftab ${txFilter===f?'on':''}" onclick="txFilter='${f}';render()">${f==='all'?'Tout':f==='income'?'Revenus':f==='expense'?'Dépenses':'Transferts'}</button>`).join('')}
+  </div>
+  <div class="card">
+    ${Object.keys(groups).length?Object.entries(groups).map(([date,list])=>`
+      <div style="font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px;${Object.keys(groups).indexOf(date)===0?'margin-top:0':''}">${date}</div>
+      <div style="font-size:11px;color:var(--mut);text-align:right;margin-top:-20px;margin-bottom:6px">${fmtFull(list.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0)||0)}</div>
+      ${list.map(txItem).join('')}
+    `).join('') : '<div class="tm" style="font-size:12px;padding:12px 0;text-align:center">Aucune transaction trouvée.</div>'}
+  </div>
+  `;
+}
+
+// ════════════════════════════════════════
+// ANALYTICS SCREEN
+// ════════════════════════════════════════
+let analyticsPeriod='month'; // 'day','week','month','year'
+
+function getPeriodTxs(period){
+  const now=new Date();
+  let s,e;
+  if(period==='day'){s=new Date(now);s.setHours(0,0,0,0);e=new Date(now);e.setHours(23,59,59,999);}
+  else if(period==='week'){s=new Date(now);s.setDate(now.getDate()-now.getDay());s.setHours(0,0,0,0);e=new Date(now);e.setHours(23,59,59,999);}
+  else if(period==='month'){s=new Date(now.getFullYear(),now.getMonth(),1);e=new Date(now.getFullYear(),now.getMonth()+1,0,23,59,59);}
+  else{s=new Date(now.getFullYear(),0,1);e=new Date(now.getFullYear(),11,31,23,59,59);}
+  return txs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<=e);
+}
+
+function getPrevPeriodTxs(period){
+  const now=new Date();
+  let s,e;
+  if(period==='day'){s=new Date(now);s.setDate(s.getDate()-1);s.setHours(0,0,0,0);e=new Date(s);e.setHours(23,59,59,999);}
+  else if(period==='week'){s=new Date(now);s.setDate(now.getDate()-now.getDay()-7);s.setHours(0,0,0,0);e=new Date(s);e.setDate(s.getDate()+6);e.setHours(23,59,59,999);}
+  else if(period==='month'){s=new Date(now.getFullYear(),now.getMonth()-1,1);e=new Date(now.getFullYear(),now.getMonth(),0,23,59,59);}
+  else{s=new Date(now.getFullYear()-1,0,1);e=new Date(now.getFullYear()-1,11,31,23,59,59);}
+  return txs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<=e);
+}
+
+// ── Helpers période ──────────────────────────────
+function periodLabel(p){return {day:"aujourd'hui",week:'cette semaine',month:'ce mois',year:'cette année'}[p]}
+function periodPrevLabel(p){return {day:'hier',week:'sem. passée',month:'mois passé',year:'an passé'}[p]}
+
+// Heatmap adaptative : day=24h / week=7j / month=daysInMonth / year=12mois
+function buildHeatmap(period){
+  const now=new Date(),y=now.getFullYear(),m=now.getMonth();
+  const cells=[];let max=1;
+  if(period==='day'){
+    const today=new Date(y,m,now.getDate());
+    for(let h=0;h<24;h++){
+      const s=new Date(today);s.setHours(h,0,0,0);
+      const e=new Date(s);e.setHours(h+1);
+      const amt=txs.filter(t=>t.type==='expense'&&new Date(t.date)>=s&&new Date(t.date)<e).reduce((a,t)=>a+t.amount,0);
+      const isNow=h===now.getHours();
+      cells.push({label:String(h).padStart(2,'0')+'h',short:String(h),amt,isNow,key:`hour-${h}`});
+      if(amt>max)max=amt;
+    }
+  } else if(period==='week'){
+    const start=new Date(now);start.setDate(now.getDate()-now.getDay());start.setHours(0,0,0,0);
+    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    for(let i=0;i<7;i++){
+      const s=new Date(start);s.setDate(start.getDate()+i);
+      const e=new Date(s);e.setDate(s.getDate()+1);
+      const amt=txs.filter(t=>t.type==='expense'&&new Date(t.date)>=s&&new Date(t.date)<e).reduce((a,t)=>a+t.amount,0);
+      const isNow=s.toDateString()===now.toDateString();
+      cells.push({label:wn[i],short:wn[i],amt,isNow,key:`day-${s.toISOString().slice(0,10)}`,date:s});
+      if(amt>max)max=amt;
+    }
+  } else if(period==='month'){
+    const dim=new Date(y,m+1,0).getDate();
+    for(let d=1;d<=dim;d++){
+      const s=new Date(y,m,d),e=new Date(y,m,d+1);
+      const amt=txs.filter(t=>t.type==='expense'&&new Date(t.date)>=s&&new Date(t.date)<e).reduce((a,t)=>a+t.amount,0);
+      const isNow=d===now.getDate();
+      cells.push({label:String(d),short:String(d),amt,isNow,key:`day-${s.toISOString().slice(0,10)}`,date:s});
+      if(amt>max)max=amt;
+    }
+  } else { // year
+    const mn=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+    for(let mm=0;mm<12;mm++){
+      const s=new Date(y,mm,1),e=new Date(y,mm+1,1);
+      const amt=txs.filter(t=>t.type==='expense'&&new Date(t.date)>=s&&new Date(t.date)<e).reduce((a,t)=>a+t.amount,0);
+      const isNow=mm===now.getMonth();
+      cells.push({label:mn[mm],short:mn[mm],amt,isNow,key:`month-${y}-${mm}`,date:s});
+      if(amt>max)max=amt;
+    }
+  }
+  return {cells,max};
+}
+
+// Couleur nuancée selon intensité : vert (calme) → jaune → orange → rouge (intense)
+function intensityColor(ratio){
+  if(ratio<=0)return 'var(--surf2)';
+  if(ratio<.25)return `rgba(16,185,129,${.20+ratio*.6})`;
+  if(ratio<.5)return `rgba(234,179,8,${.25+ratio*.5})`;
+  if(ratio<.75)return `rgba(249,115,22,${.30+ratio*.5})`;
+  return `rgba(244,63,94,${.35+ratio*.55})`;
+}
+
+function periodHeatmapClick(cell,period){
+  if(period==='day') return openHourModal(cell);
+  if(period==='week'||period==='month') return openDayModal(cell.date.getDate(),cell.date.getMonth(),cell.date.getFullYear());
+  if(period==='year') return openMonthModal(cell.date.getMonth(),cell.date.getFullYear());
+}
+
+function renderAnalytics(){
+  const now=new Date(),year=now.getFullYear(),month=now.getMonth();
+  const kpi=computeKPIs();
+  const p=analyticsPeriod;
+
+  const ptxs=getPeriodTxs(p);
+  const prevTxs=getPrevPeriodTxs(p);
+  const curExp=ptxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const curInc=ptxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const prevExp=prevTxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const prevInc=prevTxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expDelta=curExp-prevExp,expDpct=prevExp?Math.round((expDelta/prevExp)*100):0;
+  const incDelta=curInc-prevInc,incDpct=prevInc?Math.round((incDelta/prevInc)*100):0;
+
+  const pLabels={day:'Hier vs Aujourd\'hui',week:'Semaine précédente vs Cette semaine',month:'Mois précédent vs Ce mois',year:'Année précédente vs Cette année'};
+  const pCurrent={day:"Aujourd\'hui",week:'Cette semaine',month:'Ce mois',year:'Cette année'};
+  const pPrev={day:'Hier',week:'Sem. passée',month:'Mois passé',year:'An passé'};
+
+  // Heatmap adaptative
+  const heat=buildHeatmap(p);
+  const heatTitle={day:'Heatmap horaire — aujourd\'hui',week:'Heatmap journalière — semaine',month:'Heatmap journalière — mois',year:'Heatmap mensuelle — année'}[p];
+
+  // Sub-breakdown adaptatif (remplace "weekday" fixe)
+  const subTitle={day:'Dépenses par tranche horaire',week:'Dépenses par jour',month:'Dépenses par jour de semaine',year:'Dépenses par mois'}[p];
+  let subData=[],subLabels=[];
+  if(p==='day'){
+    // 4 tranches : matin / aprem / soir / nuit
+    subLabels=['Matin\n6-12h','Aprem\n12-18h','Soir\n18-22h','Nuit\n22-6h'];
+    subData=[0,0,0,0];
+    ptxs.filter(t=>t.type==='expense').forEach(t=>{
+      const h=new Date(t.date).getHours();
+      const i=h>=6&&h<12?0:h>=12&&h<18?1:h>=18&&h<22?2:3;
+      subData[i]+=t.amount;
+    });
+  } else if(p==='week'){
+    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];subLabels=wn;subData=[0,0,0,0,0,0,0];
+    ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getDay()]+=t.amount);
+  } else if(p==='month'){
+    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];subLabels=wn;subData=[0,0,0,0,0,0,0];
+    ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getDay()]+=t.amount);
+  } else {
+    const mn=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];subLabels=mn;subData=new Array(12).fill(0);
+    ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getMonth()]+=t.amount);
+  }
+  const maxSub=Math.max(...subData,1);
+  const subPeak=subData.indexOf(Math.max(...subData));
+
+  // Category breakdown pour la période
+  const catSpendP={};
+  ptxs.filter(t=>t.type==='expense').forEach(t=>{catSpendP[t.categoryId]=(catSpendP[t.categoryId]||0)+t.amount});
+  const catEntries=Object.entries(catSpendP).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const maxCat=catEntries[0]?.[1]||1;
+  const catSum=Object.values(catSpendP).reduce((s,v)=>s+v,0);
+
+  // Anomalies basées sur la période
+  const anomalies=[];
+  cats.filter(c=>c.type==='expense').forEach(cat=>{
+    const cur=catSpendP[cat.id]||0;
+    const prev2=prevTxs.filter(t=>t.categoryId===cat.id&&t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    if(prev2>0&&cur>prev2*2)anomalies.push(cat.icon+' '+cat.name+' +'+Math.round((cur/prev2-1)*100)+'% vs '+pPrev[p].toLowerCase());
+  });
+
+  // Score adaptatif (basé sur période)
+  const periodDiscipline=curInc>0?Math.max(0,Math.min(100,Math.round(100-(curExp/curInc)*60))):(curExp===0?100:0);
+  const periodIntensity=prevExp>0?Math.min(100,Math.round((curExp/prevExp)*50)):50;
+  const stabilityP=Math.max(0,Math.min(100,100-Math.abs(expDpct)));
+
+  // Commentaire IA local (le online prend le relais via fetchPeriodInsight)
+  const aiCommentId='periodInsight_'+p;
+  const localCmt=localPeriodComment(p,{curExp,curInc,prevExp,prevInc,expDpct,topCat:catEntries[0]});
+
+  return`
+  <div class="stitle">Analyse</div>
+
+  <!-- PERIOD SELECTOR -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px">
+    ${['day','week','month','year'].map(pp=>`
+      <button onclick="analyticsPeriod='${pp}';render();setTimeout(()=>fetchPeriodInsight('${pp}'),200)" style="padding:8px 4px;border:1.5px solid ${p===pp?'var(--acc)':'var(--surf3)'};border-radius:10px;background:${p===pp?'rgba(99,102,241,.15)':'var(--surf2)'};color:${p===pp?'var(--acc3)':'var(--mut)'};font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">
+        ${pp==='day'?'Jour':pp==='week'?'Semaine':pp==='month'?'Mois':'Année'}
+      </button>`).join('')}
+  </div>
+
+  <!-- COMMENTAIRE IA ADAPTATIF -->
+  <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(99,102,241,.04));border:1px solid rgba(124,58,237,.2)">
+    <div class="ch">✨ Lecture ${periodLabel(p)} <span class="tm" id="${aiCommentId}_status" style="font-size:10px">${navigator.onLine&&getGroqKey()?'Groq actif':'IA locale'}</span></div>
+    <div id="${aiCommentId}" style="font-size:13px;line-height:1.55;color:var(--txt2)">${localCmt}</div>
+  </div>
+
+  <!-- COMPARISON PÉRIODE -->
+  <div class="card">
+    <div class="ch">Comparaison — ${pLabels[p]}</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:10px">
+      <div><div class="tm" style="font-size:10px">${pPrev[p].toUpperCase()}</div><div class="mono fw8" style="font-size:16px">${fmtFull(prevExp)}</div></div>
+      <div style="text-align:center;padding:0 6px">
+        <div style="font-size:20px">${expDelta>=0?'↑':'↓'}</div>
+        <div style="font-size:11px;color:${expDelta>=0?'var(--red)':'var(--grn)'};font-weight:700">${expDelta>=0?'+':''}${expDpct}%</div>
+      </div>
+      <div style="text-align:right"><div class="tm" style="font-size:10px">${pCurrent[p].toUpperCase()}</div><div class="mono fw8" style="font-size:16px">${fmtFull(curExp)}</div></div>
+    </div>
+    <div style="height:1px;background:var(--surf3);margin:8px 0"></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px">
+      <div>Revenus: <span style="color:var(--grn);font-weight:700">${fmtFull(curInc)}</span> <span style="color:${incDelta>=0?'var(--grn)':'var(--red)'};font-size:10px">(${incDelta>=0?'+':''}${incDpct}%)</span></div>
+      <div>Solde: <span style="color:${curInc-curExp>=0?'var(--grn)':'var(--red)'};font-weight:700">${fmtFull(curInc-curExp)}</span></div>
+    </div>
+  </div>
+
+  ${renderTrendChartAdaptive(p,ptxs)}
+
+  <!-- HEATMAP ADAPTATIVE -->
+  <div class="card">
+    <div class="ch">${heatTitle} <span class="tm">cliquable</span></div>
+    <div class="hg" style="grid-template-columns:repeat(${p==='year'?6:p==='week'?7:7},1fr)">
+      ${heat.cells.map((c,i)=>{
+        const ratio=heat.max>0?c.amt/heat.max:0;
+        const bg=intensityColor(ratio);
+        const brd=c.isNow?'2px solid var(--acc3)':'none';
+        const txtCol=ratio>.5?'#fff':'var(--txt2)';
+        return`<div class="hd" style="background:${bg};border:${brd};color:${txtCol};font-weight:${c.isNow?800:600}" onclick='periodHeatmapClick(${JSON.stringify({...c,date:c.date?c.date.toISOString():null})},"${p}")'>${c.short}</div>`;
+      }).join('')}
+    </div>
+    <div style="font-size:10px;color:var(--mut);margin-top:8px;display:flex;align-items:center;gap:6px">
+      <span>Faible</span>
+      <span style="flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,${intensityColor(.05)},${intensityColor(.3)},${intensityColor(.6)},${intensityColor(.95)})"></span>
+      <span>Intense</span>
+    </div>
+  </div>
+
+  <!-- SUB-BREAKDOWN ADAPTATIF -->
+  <div class="card">
+    <div class="ch">${subTitle}</div>
+    <div class="wb">
+      ${subData.map((v,i)=>{
+        const ratio=v/maxSub;
+        const col=intensityColor(ratio);
+        return`<div class="wbc">
+          <div style="flex:1;display:flex;align-items:flex-end">
+            <div class="wbf" style="height:${Math.max(6,v?(v/maxSub)*60:0)}px;background:${col};opacity:${v>0?1:.4};width:100%"></div>
+          </div>
+          <div class="wbl" style="white-space:pre-line;font-size:9px">${subLabels[i]}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    ${subData.some(v=>v>0)?`<div style="font-size:11px;color:var(--mut);margin-top:6px">Pic: <span class="ta">${subLabels[subPeak].replace('\n',' ')}</span> — ${fmtFull(subData[subPeak])}</div>`:`<div class="tm" style="font-size:11px;margin-top:6px">Aucune donnée pour ${periodLabel(p)}.</div>`}
+  </div>
+
+  <!-- TOP DÉPENSES ADAPTATIF -->
+  <div class="card">
+    <div class="ch">Top dépenses ${periodLabel(p)}</div>
+    ${catEntries.map(([id,v])=>{
+      const cat=catById(id);const pct=Math.round((v/maxCat)*100);const sharePct=catSum?Math.round(v/catSum*100):0;
+      return`<div style="margin-bottom:11px;cursor:pointer" onclick="openCategoryModal('${id}','${p}')">
+        <div class="flex sb" style="font-size:12px;margin-bottom:4px">
+          <span>${cat.icon} ${cat.name} <span style="color:var(--mut);font-size:10px">${sharePct}%</span></span><span class="mono">${fmtFull(v)}</span>
+        </div>
+        <div class="bar"><div class="bf" style="width:${pct}%;background:${intensityColor(pct/100)}"></div></div>
+      </div>`;
+    }).join('')||`<div class="tm" style="font-size:12px">Aucune dépense ${periodLabel(p)}.</div>`}
+  </div>
+
+  ${anomalies.length?`<div class="card"><div class="ch">⚡ Anomalies — ${periodLabel(p)}</div>${anomalies.map(a=>`<div class="al al-w">${a}</div>`).join('')}</div>`:''}
+
+  <!-- SCORE FINANCIER ADAPTATIF -->
+  <div class="card">
+    <div class="ch">Score financier — ${periodLabel(p)}</div>
+    <div class="flex" style="justify-content:space-around;padding:8px 0">
+      ${scoreRing(periodDiscipline,'Discipline',periodDiscipline>75?'var(--grn)':periodDiscipline>50?'var(--ylw)':'var(--red)')}
+      ${scoreRing(stabilityP,'Stabilité',stabilityP>70?'var(--grn)':stabilityP>40?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),'Sécurité',kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
+    </div>
+    <div style="font-size:11px;color:var(--mut);margin-top:4px;text-align:center">Discipline & stabilité recalculées sur ${periodLabel(p)}. Sécurité = jours de réserve globaux.</div>
+  </div>
+  `;
+}
+
+function localPeriodComment(p,d){
+  const lbl=periodLabel(p),prev=periodPrevLabel(p);
+  if(d.curExp===0&&d.curInc===0) return `Aucune donnée ${lbl}. Saisis tes mouvements pour activer l'analyse.`;
+  const parts=[];
+  if(d.curExp>0&&d.prevExp>0){
+    if(d.expDpct>30) parts.push(`🔥 Dépenses en hausse de <strong>+${d.expDpct}%</strong> vs ${prev}. Le cerveau s'habitue à dépenser plus — c'est l'effet d'inertie.`);
+    else if(d.expDpct<-20) parts.push(`✅ Dépenses en baisse de <strong>${d.expDpct}%</strong> vs ${prev}. Bonne maîtrise.`);
+    else parts.push(`Rythme stable vs ${prev} (${d.expDpct>=0?'+':''}${d.expDpct}%).`);
+  } else if(d.curExp>0){
+    parts.push(`${fmtFull(d.curExp)} dépensés ${lbl}.`);
+  }
+  if(d.curInc>0&&d.curExp>d.curInc) parts.push(`⚠️ Tu dépenses plus que tu ne gagnes ${lbl}. Solde négatif: ${fmtFull(d.curInc-d.curExp)}.`);
+  if(d.topCat) parts.push(`Top catégorie: ${catById(d.topCat[0]).icon} <strong>${catById(d.topCat[0]).name}</strong> (${fmtFull(d.topCat[1])}).`);
+  return parts.join(' ');
+}
+
+async function fetchPeriodInsight(p){
+  if(!navigator.onLine||!getGroqKey()) return;
+  const elId='periodInsight_'+p;
+  const el=document.getElementById(elId);if(!el) return;
+  const status=document.getElementById(elId+'_status');
+  if(status) status.textContent='Groq…';
+  const ptxs=getPeriodTxs(p);
+  const prevTxs=getPrevPeriodTxs(p);
+  const curExp=ptxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const curInc=ptxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const prevExp=prevTxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const catSpendP={};ptxs.filter(t=>t.type==='expense').forEach(t=>{catSpendP[t.categoryId]=(catSpendP[t.categoryId]||0)+t.amount});
+  const top=Object.entries(catSpendP).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id,v])=>catById(id).name+':'+Math.round(v));
+  const prompt=`Tu es Ivy, coach financier neuro. Analyse en français, 2-3 phrases max, ton brutal mais utile.
+Période: ${periodLabel(p)}. Devise: ${cur()}.
+Dépenses ${periodLabel(p)}: ${Math.round(curExp)} | ${periodPrevLabel(p)}: ${Math.round(prevExp)}.
+Revenus ${periodLabel(p)}: ${Math.round(curInc)}.
+Top dépenses: ${top.join(', ')||'aucune'}.
+Donne UNE observation neuro/comportementale + UNE action concrète.`;
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+getGroqKey()},
+      body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:180,temperature:.7,messages:[{role:'user',content:prompt}]})
+    });
+    const j=await r.json();
+    const txt=j.choices?.[0]?.message?.content;
+    if(txt&&el){el.innerHTML='💡 '+txt.trim();if(status)status.textContent='Groq';}
+  }catch(e){if(status)status.textContent='IA locale (offline)';}
+}
+
+function renderTrendChartAdaptive(p,ptxs){
+  // Day = 24 points (heures), Week = 7 points (jours), Month = jours du mois, Year = 12 points (mois)
+  const now=new Date(),y=now.getFullYear(),m=now.getMonth();
+  let buckets=[],labels=[];
+  if(p==='day'){
+    for(let h=0;h<24;h++){
+      const s=new Date(y,m,now.getDate(),h),e=new Date(y,m,now.getDate(),h+1);
+      const dt=ptxs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+      buckets.push({exp:dt.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0),inc:dt.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0),lbl:h+'h'});
+    }
+  } else if(p==='week'){
+    const start=new Date(now);start.setDate(now.getDate()-now.getDay());start.setHours(0,0,0,0);
+    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    for(let i=0;i<7;i++){
+      const s=new Date(start);s.setDate(start.getDate()+i);const e=new Date(s);e.setDate(s.getDate()+1);
+      const dt=ptxs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+      buckets.push({exp:dt.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0),inc:dt.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0),lbl:wn[i]});
+    }
+  } else if(p==='month'){
+    const dim=new Date(y,m+1,0).getDate();
+    for(let d=1;d<=dim;d++){
+      const s=new Date(y,m,d),e=new Date(y,m,d+1);
+      const dt=ptxs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+      buckets.push({exp:dt.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0),inc:dt.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0),lbl:d});
+    }
+  } else {
+    const mn=['J','F','M','A','M','J','J','A','S','O','N','D'];
+    for(let mm=0;mm<12;mm++){
+      const s=new Date(y,mm,1),e=new Date(y,mm+1,1);
+      const dt=ptxs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+      buckets.push({exp:dt.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0),inc:dt.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0),lbl:mn[mm]});
+    }
+  }
+  const max=Math.max(...buckets.map(x=>Math.max(x.exp,x.inc)),1);
+  const W=320,H=150,pad=24,n=buckets.length;
+  const xs=i=>pad+((W-pad*2)*i/Math.max(1,n-1));
+  const ys=v=>H-pad-((H-pad*2)*v/max);
+  const ptsExp=buckets.map((p,i)=>xs(i)+','+ys(p.exp)).join(' ');
+  const ptsInc=buckets.map((p,i)=>xs(i)+','+ys(p.inc)).join(' ');
+  const areaExp=`M${xs(0)},${H-pad} L${ptsExp.split(' ').join(' L')} L${xs(n-1)},${H-pad} Z`;
+  const lineExp='M'+ptsExp.split(' ').join(' L');
+  const lineInc='M'+ptsInc.split(' ').join(' L');
+  const avg=buckets.reduce((s,p)=>s+p.exp,0)/n;
+  const yAvg=ys(avg);
+  return`<div class="card">
+    <div class="ch">📊 Tendance — ${periodLabel(p)} <span class="tm" style="font-weight:600">moy ${fmtFull(avg)}</span></div>
+    <div style="display:flex;gap:14px;font-size:10px;color:var(--mut);margin-bottom:6px;font-weight:700;text-transform:uppercase">
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>Sorties</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>Entrées</span>
+    </div>
+    <svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:150px">
+      <defs><linearGradient id="trendGrad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="var(--acc3)" stop-opacity=".35"/>
+        <stop offset="100%" stop-color="var(--acc3)" stop-opacity="0"/>
+      </linearGradient></defs>
+      <line class="axis" x1="${pad}" y1="${yAvg}" x2="${W-pad}" y2="${yAvg}"/>
+      <text class="lbl" x="${W-pad}" y="${yAvg-3}" text-anchor="end">moy</text>
+      <path class="area" d="${areaExp}"/>
+      <path class="line" d="${lineExp}"/>
+      <path d="${lineInc}" fill="none" stroke="var(--grn)" stroke-width="2" stroke-dasharray="4 3" stroke-linejoin="round" stroke-linecap="round"/>
+      ${buckets.map((p,i)=>`<circle class="pt" cx="${xs(i)}" cy="${ys(p.exp)}" r="2.5"><title>${p.lbl}: ${fmtFull(p.exp)} sorti, ${fmtFull(p.inc)} entré</title></circle>`).join('')}
+      <text class="lbl" x="${pad}" y="${H-6}">${buckets[0].lbl}</text>
+      <text class="lbl" x="${W-pad}" y="${H-6}" text-anchor="end">${buckets[n-1].lbl}</text>
+    </svg>
+  </div>
+  ${renderCategoryBarsAdaptive(p,ptxs)}`;
+}
+
+function renderCategoryBarsAdaptive(p,ptxs){
+  const exp=ptxs.filter(t=>t.type==='expense');
+  if(!exp.length) return `<div class="card"><div class="ch">🍰 Où va ton argent · ${periodLabel(p)}</div><div class="tm" style="font-size:12px">Aucune dépense ${periodLabel(p)}.</div></div>`;
+  const totals={};
+  exp.forEach(t=>{const c=catById(t.categoryId);const k=c.icon+' '+c.name;totals[k]=(totals[k]||0)+t.amount});
+  const sum=Object.values(totals).reduce((s,v)=>s+v,0);
+  const top=Object.entries(totals).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const colors=['var(--acc3)','var(--acc2)','var(--org)','var(--ylw)','var(--grn)','var(--red)'];
+  return`<div class="card">
+    <div class="ch">🍰 Où va ton argent · ${periodLabel(p)}</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+      ${top.map(([k,v],i)=>{
+        const pct=Math.round(v/sum*100);
+        return`<div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px">
+            <span>${k}</span><span style="color:var(--mut)">${fmtFull(v)} <span style="color:${colors[i]}">(${pct}%)</span></span>
+          </div>
+          <div style="height:8px;background:var(--surf3);border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:${colors[i]};border-radius:4px;transition:width .6s"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--txt2);margin-top:10px;line-height:1.5;padding:8px 10px;background:var(--surf2);border-radius:8px">
+      💡 Top catégorie : ${Math.round(top[0][1]/sum*100)}% du budget ${periodLabel(p)}. Réduire de 10% libère <strong style="color:var(--acc3)">${fmtFull(top[0][1]*0.1)}</strong>.
+    </div>
+  </div>`;
+}
+
+function saveGroqKey(){
+  const k = document.getElementById('new-groq-key')?.value.trim();
+  if(!k || !k.startsWith('gsk_')){alert('Clé invalide. Elle doit commencer par gsk_...');return}
+  localStorage.setItem('groq_api_key', k);
+  alert('✅ Clé Groq enregistrée! L\'IA est maintenant active.');
+  render();
+}
+function clearGroqKey(){
+  if(!confirm('Supprimer la clé Groq?'))return;
+  localStorage.removeItem('groq_api_key');
+  render();
+}
+async function testGroqKey(){
+  const el = document.getElementById('groq-test-result');
+  if(!el)return;
+  el.style.display='block';
+  el.style.background='var(--surf2)';
+  el.style.color='var(--mut)';
+  el.textContent='⏳ Test en cours...';
+  const key = getGroqKey();
+  if(!key){el.textContent='❌ Aucune clé. Entre une clé gsk_...';el.style.color='var(--red)';return}
+  try{
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:20,messages:[{role:'user',content:'Réponds juste: OK'}]})
+    });
+    const d = await resp.json();
+    if(resp.ok && d.choices?.[0]?.message?.content){
+      el.style.background='rgba(16,185,129,.15)';
+      el.style.color='var(--grn)';
+      el.textContent='✅ Clé valide! Groq AI opérationnel. Modèle: llama-3.1-8b-instant';
+    } else {
+      el.style.background='rgba(244,63,94,.15)';
+      el.style.color='var(--red)';
+      el.textContent='❌ '+(d.error?.message||'Erreur inconnue');
+    }
+  }catch(e){
+    el.style.background='rgba(244,63,94,.15)';
+    el.style.color='var(--red)';
+    el.textContent='❌ Réseau indisponible. Vérifie ta connexion.';
+  }
+}
+
+
+function renderTrendChart(){
+  const days=14;
+  const now=new Date();
+  const data=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(now);d.setHours(0,0,0,0);d.setDate(d.getDate()-i);
+    const next=new Date(d);next.setDate(d.getDate()+1);
+    const dayTx=txs.filter(t=>new Date(t.date)>=d&&new Date(t.date)<next);
+    const exp=dayTx.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    const inc=dayTx.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+    data.push({d,exp,inc});
+  }
+  const max=Math.max(...data.map(x=>Math.max(x.exp,x.inc)),1);
+  const W=320,H=150,pad=24;
+  const xs=i=>pad+((W-pad*2)*i/(days-1));
+  const ys=v=>H-pad-((H-pad*2)*v/max);
+  const ptsExp=data.map((p,i)=>xs(i)+','+ys(p.exp)).join(' ');
+  const ptsInc=data.map((p,i)=>xs(i)+','+ys(p.inc)).join(' ');
+  const areaExp=`M${xs(0)},${H-pad} L${ptsExp.split(' ').join(' L')} L${xs(days-1)},${H-pad} Z`;
+  const lineExp='M'+ptsExp.split(' ').join(' L');
+  const lineInc='M'+ptsInc.split(' ').join(' L');
+  const avg=data.reduce((s,p)=>s+p.exp,0)/days;
+  const yAvg=ys(avg);
+  // Mini explication automatique en français simple
+  const lastWeekAvg=data.slice(-7).reduce((s,p)=>s+p.exp,0)/7;
+  const prevWeekAvg=data.slice(0,7).reduce((s,p)=>s+p.exp,0)/7;
+  const diffPct=prevWeekAvg>0?Math.round((lastWeekAvg-prevWeekAvg)/prevWeekAvg*100):0;
+  const expl=diffPct>10?`📈 Tu dépenses ${diffPct}% de plus cette semaine que la précédente. Le cerveau augmente sans s'en rendre compte (effet de récence).`
+    :diffPct<-10?`📉 Tu dépenses ${Math.abs(diffPct)}% de moins cette semaine. Bon contrôle, continue.`
+    :`➡️ Tes dépenses sont stables sur les 14 jours.`;
+  return`<div class="card">
+    <div class="ch">📊 14 derniers jours <span class="tm" style="font-weight:600">moy ${fmtFull(avg)}/j</span></div>
+    <div style="display:flex;gap:14px;font-size:10px;color:var(--mut);margin-bottom:6px;font-weight:700;text-transform:uppercase">
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>Sorties</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>Entrées</span>
+    </div>
+    <svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:150px">
+      <defs><linearGradient id="trendGrad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="var(--acc3)" stop-opacity=".35"/>
+        <stop offset="100%" stop-color="var(--acc3)" stop-opacity="0"/>
+      </linearGradient></defs>
+      <line class="axis" x1="${pad}" y1="${yAvg}" x2="${W-pad}" y2="${yAvg}"/>
+      <text class="lbl" x="${W-pad}" y="${yAvg-3}" text-anchor="end">moy</text>
+      <path class="area" d="${areaExp}"/>
+      <path class="line" d="${lineExp}"/>
+      <path d="${lineInc}" fill="none" stroke="var(--grn)" stroke-width="2" stroke-dasharray="4 3" stroke-linejoin="round" stroke-linecap="round"/>
+      ${data.map((p,i)=>`<circle class="pt" cx="${xs(i)}" cy="${ys(p.exp)}" r="2.5"><title>${p.d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}: ${fmtFull(p.exp)} sorti, ${fmtFull(p.inc)} entré</title></circle>`).join('')}
+      <text class="lbl" x="${pad}" y="${H-6}">${data[0].d.getDate()}/${data[0].d.getMonth()+1}</text>
+      <text class="lbl" x="${W-pad}" y="${H-6}" text-anchor="end">aujourd'hui</text>
+    </svg>
+    <div style="font-size:11px;color:var(--txt2);margin-top:8px;line-height:1.5;padding:8px 10px;background:var(--surf2);border-radius:8px">${expl}</div>
+  </div>
+  ${renderCategoryBars()}`;
+}
+
+function renderCategoryBars(){
+  const monthExp=monthTxs().filter(t=>t.type==='expense');
+  if(!monthExp.length)return'';
+  const totals={};
+  monthExp.forEach(t=>{const c=catById(t.categoryId);const k=c.icon+' '+c.name;totals[k]=(totals[k]||0)+t.amount});
+  const sum=Object.values(totals).reduce((s,v)=>s+v,0);
+  const top=Object.entries(totals).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const colors=['var(--acc3)','var(--acc2)','var(--org)','var(--ylw)','var(--grn)','var(--red)'];
+  return`<div class="card">
+    <div class="ch">🍰 Où va ton argent ce mois</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+      ${top.map(([k,v],i)=>{
+        const pct=Math.round(v/sum*100);
+        return`<div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px">
+            <span>${k}</span><span style="color:var(--mut)">${fmtFull(v)} <span style="color:${colors[i]}">(${pct}%)</span></span>
+          </div>
+          <div style="height:8px;background:var(--surf3);border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:${colors[i]};border-radius:4px;transition:width .6s"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--txt2);margin-top:10px;line-height:1.5;padding:8px 10px;background:var(--surf2);border-radius:8px">
+      💡 La catégorie en tête capte ${Math.round(top[0][1]/sum*100)}% de ton argent. Réduire de 10% ici libère <strong style="color:var(--acc3)">${fmtFull(top[0][1]*0.1)}</strong> sans douleur — ton cerveau ne sentira pas la différence.
+    </div>
+  </div>`;
+}
+
+function scoreRing(s,label,color){
+  const r=26,c=2*Math.PI*r,fill=c-(c*Math.min(100,s)/100);
+  return`<div class="sring">
+    <svg width="66" height="66" viewBox="0 0 66 66">
+      <circle cx="33" cy="33" r="${r}" fill="none" stroke="var(--surf3)" stroke-width="4"/>
+      <circle cx="33" cy="33" r="${r}" fill="none" stroke="${color}" stroke-width="4" stroke-dasharray="${c}" stroke-dashoffset="${fill}" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .8s ease"/>
+      <text x="33" y="38" text-anchor="middle" fill="${color}" font-size="13" font-weight="800" font-family="Roboto Mono,monospace">${s}</text>
+    </svg>
+    <div style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase">${label}</div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+// AI SCREEN
+// ════════════════════════════════════════
+function renderAI(){
+  const kpi=computeKPIs(),alerts=getAlerts(kpi);
+  const isOnline=navigator.onLine;
+  return`
+  <div class="stitle">Conseiller IA</div>
+  <div class="ssub" style="color:${isOnline?'var(--grn)':'var(--org)'}">● ${isOnline?'Groq AI actif':'Mode local — hors ligne'}</div>
+
+  <!-- AUTO INSIGHTS -->
+  <div class="card">
+    <div class="ch">🧠 Analyse automatique</div>
+    ${alerts.map(a=>`<div class="al al-${a.t}">${a.m}</div>`).join('')}
+  </div>
+
+  <!-- SCORES COMPORTEMENTAUX -->
+  <div class="card">
+    <div class="ch">Indicateurs comportementaux</div>
+    <div class="flex" style="justify-content:space-around;padding:8px 0">
+      ${scoreRing(kpi.retention!==null?Math.min(100,Math.max(0,kpi.retention)):0,'Rétention',kpi.retention>=25?'var(--grn)':kpi.retention>=0?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),'Sécurité',kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.max(0,100-kpi.dopamineIdx),'Maîtrise',kpi.dopamineIdx<40?'var(--grn)':kpi.dopamineIdx<65?'var(--ylw)':'var(--red)')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+      <div class="kt"><div class="kl">Pression 7j</div><div class="kv" style="color:${kpi.pressureIdx>20?'var(--red)':kpi.pressureIdx>0?'var(--org)':'var(--grn)'}">${kpi.pressureIdx>0?'+':''}${kpi.pressureIdx}%</div><div class="ks">vs habitude 30j</div></div>
+      <div class="kt"><div class="kl">Évaporation</div><div class="kv" style="color:${kpi.evaporationRate>50?'var(--red)':kpi.evaporationRate>25?'var(--org)':'var(--grn)'}">${kpi.evaporationRate}%</div><div class="ks">post-revenu 48h</div></div>
+      <div class="kt"><div class="kl">Nocturn.</div><div class="kv" style="color:${kpi.nightPct>20?'var(--red)':kpi.nightPct>10?'var(--org)':'var(--grn)'}">${kpi.nightPct}%</div><div class="ks">dépenses 21h-5h</div></div>
+      <div class="kt"><div class="kl">Dopamine</div><div class="kv" style="color:${kpi.dopamineIdx>60?'var(--red)':kpi.dopamineIdx>35?'var(--org)':'var(--grn)'}">${kpi.dopamineIdx}%</div><div class="ks">impulsion / total</div></div>
+    </div>
+  </div>
+
+  <!-- COMPRENDRE — glossaire neuroscience -->
+  <div class="card">
+    <div class="ch">📖 Comprendre ces mots</div>
+    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🎯 Dopamine</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">C'est la "molécule du plaisir court". Quand tu achètes quelque chose de fun, ton cerveau libère de la dopamine et tu te sens bien… 5 minutes. Plus tu cèdes, plus le seuil monte. Trop de dopamine = beaucoup d'achats inutiles.</div></details>
+    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🌙 Fatigue décisionnelle</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Le cerveau a une "réserve" de bonnes décisions par jour. Le soir elle est vide — tu dis oui à des trucs que tu refuserais le matin. C'est pour ça que beaucoup de mauvais achats se font tard.</div></details>
+    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">💸 Évaporation post-revenu</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Quand un revenu arrive, le cerveau voit "abondance" et relâche le contrôle. Résultat : une grosse partie part dans les 48 heures sans qu'on s'en rende compte. C'est l'effet "argent qui brûle".</div></details>
+    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🌀 Effet domino</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Une grosse dépense en déclenche d'autres ("tant qu'à faire…"). C'est pour ça qu'on observe souvent une rafale d'achats après un gros craquage.</div></details>
+    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🛡️ Sécurité (jours)</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Combien de jours tu peux vivre sans nouveau revenu, à ton rythme actuel. C'est ton vrai indicateur de stress financier.</div></details>
+    <details><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">📊 Pression 7 jours</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Compare cette semaine à ton habitude des 30 derniers jours. +20% = tu accélères. -20% = tu freines. Le cerveau ne sent pas la différence en temps réel — d'où l'importance de la mesurer.</div></details>
+  </div>
+  <div class="card">
+    <div class="ch">Chat IA <span class="pill" style="color:${isOnline?'var(--grn)':'var(--org)'}">${isOnline?'Groq AI':'Local'}</span></div>
+    <div class="chat" id="chatArea">
+      ${aiMsgs.length===0?'<div class="bub bai">Données chargées. Pose une question sur ta situation financière.</div>':''}
+      ${aiMsgs.map(m=>`<div class="bub ${m.r==='ai'?'bai':'bus'}">${m.c.replace(/\n/g,'<br>')}${m.src&&m.r==='ai'?`<div style="font-size:9px;color:var(--mut);margin-top:4px">${m.src}</div>`:''}</div>`).join('')}
+      ${aiTyping?'<div class="bub bai ald"><div class="add"></div><div class="add"></div><div class="add"></div></div>':''}
+    </div>
+    <div class="cirow">
+      <input type="text" id="chatInput" class="fi" placeholder="Analyse mes dépenses..." autocomplete="off">
+      <button class="sbtn" id="sendBtn"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+    <div style="font-size:10px;color:var(--mut);margin-top:7px;text-align:center">Données 100% locales · ${isOnline?'Analyse via Groq':'Analyse locale active'}</div>
+  </div>
+
+  <!-- QUICK Q -->
+  <div class="card">
+    <div class="ch">Questions rapides</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      ${['Mes triggers de dépense ?','Comportement nocturne ?','Effet domino détecté ?','Mon taux d\'évaporation ?','Dopamine vs investissement ?','Que couper en premier ?'].map(q=>`<button class="btn btn-ghost btn-sm" onclick="quickAsk('${q}')">${q}</button>`).join('')}
+    </div>
+  </div>
+  `;
+}
+
+function setupChat(){
+  const ca=$('chatArea'),sb=$('sendBtn'),ci=$('chatInput');
+  if(ca)ca.scrollTop=ca.scrollHeight;
+  if(!sb||!ci)return;
+  async function send(){
+    const q=ci.value.trim();if(!q||aiTyping)return;
+    ci.value='';
+    aiMsgs.push({r:'user',c:q});aiTyping=true;render();
+    try{const res=await askAI(q);aiMsgs.push({r:'ai',c:res.text,src:res.src})}
+    catch(e){aiMsgs.push({r:'ai',c:localAI(q),src:'Local'})}
+    aiTyping=false;render();
+  }
+  sb.onclick=send;
+  ci.onkeydown=e=>{if(e.key==='Enter')send()};
+}
+function quickAsk(q){const ci=$('chatInput');if(ci){ci.value=q;$('sendBtn')&&$('sendBtn').click()}}
+
+// ════════════════════════════════════════
+// SETTINGS SCREEN
+// ════════════════════════════════════════
+function renderSettings(){
+  return`
+  <div class="stitle">Paramètres</div>
+
+  <!-- ACCOUNTS -->
+  <div class="card">
+    <div class="ch">🏦 Comptes <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">+ Nouveau</button></div>
+    ${accs.map(a=>`<div class="ach">
+      <span style="font-size:20px">${a.icon}</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${a.name}</div><div style="font-size:10px;color:var(--mut)">${a.type}</div></div>
+      <div class="mono fw8 ${a.balance<0?'tr':'tg'}">${fmtFull(a.balance)}</div>
+      <button onclick="openEditAccountModal('${a.id}')" style="background:none;border:none;color:var(--mut);cursor:pointer;font-size:14px;padding:4px">✏️</button>
+    </div>`).join('')}
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="card">
+    <div class="ch">🏷️ Catégories <button class="btn btn-ghost btn-sm" onclick="openAddCatModal()">+ Nouvelle</button></div>
+    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">Clique sur une catégorie pour la modifier ou la supprimer.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      ${cats.map(c=>`<button class="btn btn-ghost btn-sm" onclick="openEditCatModal('${c.id}')">${c.icon} ${c.name}</button>`).join('')}
+    </div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="card">
+    <div class="ch">🎯 Objectifs <button class="btn btn-ghost btn-sm" onclick="openAddGoalModal()">+ Nouveau</button></div>
+    ${goals.length?goals.map(g=>{
+      const pct=Math.min(100,(g.saved/g.target)*100);
+      const kpi=computeKPIs();
+      const gap=g.target-g.saved;
+      const dailySurplus=Math.max(0,(kpi.inc30/30)-kpi.burnRate);
+      const joursNecessaires=dailySurplus>0?Math.ceil(gap/dailySurplus):null;
+      const joursDeadline=g.deadline?Math.ceil((new Date(g.deadline)-Date.now())/86400000):null;
+      const enRetard=joursNecessaires&&joursDeadline&&joursNecessaires>joursDeadline;
+      return`<div class="gi">
+        <div class="gh">
+          <div class="gn">${g.icon||'🎯'} ${g.name}</div>
+          <div class="flex" style="gap:6px">
+            <button class="btn btn-ghost btn-sm" onclick="openDepositModal('${g.id}')">+ Épargner</button>
+            <button onclick="delGoal('${g.id}')" style="background:none;border:none;color:var(--mut);cursor:pointer">🗑️</button>
+          </div>
+        </div>
+        <div class="bar"><div class="bf" style="width:${pct}%;background:${pct>=100?'var(--grn)':enRetard?'var(--red)':'var(--acc2)'}"></div></div>
+        <div class="flex sb" style="font-size:11px;color:var(--mut);margin-top:3px">
+          <span class="mono">${fmtFull(g.saved)} / ${fmtFull(g.target)}</span>
+          ${joursDeadline!==null?`<span style="color:${enRetard?'var(--red)':'var(--mut)'}">deadline: ${joursDeadline}j</span>`:''}
+        </div>
+        ${enRetard?`<div class="geta" style="color:var(--red)">⚠️ En retard — il te faut ${joursNecessaires}j au rythme actuel</div>`
+          :joursNecessaires?`<div class="geta" style="color:var(--grn)">✅ Sur la trajectoire — objectif dans ~${joursNecessaires}j</div>`:''}
+        ${g.gp?`<div class="geta">${g.gp}</div>`:''}
+      </div>`;
+    }).join(''):'<div class="tm" style="font-size:12px">Aucun objectif.</div>'}
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="card">
+    <div class="ch">🔔 Notifications</div>
+    <div class="flex sb" style="margin-bottom:10px">
+      <span style="font-size:13px;font-weight:700">Activer</span>
+      <button class="btn btn-ghost btn-sm" onclick="toggleNotifs()">${('Notification' in window && Notification.permission==='granted')?'✅ Actives':'Activer'}</button>
+    </div>
+    <div class="flex sb" style="margin-bottom:10px">
+      <span style="font-size:12px;color:var(--mut)">Heure rappel</span>
+      <select class="fi" style="width:auto;padding:7px 10px;margin:0" onchange="saveSet('remindHour',parseInt(this.value))">
+        ${Array.from({length:24},(_,i)=>`<option value="${i}" ${(settings.remindHour||20)===i?'selected':''}>${String(i).padStart(2,'0')}h00</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn btn-ghost" onclick="testNotif()">🔔 Tester</button>
+  </div>
+
+  <!-- IA CONFIG -->
+  <div class="card">
+    <div class="ch">🤖 Intelligence Artificielle — Groq</div>
+    <div style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.7;padding:10px;background:var(--surf2);border-radius:10px">
+      <strong style="color:var(--acc3)">Groq est 100% gratuit</strong> — 14 400 req/jour, aucune carte bancaire.<br>
+      1. Va sur <strong style="color:var(--acc3)">console.groq.com</strong><br>
+      2. Crée un compte → API Keys → Create API Key<br>
+      3. Colle la clé ci-dessous
+    </div>
+    <div style="margin-bottom:8px">
+      <div style="font-size:11px;color:var(--mut);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Clé actuelle</div>
+      <div style="font-size:12px;color:var(--mut);word-break:break-all;padding:8px;background:var(--surf2);border-radius:8px;font-family:monospace">
+        ${localStorage.getItem('groq_api_key')?localStorage.getItem('groq_api_key').slice(0,16)+'...':'⚠️ Aucune clé — IA désactivée'}
+      </div>
+    </div>
+    <input id="new-groq-key" class="fi" type="text" placeholder="gsk_..." style="margin-bottom:8px">
+    <button class="btn" style="width:100%;background:var(--acc);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px" onclick="saveGroqKey()">
+      💾 Enregistrer la clé Groq
+    </button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <button class="btn btn-ghost" onclick="testGroqKey()">🧪 Tester</button>
+      <button class="btn btn-ghost" onclick="clearGroqKey()">🗑️ Supprimer</button>
+    </div>
+    <div id="groq-test-result" style="font-size:12px;margin-top:8px;padding:10px;border-radius:8px;display:none;line-height:1.5"></div>
+  </div>
+
+  <!-- VIE & PRÉVISIONS -->
+  <div class="card">
+    <div class="ch">⏳ Vie & prévisions</div>
+    <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.55">Deux chiffres qui changent comment l'app pense.</div>
+
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Revenus attendus 7j</label>
+    <input class="fi" id="setExpInc" type="number" inputmode="decimal" placeholder="ex: 5000" value="${settings.expectedIncome7d||''}" onchange="saveSet('expectedIncome7d',parseFloat(this.value)||0).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">Argent que tu sais que tu vas recevoir cette semaine. Recalcule le Safety Days et l'IA arrête de paniquer.</div>
+
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Ton taux horaire (${cur()}/h)</label>
+    <input class="fi" id="setHrly" type="number" inputmode="decimal" placeholder="ex: 500" value="${settings.hourlyRate||''}" onchange="saveSet('hourlyRate',parseFloat(this.value)||0).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">Convertit chaque dépense en temps de vie : "= 4h de travail". Laisse vide pour désactiver.</div>
+
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Seuil "Effet Fourmi"</label>
+    <input class="fi" id="setAnt" type="number" inputmode="decimal" placeholder="défaut 200" value="${settings.antThreshold||200}" onchange="saveSet('antThreshold',parseFloat(this.value)||200).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 4px;padding-left:2px">Toute dépense sous ce montant est considérée "petite" et cumulée séparément.</div>
+  </div>
+
+  <!-- DEVISE -->
+  <div class="card">
+    <div class="ch">💱 Devise</div>
+    <div class="flex sb">
+      <span style="font-size:13px;font-weight:700">Devise actuelle: ${cur()}</span>
+      <button class="btn btn-ghost btn-sm" onclick="openCurrencyModal()">Changer</button>
+    </div>
+  </div>
+
+  <!-- TRANSFERT -->
+  <div class="card">
+    <div class="ch">⇄ Virement entre comptes</div>
+    <button class="btn btn-ghost" onclick="openTransferModal()">Effectuer un virement</button>
+  </div>
+
+  <!-- SYNC -->
+  <div class="card">
+    <div class="ch">💾 Sync multi-appareils</div>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">Exporte un code de sauvegarde contenant toutes tes données. Importe-le sur n'importe quel appareil.</p>
+    <button class="btn" style="margin-bottom:8px" onclick="doExport()">📤 Générer code de sauvegarde</button>
+    <button class="btn btn-ghost" style="margin-bottom:8px" onclick="doImport()">📥 Restaurer depuis un code</button>
+    <button class="btn btn-ghost" onclick="exportCSV()">📊 Export CSV</button>
+  </div>
+
+  <!-- DANGER -->
+  <div class="card">
+    <div class="ch">⚠️ Zone dangereuse</div>
+    <button class="btn btn-red" onclick="confirmClear()">Effacer toutes les données</button>
+  </div>
+
+  <div style="text-align:center;padding:16px 0;font-size:10px;color:var(--mut)">Finance AI OS · Offline-First · IndexedDB</div>
+  `;
+}
+
+// ════════════════════════════════════════
+// ADD TRANSACTION MODAL
+// ════════════════════════════════════════
+let _txType='expense';
+function openAddModal(){
+  _txType='expense';
+  const now=new Date().toISOString().slice(0,16);
+  openModal(`
+    <h3>Nouvelle transaction</h3>
+    <div class="ttabs">
+      <button class="tt te" id="tabE" onclick="switchType('expense')">❌ Dépense</button>
+      <button class="tt" id="tabI" onclick="switchType('income')">✅ Revenu</button>
+      <button class="tt" id="tabT" onclick="switchType('transfer')">⇄ Transfert</button>
+    </div>
+    <!-- AMOUNT BIG -->
+    <div style="text-align:center;margin-bottom:12px">
+      <input id="txAmt" type="number" inputmode="decimal" class="fi" placeholder="0" style="font-size:28px;font-weight:800;text-align:center;font-family:var(--mono)">
+      <div style="font-size:12px;color:var(--mut);margin-top:-4px">${cur()}</div>
+    </div>
+    <div id="txFields"></div>
+    <input type="datetime-local" id="txDate" class="fi" value="${now}">
+    <input type="text" id="txNote" class="fi" placeholder="Note ou description (optionnel)">
+    <input type="text" id="txLoc" class="fi" placeholder="📍 Lieu (ex: Centre-ville, bureau...)" autocomplete="off">
+    <div style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:6px 2px 4px">État d'esprit (Ivy en a besoin)</div>
+    <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+      ${[['😊','calme'],['😐','neutre'],['😫','fatigué'],['😡','stressé'],['🥳','euphorique']].map(([e,l])=>`
+        <label style="flex:1;min-width:50px;cursor:pointer">
+          <input type="radio" name="txMood" value="${e}" style="display:none" onchange="document.querySelectorAll('label[data-mood]').forEach(x=>x.style.background='var(--surf2)');this.parentElement.style.background='rgba(124,58,237,.18)'">
+          <div data-mood="${e}" style="background:var(--surf2);border:1px solid var(--brd);border-radius:10px;padding:8px 4px;text-align:center;font-size:18px">
+            ${e}<div style="font-size:9px;color:var(--mut);margin-top:2px">${l}</div>
+          </div>
+        </label>`).join('')}
+    </div>
+    <button class="btn" onclick="saveTx()">✓ Enregistrer</button>
+  `);
+  updateTxFields();
+  setTimeout(()=>{$('txAmt')&&$('txAmt').focus()},100);
+}
+
+function switchType(t){
+  _txType=t;
+  ['E','I','T'].forEach(x=>{
+    const b=$('tab'+x);if(b){b.className='tt'+(x==='E'&&t==='expense'?' te':x==='I'&&t==='income'?' ti':x==='T'&&t==='transfer'?' tt2':'')}
+  });
+  updateTxFields();
+}
+
+function updateTxFields(){
+  const f=$('txFields');if(!f)return;
+  if(_txType==='transfer'){
+    f.innerHTML=`
+      <select id="txFrom" class="fi"><option value="" disabled selected>Compte source</option>${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name} (${fmtFull(a.balance)})</option>`).join('')}</select>
+      <select id="txTo" class="fi"><option value="" disabled selected>Compte destination</option>${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
+    `;
+  } else {
+    const filtered=cats.filter(c=>c.type===_txType);
+    f.innerHTML=`
+      <select id="txCat" class="fi">${filtered.map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('')}</select>
+      <select id="txAcc" class="fi">${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
+    `;
+  }
+}
+
+// Catégories considérées comme "dopamine" pour le coût d'opportunité
+// 'food' exclu par défaut — réintégré ponctuellement via mots-clés (snack, livraison, etc.)
+const DOPAMINE_CATS=['leisure','clothes','unforeseen','other_exp'];
+const FOOD_IMPULSE_RE=/snack|fast.?food|livraison|delivery|resto|burger|pizza|glace|bonbon/i;
+function isDopamineTx(t){return DOPAMINE_CATS.includes(t.categoryId)||(t.categoryId==='food'&&t.note&&FOOD_IMPULSE_RE.test(t.note))}
+
+function getPriorityGoal(){
+  // Objectif prioritaire = non atteint, avec deadline la plus proche
+  const active=goals.filter(g=>g.saved<g.target&&g.deadline);
+  if(!active.length) return goals.find(g=>g.saved<g.target)||null;
+  return active.sort((a,b)=>new Date(a.deadline)-new Date(b.deadline))[0];
+}
+
+function opportunityCostDays(amt){
+  // Combien de jours de progression vers l'objectif cette somme représente-t-elle ?
+  const g=getPriorityGoal();if(!g) return null;
+  const gap=g.target-g.saved;if(gap<=0) return null;
+  const k=computeKPIs();
+  // Surplus journalier disponible pour épargner = revenus 30j/30 - burnRate
+  const dailySurplus=Math.max(0,(k.inc30/30)-k.burnRate);
+  if(dailySurplus<=0) return null;
+  // Combien de jours de surplus = cette dépense ?
+  return Math.round(amt/dailySurplus*10)/10;
+}
+
+// ════════════════════════════════════════
+// COMPTEUR DE DESTIN — date d'atteinte de l'objectif
+// ════════════════════════════════════════
+function goalMonthly(g){
+  // Découpe l'objectif en jalon mensuel : combien doit être épargné CE mois pour rester sur trajectoire
+  if(!g||!g.deadline) return null;
+  const gap=g.target-(g.saved||0);
+  if(gap<=0) return {done:true};
+  const now=new Date();
+  const deadline=new Date(g.deadline);
+  const monthsLeft=Math.max(1,(deadline.getFullYear()-now.getFullYear())*12+(deadline.getMonth()-now.getMonth())+1);
+  const monthlyTarget=Math.ceil(gap/monthsLeft);
+  // Ce qui a été épargné CE MOIS
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  const savedThisMonth=(g.deposits||[]).filter(d=>new Date(d.date)>=monthStart).reduce((s,d)=>s+d.amount,0);
+  const pct=Math.min(100,Math.round((savedThisMonth/monthlyTarget)*100));
+  return {monthlyTarget,savedThisMonth,pct,monthsLeft,done:false};
+}
+function goalETA(g){
+  if(!g) return null;
+  const gap=g.target-(g.saved||0);
+  if(gap<=0) return {done:true,date:null,days:0};
+  const k=computeKPIs();
+  const dailySurplus=Math.max(0,(k.inc30/30)-k.burnRate);
+  if(dailySurplus<=0) return {done:false,date:null,days:null,impossible:true};
+  const days=Math.ceil(gap/dailySurplus);
+  const date=new Date(Date.now()+days*86400000);
+  return {done:false,date,days,impossible:false};
+}
+
+// ════════════════════════════════════════
+// IVY — INTERVENTION PROACTIVE après une dépense
+// ════════════════════════════════════════
+function ivyVerdict({amt,catId,mood,location,hour}){
+  const g=getPriorityGoal();
+  const days=opportunityCostDays(amt);
+  const isDopamine=DOPAMINE_CATS.includes(catId) || (catId==='food' && /snack|fast.?food|livraison|delivery|resto|burger|pizza/i.test(arguments[0].note||''));
+  const isNight=hour>=21||hour<5;
+  const tiredMood=['😫','😡','😴'].includes(mood);
+  const triggers=[];
+  if(isDopamine && days!==null && days>=0.5) triggers.push('opportunité');
+  if(isNight) triggers.push('nuit');
+  if(tiredMood) triggers.push('humeur');
+  if(location && location.length>1) triggers.push('lieu');
+  if(triggers.length<1) return null; // pas d'intervention
+  const cat=catById(catId);
+  const lines=[];
+  if(g && days!==null && days>=0.5){
+    const unit=days>=1?`${days} jour${days>1?'s':''}`:`${Math.round(days*24)} heures`;
+    lines.push(`⚡ Tu viens de repousser <strong>"${g.name}"</strong> de <strong>${unit}</strong>. Pour ${cat.name.toLowerCase()}.`);
+  }
+  if(tiredMood) lines.push(`🧠 Humeur ${mood} au moment de payer. C'est pas l'envie — c'est l'épuisement qui décide à ta place (fatigue décisionnelle).`);
+  if(isNight) lines.push(`🌙 ${hour}h du matin/soir. Ton cortex préfrontal (le frein) dort. Ton cerveau primitif (la pulsion) signe.`);
+  if(location && location.length>1) lines.push(`📍 <em>${location}</em> — ce lieu déclenche tes craquages. Note-le. Évite-le quand t'es fatigué.`);
+  lines.push(`<strong>Ordre du jour :</strong> demain matin, vire ${fmtFull(amt)} sur ton épargne. Réparation immédiate.`);
+  return lines.join('<br><br>');
+}
+
+function showIvyVerdict(html){
+  if(!html) return;
+  openModal(`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--org));display:flex;align-items:center;justify-content:center;font-size:18px">⚡</div>
+      <div>
+        <div style="font-weight:800;font-size:15px">IVY · Verdict</div>
+        <div style="font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px">Stratège brutal</div>
+      </div>
+    </div>
+    <div style="background:var(--surf2);border-left:3px solid var(--red);padding:14px;border-radius:10px;font-size:13px;line-height:1.6;margin-bottom:14px">${html}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="btn btn-ghost" onclick="closeModal()">J'assume</button>
+      <button class="btn" onclick="closeModal();go('ai')">Parler à Ivy</button>
+    </div>
+  `);
+}
+
+async function saveTx(){
+  const amt=parseFloat($('txAmt')?.value);
+  if(!amt||amt<=0){alert('Montant invalide');return}
+  const date=new Date($('txDate')?.value||new Date()).toISOString();
+  const note=$('txNote')?.value||'';
+  const mood=document.querySelector('input[name="txMood"]:checked')?.value||'';
+  const location=$('txLoc')?.value?.trim()||'';
+
+  if(_txType==='transfer'){
+    const fromId=$('txFrom')?.value,toId=$('txTo')?.value;
+    if(!fromId||!toId){alert('Sélectionne les deux comptes');return}
+    if(fromId===toId){alert('Comptes identiques');return}
+    const from=accs.find(a=>a.id===fromId),to=accs.find(a=>a.id===toId);
+    if(from.balance<amt){alert('Solde insuffisant');return}
+    from.balance-=amt;to.balance+=amt;
+    await dbPut('accounts',from);await dbPut('accounts',to);
+    await dbPut('transactions',{id:uid(),amount:amt,type:'transfer',categoryId:'transfer',accountId:fromId,toAccountId:toId,date,note,mood,location,createdAt:new Date().toISOString()});
+    closeModal();await render();return;
+  }
+
+  const catId=$('txCat')?.value,accId=$('txAcc')?.value;
+  if(!catId||!accId){alert('Sélectionne une catégorie et un compte');return}
+
+  // ── Friction Prédictive (avant validation) ──
+  if(_txType==='expense' && (DOPAMINE_CATS.includes(catId) || (catId==='food' && note && FOOD_IMPULSE_RE.test(note)))){
+    const days=opportunityCostDays(amt);
+    const g=getPriorityGoal();
+    if(days!==null && g && days>=0.5){
+      const h=Math.round(days*24);
+      const msg=days>=1
+        ? `⚠️ IVY : cette dépense de ${fmtFull(amt)} repousse "${g.name}" de ${days} jour${days>1?'s':''}.\n\nTu confirmes ?`
+        : `⚠️ IVY : cette dépense de ${fmtFull(amt)} repousse "${g.name}" de ${h} heures.\n\nTu confirmes ?`;
+      if(!confirm(msg)) return;
+    }
+  }
+
+  const acc=accs.find(a=>a.id===accId);
+  if(_txType==='expense' && acc.balance < amt){
+    alert(`⛔ Solde insuffisant\n\n${acc.icon} ${acc.name} : ${fmtFull(acc.balance)}\nDépense demandée : ${fmtFull(amt)}\n\nLogique : on ne peut pas dépenser ce qu'on n'a pas.`);
+    return;
+  }
+  acc.balance+=_txType==='income'?amt:-amt;
+  await dbPut('accounts',acc);
+  await dbPut('transactions',{id:uid(),amount:amt,type:_txType,categoryId:catId,accountId:accId,date,note,mood,location,createdAt:new Date().toISOString()});
+  closeModal();await render();
+
+  // ── IVY : verdict proactif après coup (dépenses uniquement) ──
+  if(_txType==='expense'){
+    const hour=new Date(date).getHours();
+    const verdict=ivyVerdict({amt,catId,mood,location,hour});
+    if(verdict) setTimeout(()=>showIvyVerdict(verdict),350);
+  }
+}
+
+// ════════════════════════════════════════
+// TX DETAIL MODAL
+// ════════════════════════════════════════
+function openTxDetailModal(id){
+  const t=txs.find(x=>x.id===id);if(!t)return;
+  const cat=catById(t.categoryId),acc=accById(t.accountId);
+  const color=t.type==='expense'?'var(--red)':t.type==='transfer'?'var(--acc3)':'var(--grn)';
+  const sign=t.type==='expense'?'-':t.type==='transfer'?'⇄':'+';
+  const ds=new Date(t.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  openModal(`
+    <h3>${cat.icon} ${cat.name}</h3>
+    <div style="font-size:30px;font-weight:800;font-family:var(--mono);color:${color};margin-bottom:14px">${sign}${fmtFull(t.amount)}</div>
+    <div class="al al-i" style="margin-bottom:8px">
+      <div>📅 ${ds}</div>
+      <div style="margin-top:4px">🏦 ${acc.icon} ${acc.name}</div>
+      ${t.type==='transfer'&&t.toAccountId?`<div style="margin-top:4px">→ ${accById(t.toAccountId).icon} ${accById(t.toAccountId).name}</div>`:''}
+      ${t.note?`<div style="margin-top:4px">📝 ${t.note}</div>`:''}
+    </div>
+    <button class="btn btn-red" onclick="delTx('${t.id}')">🗑️ Supprimer</button>
+  `);
+}
+
+async function delTx(id){
+  const t=txs.find(x=>x.id===id);if(!t)return;
+  if(!confirm('Supprimer cette transaction ?'))return;
+  const acc=accs.find(a=>a.id===t.accountId);
+  if(acc){acc.balance+=t.type==='expense'?t.amount:-t.amount;await dbPut('accounts',acc)}
+  if(t.type==='transfer'&&t.toAccountId){
+    const to=accs.find(a=>a.id===t.toAccountId);
+    if(to){to.balance-=t.amount;await dbPut('accounts',to)}
+  }
+  await dbDel('transactions',id);closeModal();await render();
+}
+
+// ════════════════════════════════════════
+// KPI MODAL
+// ════════════════════════════════════════
+function openKPIModal(type){
+  const k=computeKPIs();
+  const content={
+    burn:`<h3>🔥 Burn Rate lissé</h3><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--org);margin:12px 0">${fmtFull(k.burnRate)}/jour</div><p style="color:var(--mut);font-size:13px;line-height:1.6">Calculé sur tes <strong>30 derniers jours</strong> de dépenses (${fmtFull(k.exp30)} total).<br>Ce chiffre lissé est immunisé contre les grosses dépenses ponctuelles.<br>En comparaison, ta moyenne des 7 derniers jours: <strong>${fmtFull(k.exp7/7)}/j</strong>.</p>`,
+    safety:`<h3>🛡️ Safety Days</h3><div style="font-size:28px;font-weight:800;font-family:var(--mono);margin:12px 0;color:${k.safetyDays<7?'var(--red)':k.safetyDays<15?'var(--org)':'var(--grn)'}">${k.safetyDays===9999?'∞':k.safetyDays} jours</div><p style="color:var(--mut);font-size:13px;line-height:1.6">Avec <strong>${fmtFull(k.balance)}</strong> de capital actif et <strong>${fmtFull(k.burnRate)}/j</strong> de burn rate lissé (30j),<br>tu peux tenir <strong>${k.safetyDays===9999?'indéfiniment':k.safetyDays+' jours'}</strong> sans aucune entrée.</p>`,
+    pressure:`<h3>📊 Indice de Pression</h3><div style="font-size:28px;font-weight:800;font-family:var(--mono);margin:12px 0;color:${k.pressureIdx>20?'var(--red)':k.pressureIdx>0?'var(--org)':'var(--grn)'}">${k.pressureIdx>0?'+':''}${k.pressureIdx}%</div><p style="color:var(--mut);font-size:13px;line-height:1.6">Dépenses journalières des 7 derniers jours: <strong>${fmtFull(k.exp7/7)}/j</strong><br>vs ta moyenne 30j: <strong>${fmtFull(k.burnRate)}/j</strong><br>${k.pressureIdx>20?'⚠️ Tu accélères. C\'est le moment de freiner <em>avant</em> d\'être à sec.':k.pressureIdx<-15?'✅ Tu freines par rapport à ton habitude. Bonne maîtrise.':'Rythme stable par rapport à ton habitude.'}</p>`,
+  };
+  openModal(content[type]||'');
+}
+
+// ════════════════════════════════════════
+// DAY MODAL
+// ════════════════════════════════════════
+function openDayModal(day,monthArg,yearArg){
+  const now=new Date();
+  const m=(monthArg!==undefined&&monthArg!==null)?monthArg:now.getMonth();
+  const y=(yearArg!==undefined&&yearArg!==null)?yearArg:now.getFullYear();
+  const date=new Date(y,m,day);
+  const dayTxs=txs.filter(t=>new Date(t.date).toDateString()===date.toDateString());
+  const total=dayTxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const inc=dayTxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const label=date.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  // Drill par heure
+  const hours=new Array(24).fill(0);
+  dayTxs.filter(t=>t.type==='expense').forEach(t=>hours[new Date(t.date).getHours()]+=t.amount);
+  const maxH=Math.max(...hours,1);
+  openModal(`
+    <h3>📅 ${label}</h3>
+    <div style="display:flex;gap:12px;margin-bottom:12px">
+      <div><div class="tm" style="font-size:10px">DÉPENSES</div><div class="mono fw8" style="color:var(--red);font-size:18px">-${fmtFull(total)}</div></div>
+      <div><div class="tm" style="font-size:10px">REVENUS</div><div class="mono fw8" style="color:var(--grn);font-size:18px">+${fmtFull(inc)}</div></div>
+    </div>
+    <div style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;margin-bottom:6px">Par heure</div>
+    <div style="display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-bottom:14px">
+      ${hours.map((v,h)=>`<div title="${h}h: ${fmtFull(v)}" style="height:28px;background:${intensityColor(v/maxH)};border-radius:3px;cursor:pointer" onclick="openHourModal({date:'${date.toISOString()}',hour:${h}})"></div>`).join('')}
+    </div>
+    <div style="font-size:10px;color:var(--mut);text-align:center;margin-bottom:10px">0h ←→ 23h · clique une barre pour les transactions</div>
+    ${dayTxs.length?dayTxs.map(txItem).join(''):'<div class="tm">Aucune transaction ce jour.</div>'}
+  `);
+}
+
+function openHourModal(cell){
+  const dt=cell.date?new Date(cell.date):new Date();
+  const h=cell.hour!==undefined?cell.hour:dt.getHours();
+  const s=new Date(dt);s.setHours(h,0,0,0);
+  const e=new Date(s);e.setHours(h+1);
+  const list=txs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+  const total=list.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  openModal(`
+    <h3>⏰ ${String(h).padStart(2,'0')}h — ${s.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}</h3>
+    <div style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--red);margin-bottom:10px">-${fmtFull(total)}</div>
+    ${list.length?list.map(txItem).join(''):'<div class="tm">Aucune transaction sur cette tranche.</div>'}
+  `);
+}
+
+function openMonthModal(monthIdx,yearArg){
+  const y=yearArg||new Date().getFullYear();
+  const s=new Date(y,monthIdx,1),e=new Date(y,monthIdx+1,1);
+  const list=txs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
+  const total=list.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  const inc=list.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0);
+  const mn=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  // Heatmap par jour
+  const dim=new Date(y,monthIdx+1,0).getDate();
+  const days=[];let max=1;
+  for(let d=1;d<=dim;d++){
+    const ds=new Date(y,monthIdx,d),de=new Date(y,monthIdx,d+1);
+    const a=list.filter(t=>t.type==='expense'&&new Date(t.date)>=ds&&new Date(t.date)<de).reduce((x,t)=>x+t.amount,0);
+    days.push({d,a});if(a>max)max=a;
+  }
+  openModal(`
+    <h3>🗓 ${mn[monthIdx]} ${y}</h3>
+    <div style="display:flex;gap:12px;margin-bottom:12px">
+      <div><div class="tm" style="font-size:10px">DÉPENSES</div><div class="mono fw8" style="color:var(--red);font-size:18px">-${fmtFull(total)}</div></div>
+      <div><div class="tm" style="font-size:10px">REVENUS</div><div class="mono fw8" style="color:var(--grn);font-size:18px">+${fmtFull(inc)}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:12px">
+      ${days.map(({d,a})=>`<div onclick="closeModal();setTimeout(()=>openDayModal(${d},${monthIdx},${y}),100)" style="aspect-ratio:1;background:${intensityColor(a/max)};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer">${d}</div>`).join('')}
+    </div>
+    <div style="font-size:10px;color:var(--mut);text-align:center">Clique un jour pour drill-down heure</div>
+  `);
+}
+
+function openCategoryModal(catId,period){
+  const cat=catById(catId);
+  const ptxs=getPeriodTxs(period||'month').filter(t=>t.categoryId===catId&&t.type==='expense');
+  const total=ptxs.reduce((s,t)=>s+t.amount,0);
+  openModal(`
+    <h3>${cat.icon} ${cat.name}</h3>
+    <div style="font-size:22px;font-weight:800;font-family:var(--mono);color:var(--red);margin-bottom:6px">-${fmtFull(total)}</div>
+    <div class="tm" style="font-size:11px;margin-bottom:12px">${ptxs.length} transactions · ${periodLabel(period||'month')}</div>
+    ${ptxs.length?ptxs.slice(0,30).map(txItem).join(''):'<div class="tm">Aucune transaction.</div>'}
+  `);
+}
+
+// ════════════════════════════════════════
+// ACCOUNT MODALS
+// ════════════════════════════════════════
+function openAddAccountModal(){
+  openModal(`
+    <h3>Nouveau compte</h3>
+    <input id="accName" class="fi" placeholder="Nom du compte">
+    <input id="accIcon" class="fi" placeholder="Emoji (ex: 💳)">
+    <select id="accType" class="fi">
+      <option value="main">Principal</option>
+      <option value="savings">Épargne</option>
+      <option value="cash">Espèces</option>
+      <option value="mobile">Mobile Money</option>
+      <option value="business">Business</option>
+    </select>
+    <input id="accBal" class="fi" type="number" placeholder="Solde initial" inputmode="decimal">
+    <button class="btn" onclick="saveNewAccount()">Créer</button>
+  `);
+}
+async function saveNewAccount(){
+  const name=$('accName')?.value;if(!name)return;
+  const a={id:'acc'+uid(),name,icon:$('accIcon')?.value||'💳',type:$('accType')?.value||'main',balance:parseFloat($('accBal')?.value)||0};
+  await dbPut('accounts',a);closeModal();await render();
+}
+function openEditAccountModal(id){
+  const a=accs.find(x=>x.id===id);if(!a)return;
+  openModal(`
+    <h3>Modifier ${a.name}</h3>
+    <input id="eAccName" class="fi" value="${a.name}">
+    <input id="eAccIcon" class="fi" value="${a.icon}">
+    <input id="eAccBal" class="fi" type="number" value="${a.balance}" inputmode="decimal">
+    <button class="btn" style="margin-bottom:8px" onclick="updateAccount('${id}')">Enregistrer</button>
+    <button class="btn btn-red" onclick="delAccount('${id}')">Supprimer ce compte</button>
+  `);
+}
+async function updateAccount(id){
+  const a=accs.find(x=>x.id===id);if(!a)return;
+  a.name=$('eAccName')?.value||a.name;a.icon=$('eAccIcon')?.value||a.icon;a.balance=parseFloat($('eAccBal')?.value)||a.balance;
+  await dbPut('accounts',a);closeModal();await render();
+}
+async function delAccount(id){
+  if(!confirm('Supprimer ce compte ?'))return;
+  await dbDel('accounts',id);closeModal();await render();
+}
+
+// ════════════════════════════════════════
+// CATEGORY MODALS
+// ════════════════════════════════════════
+function openAddCatModal(){
+  openModal(`
+    <h3>Nouvelle catégorie</h3>
+    <input id="catName" class="fi" placeholder="Nom">
+    <input id="catIcon" class="fi" placeholder="Emoji">
+    <select id="catType" class="fi">
+      <option value="expense">Dépense</option>
+      <option value="income">Revenu</option>
+    </select>
+    <button class="btn" onclick="saveNewCat()">Créer</button>
+  `);
+}
+async function saveNewCat(){
+  const name=$('catName')?.value;if(!name)return;
+  const type=$('catType')?.value||'expense';
+  const dup=cats.find(c=>c.type===type && c.name.trim().toLowerCase()===name.trim().toLowerCase());
+  if(dup){
+    if(!confirm(`⚠️ Une catégorie "${dup.icon} ${dup.name}" existe déjà.\n\nCréer un doublon quand même ?`)) return;
+  }
+  await dbPut('categories',{id:'cat'+uid(),name,icon:$('catIcon')?.value||'📌',type});
+  closeModal();await render();
+}
+function openEditCatModal(id){
+  const c=cats.find(x=>x.id===id);if(!c)return;
+  openModal(`
+    <h3>${c.icon} ${c.name}</h3>
+    <input id="eCatName" class="fi" value="${c.name}">
+    <input id="eCatIcon" class="fi" value="${c.icon}">
+    <select id="eCatType" class="fi">
+      <option value="expense" ${c.type==='expense'?'selected':''}>Dépense</option>
+      <option value="income" ${c.type==='income'?'selected':''}>Revenu</option>
+    </select>
+    <button class="btn" style="margin-bottom:8px" onclick="updateCat('${id}')">Enregistrer</button>
+    <button class="btn btn-red" onclick="delCat('${id}')">Supprimer</button>
+  `);
+}
+async function updateCat(id){
+  const c=cats.find(x=>x.id===id);if(!c)return;
+  c.name=$('eCatName')?.value||c.name;c.icon=$('eCatIcon')?.value||c.icon;c.type=$('eCatType')?.value||c.type;
+  await dbPut('categories',c);closeModal();await render();
+}
+async function delCat(id){
+  if(!confirm('Supprimer cette catégorie ?'))return;
+  await dbDel('categories',id);closeModal();await render();
+}
+
+// ════════════════════════════════════════
+// GOALS
+// ════════════════════════════════════════
+function openAddGoalModal(){
+  openModal(`
+    <h3>Nouvel objectif</h3>
+    <input id="gName" class="fi" placeholder="Nom (ex: Nouveau PC)">
+    <input id="gTarget" class="fi" type="number" placeholder="Montant cible" inputmode="decimal">
+    <input id="gIcon" class="fi" placeholder="Emoji (ex: 💻)">
+    <input id="gDeadline" class="fi" type="date" style="color:var(--txt2)" title="Deadline (optionnel)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 8px;padding-left:2px">Date limite (optionnel — active le suivi de trajectoire)</div>
+    <input id="gNote" class="fi" placeholder="Étape ou note (optionnel)">
+    <button class="btn" onclick="saveGoal()">Créer</button>
+  `);
+}
+async function saveGoal(){
+  const name=$('gName')?.value,target=parseFloat($('gTarget')?.value);
+  if(!name||!target)return;
+  const deadline=$('gDeadline')?.value||null;
+  await dbPut('goals',{id:'g'+uid(),name,target,saved:0,icon:$('gIcon')?.value||'🎯',gp:$('gNote')?.value||'',deadline,deposits:[],createdAt:new Date().toISOString()});
+  closeModal();await render();
+}
+function openDepositModal(id){
+  const g=goals.find(x=>x.id===id);if(!g)return;
+  openModal(`
+    <h3>💰 ${g.icon} ${g.name}</h3>
+    <div style="color:var(--mut);font-size:12px;margin-bottom:12px">${fmtFull(g.saved)} / ${fmtFull(g.target)}</div>
+    <input id="depAmt" class="fi" type="number" placeholder="Montant à épargner" inputmode="decimal">
+    <button class="btn" onclick="saveDeposit('${id}')">Épargner</button>
+  `);
+}
+async function saveDeposit(id){
+  const g=goals.find(x=>x.id===id);const amt=parseFloat($('depAmt')?.value);
+  if(!g||!amt)return;
+  g.saved+=amt;
+  if(!g.deposits)g.deposits=[];
+  g.deposits.push({date:new Date().toISOString(),amount:amt});
+  await dbPut('goals',g);closeModal();await render();
+}
+async function delGoal(id){
+  if(!confirm('Supprimer cet objectif ?'))return;
+  await dbDel('goals',id);await render();
+}
+
+// ════════════════════════════════════════
+// TRANSFER MODAL
+// ════════════════════════════════════════
+function openTransferModal(){
+  openModal(`
+    <h3>⇄ Virement</h3>
+    <select id="tFrom" class="fi">${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name} (${fmtFull(a.balance)})</option>`).join('')}</select>
+    <div style="text-align:center;color:var(--mut);margin:-4px 0 4px">↓</div>
+    <select id="tTo" class="fi">${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
+    <input id="tAmt" class="fi" type="number" placeholder="Montant" inputmode="decimal">
+    <input id="tNote" class="fi" placeholder="Note (optionnel)">
+    <button class="btn" onclick="doTransfer()">Transférer</button>
+  `);
+}
+async function doTransfer(){
+  const fromId=$('tFrom')?.value,toId=$('tTo')?.value,amt=parseFloat($('tAmt')?.value);
+  if(fromId===toId){alert('Comptes identiques');return}
+  const from=accs.find(a=>a.id===fromId),to=accs.find(a=>a.id===toId);
+  if(!from||!to||!amt||from.balance<amt){alert('Solde insuffisant');return}
+  from.balance-=amt;to.balance+=amt;
+  await dbPut('accounts',from);await dbPut('accounts',to);
+  await dbPut('transactions',{id:uid(),amount:amt,type:'transfer',categoryId:'transfer',accountId:fromId,toAccountId:toId,date:new Date().toISOString(),note:$('tNote')?.value||''});
+  closeModal();await render();
+}
+
+// ════════════════════════════════════════
+// CURRENCY MODAL
+// ════════════════════════════════════════
+function openCurrencyModal(){
+  openModal(`
+    <h3>💱 Devise</h3>
+    <input id="curInp" class="fi" value="${cur()}" placeholder="Ex: FC, USD, EUR, XAF">
+    <button class="btn" onclick="saveCurrency()">Enregistrer</button>
+  `);
+}
+async function saveCurrency(){
+  const v=$('curInp')?.value;if(!v)return;
+  await saveSet('currency',v);closeModal();await render();
+}
+
+// ════════════════════════════════════════
+// SETTINGS HELPERS
+// ════════════════════════════════════════
+async function saveSet(key,val){settings[key]=val;await dbPut('settings',{key,value:val})}
+async function toggleNotifs(){
+  if(!('Notification' in window)){alert('Notifications non supportées sur ce navigateur');return}
+  if(Notification.permission==='denied'){
+    alert('Notifications bloquées. Va dans les paramètres de Chrome → Site → Notifications → Autoriser, puis reviens.');
+    return;
+  }
+  if(Notification.permission!=='granted'){
+    const p=await Notification.requestPermission();
+    if(p!=='granted'){alert('Permission refusée. Active les notifications dans les paramètres Chrome.');return}
+  }
+  await saveSet('notifEnabled',true);
+  // Test immédiat pour confirmer que ça marche
+  setTimeout(()=>sendNotif('🎉 Finance AI OS','Notifications activées ! Tu recevras tes rappels.','test'),500);
+  await render();
+}
+function testNotif(){sendNotif('🔔 Finance AI OS','Ça marche ! Tu vas recevoir tes rappels comme ça.','test')}
+
+// ════════════════════════════════════════
+// SYNC / EXPORT
+// ════════════════════════════════════════
+async function doExport(){
+  const payload={v:3,date:new Date().toISOString(),txs,accs,cats,goals,settings:Object.entries(settings).map(([k,v])=>({key:k,value:v}))};
+  const code=btoa(encodeURIComponent(JSON.stringify(payload)));
+  openModal(`
+    <h3>📤 Code de sauvegarde</h3>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">Copie ce code. Sur un autre appareil, utilise "Restaurer" pour récupérer toutes tes données.</p>
+    <div class="scode" id="scode">${code}</div>
+    <button class="btn" style="margin-top:12px" onclick="copyCode()">📋 Copier</button>
+    <div style="font-size:10px;color:var(--mut);margin-top:8px;text-align:center">${txs.length} transactions · ${accs.length} comptes · ${goals.length} objectifs</div>
+  `);
+}
+function copyCode(){
+  const c=$('scode')?.textContent;if(!c)return;
+  navigator.clipboard?.writeText(c).then(()=>alert('✅ Copié !')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=c;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('✅ Copié !');
+  });
+}
+function doImport(){
+  openModal(`
+    <h3>📥 Restaurer</h3>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">⚠️ Toutes les données actuelles seront remplacées.</p>
+    <textarea id="importCode" class="fi" style="height:120px;resize:none" placeholder="Colle ton code ici..."></textarea>
+    <button class="btn" onclick="processImport()">Restaurer</button>
+  `);
+}
+async function processImport(){
+  try{
+    const code=$('importCode')?.value.trim();if(!code)return;
+    const p=JSON.parse(decodeURIComponent(atob(code)));
+    for(const s of['transactions','accounts','categories','goals','settings'])await dbClear(s);
+    for(const t of p.txs||[])await dbPut('transactions',t);
+    for(const a of p.accs||[])await dbPut('accounts',a);
+    for(const c of p.cats||[])await dbPut('categories',c);
+    for(const g of p.goals||[])await dbPut('goals',g);
+    for(const s of p.settings||[])await dbPut('settings',s);
+    closeModal();await render();alert('✅ Données restaurées !');
+  }catch(e){alert('❌ Code invalide.')}
+}
+function exportCSV(){
+  const rows=[['Date','Type','Montant','Catégorie','Compte','Note']];
+  txs.forEach(t=>{const cat=catById(t.categoryId),acc=accById(t.accountId);rows.push([new Date(t.date).toLocaleDateString('fr-FR'),t.type,t.amount,cat.name,acc.name,t.note||''])});
+  const blob=new Blob([rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='transactions.csv';a.click();URL.revokeObjectURL(url);
+}
+async function confirmClear(){
+  if(!confirm('⚠️ Effacer TOUTES les données ? Irréversible.'))return;
+  for(const s of['transactions','accounts','categories','goals','settings'])await dbClear(s);
+  await initData();await render();
+}
+
+// ════════════════════════════════════════
+// MICRO-CÉLÉBRATIONS
+// ════════════════════════════════════════
+function celebrate(title,sub){
+  const el=document.createElement('div');
+  el.className='celebration';
+  el.innerHTML=`✨ <strong>${title}</strong>${sub?`<small>${sub}</small>`:''}`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),3700);
+}
+async function checkCelebrations(){
+  if(!txs.length) return;
+  const seen=settings.celebrationsSeen||{};
+  // 1. Première semaine complète de saisie (7 jours distincts avec au moins 1 tx)
+  if(!seen.firstWeek){
+    const days=new Set(txs.map(t=>new Date(t.date).toDateString()));
+    if(days.size>=7){
+      celebrate('Première semaine complète !','7 jours de saisie — l\'habitude commence.');
+      seen.firstWeek=Date.now();
+      await saveSet('celebrationsSeen',seen);
+    }
+  }
+  // 2. Premier jalon mensuel atteint
+  if(!seen.firstMilestone){
+    for(const g of goals){
+      const m=goalMonthly(g);
+      if(m && !m.done && m.pct>=100){
+        celebrate(`Jalon de "${g.name}" atteint !`,`Tu as épargné ce qu'il fallait ce mois.`);
+        seen.firstMilestone=Date.now();
+        await saveSet('celebrationsSeen',seen);
+        break;
+      }
+    }
+  }
+  // 3. 7 jours de rétention positive
+  if(!seen.weekRetention){
+    const k=computeKPIs();
+    if(k.retention!==null && k.retention>=25 && k.dataDays>=7){
+      celebrate('7 jours de rétention positive','Tu gardes plus que tu ne dépenses. Ton cerveau apprend.');
+      seen.weekRetention=Date.now();
+      await saveSet('celebrationsSeen',seen);
+    }
+  }
+}
+
+// ════════════════════════════════════════
+// SERVICE WORKER REGISTRATION
+// ════════════════════════════════════════
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(reg=>{
+      console.log('SW enregistré ✓');
+      reg.addEventListener('updatefound',()=>{
+        const w=reg.installing;if(!w)return;
+        w.addEventListener('statechange',()=>{
+          if(w.state==='installed'&&navigator.serviceWorker.controller){
+            w.postMessage({type:'SKIP_WAITING'});
+          }
+        });
+      });
+      // Écouter les clics sur les notifications depuis le SW
+      navigator.serviceWorker.addEventListener('message',e=>{
+        if(e.data&&e.data.type==='NOTIF_CLICK'){
+          go('home'); // revenir à l'accueil si on clique la notif
+        }
+      });
+    }).catch(e=>console.warn('SW erreur:',e));
+    let refreshing=false;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(refreshing)return;refreshing=true;location.reload();
+    });
+  });
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+(async()=>{
+  try{await openDB()}catch(e){console.error('DB open failed',e);alert('IndexedDB indisponible. Active le stockage dans ton navigateur.')}
+  try{await initData()}catch(e){console.warn('initData',e)}
+  try{await render()}catch(e){console.error('initial render',e)}
+  try{updateOnlineStatus()}catch(e){}
+  try{initNotifs()}catch(e){}
+  // Background insight refresh every 10 min when online
+  setInterval(()=>{if(navigator.onLine&&screen==='home'){_lastInsightTime=0;maybeAutoInsight()}},600000);
+})();
+</script>
+</body>
+</html>
