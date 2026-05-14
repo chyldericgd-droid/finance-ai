@@ -5,11 +5,19 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
-  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait",
   "background_color": "#09090f",
   "theme_color": "#09090f",
-  "categories": ["finance", "productivity", "lifestyle"],
+  "categories": [
+    "finance",
+    "productivity",
+    "lifestyle"
+  ],
   "dir": "auto",
   "icons": [
     {
@@ -48,13 +56,25 @@
       "name": "Add expense · Ajouter dépense",
       "short_name": "Expense",
       "url": "./index.html?action=expense",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Add income · Ajouter revenu",
       "short_name": "Income",
       "url": "./index.html?action=income",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
-  ]
+  ],
+  "id": "/?v=4.8",
+  "lang": "auto"
 }

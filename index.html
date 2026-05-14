@@ -460,6 +460,90 @@ select.fi{cursor:pointer}
 // ════════════════════════════════════════
 const I18N={
   fr:{
+    // === extra v4.8 ===,
+    pl_day:"aujourd'hui",
+    pl_week:"cette semaine",
+    pl_month:"ce mois",
+    pl_year:"cette année",
+    pp_day:"hier",
+    pp_week:"sem. passée",
+    pp_month:"mois passé",
+    pp_year:"an passé",
+    pcap_day:"AUJOURD'HUI",
+    pcap_week:"CETTE SEMAINE",
+    pcap_month:"CE MOIS",
+    pcap_year:"CETTE ANNÉE",
+    ppcap_day:"HIER",
+    ppcap_week:"SEM. PASSÉE",
+    ppcap_month:"MOIS PASSÉ",
+    ppcap_year:"AN PASSÉ",
+    cmp_label:"Comparaison",
+    cmp_vs:"vs",
+    heat_day:"Heatmap horaire",
+    heat_week:"Heatmap journalière",
+    heat_month:"Heatmap journalière",
+    heat_year:"Heatmap mensuelle",
+    sub_day:"Dépenses par tranche horaire",
+    sub_week:"Dépenses par jour",
+    sub_month:"Dépenses par jour de semaine",
+    sub_year:"Dépenses par mois",
+    tr_morning:"Matin",
+    tr_afternoon:"Aprem",
+    tr_evening:"Soir",
+    tr_night:"Nuit",
+    wd_sun:"Dim",
+    wd_mon:"Lun",
+    wd_tue:"Mar",
+    wd_wed:"Mer",
+    wd_thu:"Jeu",
+    wd_fri:"Ven",
+    wd_sat:"Sam",
+    mn_jan:"Jan",
+    mn_feb:"Fév",
+    mn_mar:"Mar",
+    mn_apr:"Avr",
+    mn_may:"Mai",
+    mn_jun:"Juin",
+    mn_jul:"Juil",
+    mn_aug:"Aoû",
+    mn_sep:"Sep",
+    mn_oct:"Oct",
+    mn_nov:"Nov",
+    mn_dec:"Déc",
+    intensity_low:"Faible",
+    intensity_high:"Intense",
+    peak_label:"Pic",
+    clickable:"cliquable",
+    top_exp:"Top dépenses",
+    score_fin:"Score financier",
+    trend_label:"Tendance",
+    lecture:"Lecture",
+    groq_active:"Groq actif",
+    ia_local:"IA locale",
+    discipline_help:"Discipline & stabilité recalculées sur {p}. Sécurité = jours de réserve globaux.",
+    recv:"Revenus",
+    solde:"Solde",
+    no_exp_period:"Aucune dépense {p}.",
+    where_money:"Où va ton argent · {p}",
+    home_accounts:"Comptes",
+    add_short:"+ Ajouter",
+    home_goals:"Objectifs",
+    manage:"Gérer",
+    add_save:"+ Épargner",
+    late_short:"retard",
+    no_goals_msg:"Aucun objectif.",
+    goal_destiny_imp:"${t('goal_destiny_imp').replace('⛔ ','')}",
+    goal_destiny_reach:"${t('goal_destiny_reach').replace('🎯 ','')}",
+    goal_milestone:"${t('goal_milestone').replace('📅 ','')}",
+    goal_late_full:"⚠️ En retard — il te faut {n}j au rythme actuel",
+    goal_track_full:"✅ Sur la trajectoire — objectif dans ~{n}j",
+    deadline:"deadline",
+    ai_assistant:"Assistant IA",
+    ai_tap_chat:"tap pour discuter",
+    ai_loading:"Analyse en cours...",
+    no_tx_first:"📝 Aucune transaction encore. Tape le <strong>+</strong> pour saisir ta première — sans données je peux rien analyser.",
+    all_good:"✅ Rien d'urgent. Burn rate {br}/j, safety {sd}j. Profites-en pour avancer ton objectif.",
+    home_quick_q:"Questions rapides",
     // Nav
     nav_home:'Home',nav_txns:'Txns',nav_analyse:'Analyse',nav_ia:'IA',nav_config:'Config',
     // Hero
@@ -612,6 +696,90 @@ const I18N={
 
   },
   en:{
+    // === extra v4.8 ===,
+    pl_day:"today",
+    pl_week:"this week",
+    pl_month:"this month",
+    pl_year:"this year",
+    pp_day:"yesterday",
+    pp_week:"last week",
+    pp_month:"last month",
+    pp_year:"last year",
+    pcap_day:"TODAY",
+    pcap_week:"THIS WEEK",
+    pcap_month:"THIS MONTH",
+    pcap_year:"THIS YEAR",
+    ppcap_day:"YESTERDAY",
+    ppcap_week:"LAST WEEK",
+    ppcap_month:"LAST MONTH",
+    ppcap_year:"LAST YEAR",
+    cmp_label:"Comparison",
+    cmp_vs:"vs",
+    heat_day:"Hourly heatmap",
+    heat_week:"Daily heatmap",
+    heat_month:"Daily heatmap",
+    heat_year:"Monthly heatmap",
+    sub_day:"Spend by time of day",
+    sub_week:"Spend by day",
+    sub_month:"Spend by weekday",
+    sub_year:"Spend by month",
+    tr_morning:"Morn.",
+    tr_afternoon:"Aftn.",
+    tr_evening:"Eve.",
+    tr_night:"Night",
+    wd_sun:"Sun",
+    wd_mon:"Mon",
+    wd_tue:"Tue",
+    wd_wed:"Wed",
+    wd_thu:"Thu",
+    wd_fri:"Fri",
+    wd_sat:"Sat",
+    mn_jan:"Jan",
+    mn_feb:"Feb",
+    mn_mar:"Mar",
+    mn_apr:"Apr",
+    mn_may:"May",
+    mn_jun:"Jun",
+    mn_jul:"Jul",
+    mn_aug:"Aug",
+    mn_sep:"Sep",
+    mn_oct:"Oct",
+    mn_nov:"Nov",
+    mn_dec:"Dec",
+    intensity_low:"Low",
+    intensity_high:"High",
+    peak_label:"Peak",
+    clickable:"tap",
+    top_exp:"Top expenses",
+    score_fin:"Financial score",
+    trend_label:"Trend",
+    lecture:"Reading",
+    groq_active:"Groq active",
+    ia_local:"Local AI",
+    discipline_help:"Discipline & stability recalculated for {p}. Security = global reserve days.",
+    recv:"Income",
+    solde:"Balance",
+    no_exp_period:"No expenses {p}.",
+    where_money:"Where your money goes · {p}",
+    home_accounts:"Accounts",
+    add_short:"+ Add",
+    home_goals:"Goals",
+    manage:"Manage",
+    add_save:"+ Save",
+    late_short:"late",
+    no_goals_msg:"No goals.",
+    goal_destiny_imp:"⛔ Destiny Counter: impossible at current pace — burn rate > income",
+    goal_destiny_reach:"🎯 Destiny Counter: reached on",
+    goal_milestone:"📅 This month milestone",
+    goal_late_full:"⚠️ Behind — you need {n}d at current pace",
+    goal_track_full:"✅ On track — goal in ~{n}d",
+    deadline:"deadline",
+    ai_assistant:"AI Assistant",
+    ai_tap_chat:"tap to chat",
+    ai_loading:"Analyzing...",
+    no_tx_first:"📝 No transactions yet. Tap <strong>+</strong> to add your first — without data I cannot analyze anything.",
+    all_good:"✅ Nothing urgent. Burn rate {br}/d, safety {sd}d. Use this time to push your goal.",
+    home_quick_q:"Quick questions",
     nav_home:'Home',nav_txns:'Txns',nav_analyse:'Analyse',nav_ia:'AI',nav_config:'Config',
     capital:'Available Balance',savings_locked:'in savings',revenues:'Income',expenses:'Expenses',
     burn_rate:'Burn Rate',burn_sub:'per day · 30d avg',safety_days:'Safety Days',safety_sub:'days · at current pace',
@@ -744,6 +912,90 @@ const I18N={
 
   },
   es:{
+    // === extra v4.8 ===,
+    pl_day:"hoy",
+    pl_week:"esta semana",
+    pl_month:"este mes",
+    pl_year:"este año",
+    pp_day:"ayer",
+    pp_week:"sem. pasada",
+    pp_month:"mes pasado",
+    pp_year:"año pasado",
+    pcap_day:"HOY",
+    pcap_week:"ESTA SEMANA",
+    pcap_month:"ESTE MES",
+    pcap_year:"ESTE AÑO",
+    ppcap_day:"AYER",
+    ppcap_week:"SEM. PASADA",
+    ppcap_month:"MES PASADO",
+    ppcap_year:"AÑO PASADO",
+    cmp_label:"Comparación",
+    cmp_vs:"vs",
+    heat_day:"Mapa horario",
+    heat_week:"Mapa diario",
+    heat_month:"Mapa diario",
+    heat_year:"Mapa mensual",
+    sub_day:"Gastos por franja horaria",
+    sub_week:"Gastos por día",
+    sub_month:"Gastos por día de la semana",
+    sub_year:"Gastos por mes",
+    tr_morning:"Mañana",
+    tr_afternoon:"Tarde",
+    tr_evening:"Noche",
+    tr_night:"Madrug.",
+    wd_sun:"Dom",
+    wd_mon:"Lun",
+    wd_tue:"Mar",
+    wd_wed:"Mié",
+    wd_thu:"Jue",
+    wd_fri:"Vie",
+    wd_sat:"Sáb",
+    mn_jan:"Ene",
+    mn_feb:"Feb",
+    mn_mar:"Mar",
+    mn_apr:"Abr",
+    mn_may:"May",
+    mn_jun:"Jun",
+    mn_jul:"Jul",
+    mn_aug:"Ago",
+    mn_sep:"Sep",
+    mn_oct:"Oct",
+    mn_nov:"Nov",
+    mn_dec:"Dic",
+    intensity_low:"Bajo",
+    intensity_high:"Alto",
+    peak_label:"Pico",
+    clickable:"pulsable",
+    top_exp:"Top gastos",
+    score_fin:"Score financiero",
+    trend_label:"Tendencia",
+    lecture:"Lectura",
+    groq_active:"Groq activo",
+    ia_local:"IA local",
+    discipline_help:"Disciplina y estabilidad recalculadas en {p}. Seguridad = días de reserva globales.",
+    recv:"Ingresos",
+    solde:"Saldo",
+    no_exp_period:"Sin gastos {p}.",
+    where_money:"A dónde va tu dinero · {p}",
+    home_accounts:"Cuentas",
+    add_short:"+ Añadir",
+    home_goals:"Objetivos",
+    manage:"Gestionar",
+    add_save:"+ Ahorrar",
+    late_short:"retraso",
+    no_goals_msg:"Sin objetivos.",
+    goal_destiny_imp:"⛔ Contador del Destino: imposible al ritmo actual — burn rate > ingresos",
+    goal_destiny_reach:"🎯 Contador del Destino: alcanzado el",
+    goal_milestone:"📅 Hito de este mes",
+    goal_late_full:"⚠️ Retrasado — necesitas {n}d al ritmo actual",
+    goal_track_full:"✅ En camino — objetivo en ~{n}d",
+    deadline:"fecha límite",
+    ai_assistant:"Asistente IA",
+    ai_tap_chat:"pulsa para chatear",
+    ai_loading:"Analizando...",
+    no_tx_first:"📝 Aún no hay transacciones. Pulsa <strong>+</strong> para añadir la primera — sin datos no puedo analizar.",
+    all_good:"✅ Nada urgente. Burn rate {br}/d, seguridad {sd}d. Aprovecha para avanzar en tu objetivo.",
+    home_quick_q:"Preguntas rápidas",
     nav_home:'Inicio',nav_txns:'Txns',nav_analyse:'Análisis',nav_ia:'IA',nav_config:'Config',
     capital:'Capital disponible',savings_locked:'en ahorro',revenues:'Ingresos',expenses:'Gastos',
     burn_rate:'Burn Rate',burn_sub:'por día · prom. 30d',safety_days:'Días de seguridad',safety_sub:'días · al ritmo actual',
@@ -867,6 +1119,90 @@ const I18N={
 
   },
   pt:{
+    // === extra v4.8 ===,
+    pl_day:"hoje",
+    pl_week:"esta semana",
+    pl_month:"este mês",
+    pl_year:"este ano",
+    pp_day:"ontem",
+    pp_week:"sem. passada",
+    pp_month:"mês passado",
+    pp_year:"ano passado",
+    pcap_day:"HOJE",
+    pcap_week:"ESTA SEMANA",
+    pcap_month:"ESTE MÊS",
+    pcap_year:"ESTE ANO",
+    ppcap_day:"ONTEM",
+    ppcap_week:"SEM. PASSADA",
+    ppcap_month:"MÊS PASSADO",
+    ppcap_year:"ANO PASSADO",
+    cmp_label:"Comparação",
+    cmp_vs:"vs",
+    heat_day:"Mapa por hora",
+    heat_week:"Mapa diário",
+    heat_month:"Mapa diário",
+    heat_year:"Mapa mensal",
+    sub_day:"Gastos por faixa horária",
+    sub_week:"Gastos por dia",
+    sub_month:"Gastos por dia da semana",
+    sub_year:"Gastos por mês",
+    tr_morning:"Manhã",
+    tr_afternoon:"Tarde",
+    tr_evening:"Noite",
+    tr_night:"Madrug.",
+    wd_sun:"Dom",
+    wd_mon:"Seg",
+    wd_tue:"Ter",
+    wd_wed:"Qua",
+    wd_thu:"Qui",
+    wd_fri:"Sex",
+    wd_sat:"Sáb",
+    mn_jan:"Jan",
+    mn_feb:"Fev",
+    mn_mar:"Mar",
+    mn_apr:"Abr",
+    mn_may:"Mai",
+    mn_jun:"Jun",
+    mn_jul:"Jul",
+    mn_aug:"Ago",
+    mn_sep:"Set",
+    mn_oct:"Out",
+    mn_nov:"Nov",
+    mn_dec:"Dez",
+    intensity_low:"Baixo",
+    intensity_high:"Alto",
+    peak_label:"Pico",
+    clickable:"tocar",
+    top_exp:"Top despesas",
+    score_fin:"Score financeiro",
+    trend_label:"Tendência",
+    lecture:"Leitura",
+    groq_active:"Groq ativo",
+    ia_local:"IA local",
+    discipline_help:"Disciplina & estabilidade recalculadas em {p}. Segurança = dias de reserva globais.",
+    recv:"Receitas",
+    solde:"Saldo",
+    no_exp_period:"Sem despesas {p}.",
+    where_money:"Para onde vai o teu dinheiro · {p}",
+    home_accounts:"Contas",
+    add_short:"+ Adicionar",
+    home_goals:"Objetivos",
+    manage:"Gerir",
+    add_save:"+ Poupar",
+    late_short:"atraso",
+    no_goals_msg:"Sem objetivos.",
+    goal_destiny_imp:"⛔ Contador do Destino: impossível no ritmo atual — burn rate > receitas",
+    goal_destiny_reach:"🎯 Contador do Destino: alcançado em",
+    goal_milestone:"📅 Marco deste mês",
+    goal_late_full:"⚠️ Atrasado — precisas de {n}d no ritmo atual",
+    goal_track_full:"✅ No caminho — objetivo em ~{n}d",
+    deadline:"prazo",
+    ai_assistant:"Assistente IA",
+    ai_tap_chat:"tocar para conversar",
+    ai_loading:"A analisar...",
+    no_tx_first:"📝 Ainda sem transações. Toca em <strong>+</strong> para registar a primeira — sem dados não posso analisar.",
+    all_good:"✅ Nada urgente. Burn rate {br}/d, segurança {sd}d. Aproveita para avançar no teu objetivo.",
+    home_quick_q:"Perguntas rápidas",
     nav_home:'Início',nav_txns:'Txns',nav_analyse:'Análise',nav_ia:'IA',nav_config:'Config',
     capital:'Capital Disponível',savings_locked:'em poupança',revenues:'Receitas',expenses:'Despesas',
     burn_rate:'Burn Rate',burn_sub:'por dia · média 30d',safety_days:'Dias de Segurança',safety_sub:'dias · no ritmo atual',
@@ -1026,6 +1362,16 @@ function displayCat(c){
   const tr=I18N[_lang]&&I18N[_lang][k];
   return tr ? {...c, name: tr} : c;
 }
+
+
+// === v4.8 i18n helpers ===
+function periodCap(p){return t("pcap_"+p)}
+function periodPrevCap(p){return t("ppcap_"+p)}
+function cmpLabel(p){return t("pp_"+p).charAt(0).toUpperCase()+t("pp_"+p).slice(1)+" "+t("cmp_vs")+" "+t("pl_"+p)}
+function wdShort(){return [t('wd_sun'),t('wd_mon'),t('wd_tue'),t('wd_wed'),t('wd_thu'),t('wd_fri'),t('wd_sat')]}
+function mnShort(){return [t('mn_jan'),t('mn_feb'),t('mn_mar'),t('mn_apr'),t('mn_may'),t('mn_jun'),t('mn_jul'),t('mn_aug'),t('mn_sep'),t('mn_oct'),t('mn_nov'),t('mn_dec')]}
+function trancheLabels(){return [t('tr_morning')+'\n6-12h',t('tr_afternoon')+'\n12-18h',t('tr_evening')+'\n18-22h',t('tr_night')+'\n22-6h']}
+function langInstr(){return _lang==='en'?'IMPORTANT: Reply ONLY in English.':_lang==='es'?'IMPORTANTE: Responde SOLO en español.':_lang==='pt'?'IMPORTANTE: Responde SÓ em português.':'IMPORTANT: Réponds UNIQUEMENT en français.'}
 
 // t() = translate — le raccourci central
 const t=key=>I18N[_lang]?.[key]||I18N['fr']?.[key]||key;
@@ -1510,7 +1856,7 @@ async function askAI(userMsg){
   const key = getGroqKey();
   if(navigator.onLine && key){
     try{
-      const langInstruction=_lang==='en'?'Respond in English.':_lang==='es'?'Responde en español.':_lang==='pt'?'Responde em português.':'Réponds en français.';
+      const langInstruction=langInstr();
       const sys = `You are IVY. Not an assistant. Not a gentle coach. A brutal strategist defending this person's dreams against themselves.
 
 ABSOLUTE RULES:
@@ -1608,7 +1954,7 @@ async function fetchHomeInsight(){
   // Cache 10 min
   if(_lastInsight && Date.now()-_lastInsightTime < 600000) return _lastInsight;
   try{
-    const sys = "Tu es un coach financier qui parle à un ami — utilise toujours \"tu\". En UNE phrase de 25 mots maximum, dis-lui le truc le plus important à savoir maintenant : impact sur son objectif, ou comportement de cerveau le plus risqué (dopamine, fatigue du soir, effet domino, effet fourmi). Si dataDays<14 dans les données, NE compare PAS sur 30j — parle uniquement des jours réels disponibles. Français simple, chiffres précis, pas de jargon, pas de salutation.";
+    const sys = "You are a financial coach speaking informally to a friend. In ONE sentence of max 25 words, tell them the most important thing right now: impact on their goal, or the riskiest brain behavior (dopamine, evening fatigue, domino effect, ant effect). If dataDays<14, do NOT compare on 30d — talk only about actual days available. Precise numbers, no jargon, no greeting. "+langInstr();
     const ctx = buildCtx();
     const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
@@ -1682,7 +2028,7 @@ function getAlerts(kpi){
   // — Critiques (toujours prioritaires, jamais en rotation) —
   const critical=[];
   if(!txs.length){
-    return [{t:'i',m:`📝 Aucune transaction encore. Tape le <strong>+</strong> pour saisir ta première — sans données je peux rien analyser.`}];
+    return [{t:'i',m:t('no_tx_first')}];
   }
   if(kpi.isShortHistory){
     pool.push({t:'i',m:`📅 Tu as ${kpi.dataDays} jour${kpi.dataDays>1?'s':''} de données. Les analyses se calent là-dessus — la pression vs habitude attendra ${14-kpi.dataDays}j de plus pour avoir du sens.`,prio:1});
@@ -1730,7 +2076,7 @@ function getAlerts(kpi){
     if(out.length>=3) break;
     out.push(a);
   }
-  return out.length?out:[{t:'g',m:`✅ Rien d'urgent. Burn rate ${fmtFull(kpi.burnRate)}/j, safety ${kpi.safetyDays===9999?'∞':kpi.safetyDays}j. Profites-en pour avancer ton objectif.`}];
+  return out.length?out:[{t:'g',m:t('all_good').replace('{br}',fmtFull(kpi.burnRate)).replace('{sd}',kpi.safetyDays===9999?'∞':kpi.safetyDays)}];
 }
 
 // ════════════════════════════════════════
@@ -1959,35 +2305,35 @@ function renderHome(){
 
   <!-- AI INSIGHT (online only) -->
   ${navigator.onLine && getGroqKey()?`<div class="ai-insight" onclick="openAIQuick()" style="cursor:pointer">
-    <div class="ai-h">✨ Assistant IA <span style="margin-left:auto;font-size:10px;color:var(--mut);font-weight:600;text-transform:none;letter-spacing:0">tap pour discuter</span></div>
-    <div class="ai-b" id="aiInsightBody">${_lastInsight?'💡 '+_lastInsight:'<span class="ai-loading"></span> Analyse en cours...'}</div>
+    <div class="ai-h">✨ ${t('ai_assistant')} <span style="margin-left:auto;font-size:10px;color:var(--mut);font-weight:600;text-transform:none;letter-spacing:0">${t('ai_tap_chat')}</span></div>
+    <div class="ai-b" id="aiInsightBody">${_lastInsight?'💡 '+_lastInsight:'<span class="ai-loading"></span> '+t('ai_loading')}</div>
   </div>`:''}
 
   <!-- ALERTS -->
   <div class="card">
-    <div class="ch">🔔 Alertes intelligentes <span class="pill">${alerts.length}</span></div>
+    <div class="ch">🔔 ${t('alerts_title')} <span class="pill">${alerts.length}</span></div>
     ${alerts.map(a=>`<div class="al al-${a.t}">${a.m}</div>`).join('')}
   </div>
 
   <!-- RECENT TX -->
   <div class="card">
-    <div class="ch">Transactions récentes <button class="btn btn-ghost btn-sm" onclick="go('txlist')">Voir tout</button></div>
+    <div class="ch">${t('tx_recent')} <button class="btn btn-ghost btn-sm" onclick="go('txlist')">${t('tx_see_all')}</button></div>
     ${txs.slice(0,5).map(txItem).join('')||`<div class="tm" style="font-size:12px;padding:8px 0">${t('tx_none')}</div>`}
   </div>
 
   <!-- ACCOUNTS -->
   <div class="card">
-    <div class="ch">Comptes <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">+ Ajouter</button></div>
+    <div class="ch">${t('home_accounts')} <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">${t('add_short')}</button></div>
     ${accs.map(a=>`<div class="ach" onclick="openEditAccountModal('${a.id}')">
       <span style="font-size:20px">${a.icon}</span>
-      <div style="flex:1"><div style="font-size:13px;font-weight:700">${a.name}</div><div style="font-size:10px;color:var(--mut)">${a.type.toUpperCase()}</div></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${displayAcc(a).name}</div><div style="font-size:10px;color:var(--mut)">${a.type.toUpperCase()}</div></div>
       <div class="mono fw8 ${a.balance<0?'tr':'tg'}">${fmtFull(a.balance)}</div>
     </div>`).join('')}
   </div>
 
   <!-- GOALS QUICK -->
   ${goals.length?`<div class="card">
-    <div class="ch">Objectifs <button class="btn btn-ghost btn-sm" onclick="go('settings')">Gérer</button></div>
+    <div class="ch">${t('home_goals')} <button class="btn btn-ghost btn-sm" onclick="go('settings')">${t('manage')}</button></div>
     ${goals.slice(0,3).map(g=>{
       const pct=Math.min(100,(g.saved/g.target)*100);
       const gap=g.target-g.saved;
@@ -2004,11 +2350,11 @@ function renderHome(){
         <div class="bar"><div class="bf" style="width:${pct}%;background:${pct>=100?'var(--grn)':enRetard?'var(--red)':'var(--acc2)'}"></div></div>
         <div class="flex sb" style="font-size:10px;color:var(--mut);margin-top:3px">
           <span>${fmtFull(g.saved)} / ${fmtFull(g.target)}</span>
-          ${enRetard?`<span style="color:var(--red)">⚠️ retard ${joursNec-joursDeadline}j</span>`
+          ${enRetard?`<span style="color:var(--red)">⚠️ ${t('late_short')} ${joursNec-joursDeadline}j</span>`
             :joursNec?`<span style="color:var(--acc3)">~${joursNec}j</span>`:''}
         </div>
-        ${(()=>{const eta=goalETA(g);if(!eta||eta.done)return'';if(eta.impossible)return`<div style="font-size:10px;color:var(--red);margin-top:4px;font-weight:700">⛔ Compteur de Destin : impossible au rythme actuel — burn rate > revenus</div>`;const ds=eta.date.toLocaleDateString(getLocale(),{day:'numeric',month:'short',year:'numeric'});return`<div style="font-size:10px;color:var(--acc3);margin-top:4px;font-weight:700">🎯 Compteur de Destin : atteint le <strong>${ds}</strong> (${eta.days}j)</div>`;})()}
-        ${(()=>{const m=goalMonthly(g);if(!m||m.done)return'';const c=m.pct>=100?'var(--grn)':m.pct>=50?'var(--ylw)':'var(--mut)';return`<div style="margin-top:6px;padding:6px 8px;background:var(--surf2);border-radius:8px"><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--mut);margin-bottom:3px"><span>📅 Jalon ce mois</span><span style="color:${c}">${fmtFull(m.savedThisMonth)} / ${fmtFull(m.monthlyTarget)}</span></div><div style="height:3px;background:var(--surf3);border-radius:3px;overflow:hidden"><div style="height:100%;width:${m.pct}%;background:${c};transition:width .5s"></div></div></div>`;})()}
+        ${(()=>{const eta=goalETA(g);if(!eta||eta.done)return'';if(eta.impossible)return`<div style="font-size:10px;color:var(--red);margin-top:4px;font-weight:700">${t('goal_destiny_imp').replace('⛔ ','')}</div>`;const ds=eta.date.toLocaleDateString(getLocale(),{day:'numeric',month:'short',year:'numeric'});return`<div style="font-size:10px;color:var(--acc3);margin-top:4px;font-weight:700">${t('goal_destiny_reach').replace('🎯 ','')} <strong>${ds}</strong> (${eta.days}j)</div>`;})()}
+        ${(()=>{const m=goalMonthly(g);if(!m||m.done)return'';const c=m.pct>=100?'var(--grn)':m.pct>=50?'var(--ylw)':'var(--mut)';return`<div style="margin-top:6px;padding:6px 8px;background:var(--surf2);border-radius:8px"><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--mut);margin-bottom:3px"><span>${t('goal_milestone').replace('📅 ','')}</span><span style="color:${c}">${fmtFull(m.savedThisMonth)} / ${fmtFull(m.monthlyTarget)}</span></div><div style="height:3px;background:var(--surf3);border-radius:3px;overflow:hidden"><div style="height:100%;width:${m.pct}%;background:${c};transition:width .5s"></div></div></div>`;})()}
       </div>`;
     }).join('')}
   </div>`:''}
@@ -2116,8 +2462,8 @@ function getPrevPeriodTxs(period){
 }
 
 // ── Helpers période ──────────────────────────────
-function periodLabel(p){return {day:"aujourd'hui",week:'cette semaine',month:'ce mois',year:'cette année'}[p]}
-function periodPrevLabel(p){return {day:'hier',week:'sem. passée',month:'mois passé',year:'an passé'}[p]}
+function periodLabel(p){return t("pl_"+p)}
+function periodPrevLabel(p){return t("pp_"+p)}
 
 // Heatmap adaptative : day=24h / week=7j / month=daysInMonth / year=12mois
 function buildHeatmap(period){
@@ -2195,20 +2541,20 @@ function renderAnalytics(){
   const expDelta=curExp-prevExp,expDpct=prevExp?Math.round((expDelta/prevExp)*100):0;
   const incDelta=curInc-prevInc,incDpct=prevInc?Math.round((incDelta/prevInc)*100):0;
 
-  const pLabels={day:'Hier vs Aujourd\'hui',week:'Semaine précédente vs Cette semaine',month:'Mois précédent vs Ce mois',year:'Année précédente vs Cette année'};
-  const pCurrent={day:"Aujourd\'hui",week:'Cette semaine',month:'Ce mois',year:'Cette année'};
-  const pPrev={day:'Hier',week:'Sem. passée',month:'Mois passé',year:'An passé'};
+  const pLabels={day:cmpLabel('day'),week:cmpLabel('week'),month:cmpLabel('month'),year:cmpLabel('year')};
+  const pCurrent={day:periodCap('day'),week:periodCap('week'),month:periodCap('month'),year:periodCap('year')};
+  const pPrev={day:periodPrevCap('day'),week:periodPrevCap('week'),month:periodPrevCap('month'),year:periodPrevCap('year')};
 
   // Heatmap adaptative
   const heat=buildHeatmap(p);
-  const heatTitle={day:'Heatmap horaire — aujourd\'hui',week:'Heatmap journalière — semaine',month:'Heatmap journalière — mois',year:'Heatmap mensuelle — année'}[p];
+  const heatTitle=t('heat_'+p)+' — '+periodLabel(p);
 
   // Sub-breakdown adaptatif (remplace "weekday" fixe)
-  const subTitle={day:'Dépenses par tranche horaire',week:'Dépenses par jour',month:'Dépenses par jour de semaine',year:'Dépenses par mois'}[p];
+  const subTitle=t('sub_'+p);
   let subData=[],subLabels=[];
   if(p==='day'){
     // 4 tranches : matin / aprem / soir / nuit
-    subLabels=['Matin\n6-12h','Aprem\n12-18h','Soir\n18-22h','Nuit\n22-6h'];
+    subLabels=trancheLabels();
     subData=[0,0,0,0];
     ptxs.filter(t=>t.type==='expense').forEach(t=>{
       const h=new Date(t.date).getHours();
@@ -2216,13 +2562,13 @@ function renderAnalytics(){
       subData[i]+=t.amount;
     });
   } else if(p==='week'){
-    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];subLabels=wn;subData=[0,0,0,0,0,0,0];
+    const wn=wdShort();subLabels=wn;subData=[0,0,0,0,0,0,0];
     ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getDay()]+=t.amount);
   } else if(p==='month'){
-    const wn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];subLabels=wn;subData=[0,0,0,0,0,0,0];
+    const wn=wdShort();subLabels=wn;subData=[0,0,0,0,0,0,0];
     ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getDay()]+=t.amount);
   } else {
-    const mn=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];subLabels=mn;subData=new Array(12).fill(0);
+    const mn=mnShort();subLabels=mn;subData=new Array(12).fill(0);
     ptxs.filter(t=>t.type==='expense').forEach(t=>subData[new Date(t.date).getMonth()]+=t.amount);
   }
   const maxSub=Math.max(...subData,1);
@@ -2259,19 +2605,19 @@ function renderAnalytics(){
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px">
     ${['day','week','month','year'].map(pp=>`
       <button onclick="analyticsPeriod='${pp}';render();setTimeout(()=>fetchPeriodInsight('${pp}'),200)" style="padding:8px 4px;border:1.5px solid ${p===pp?'var(--acc)':'var(--surf3)'};border-radius:10px;background:${p===pp?'rgba(99,102,241,.15)':'var(--surf2)'};color:${p===pp?'var(--acc3)':'var(--mut)'};font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">
-        ${pp==='day'?'Jour':pp==='week'?'Semaine':pp==='month'?'Mois':'Année'}
+        ${t('an_'+pp)}
       </button>`).join('')}
   </div>
 
   <!-- COMMENTAIRE IA ADAPTATIF -->
   <div class="card" style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(99,102,241,.04));border:1px solid rgba(124,58,237,.2)">
-    <div class="ch">✨ Lecture ${periodLabel(p)} <span class="tm" id="${aiCommentId}_status" style="font-size:10px">${navigator.onLine&&getGroqKey()?'Groq actif':'IA locale'}</span></div>
+    <div class="ch">✨ ${t('lecture')} ${periodLabel(p)} <span class="tm" id="${aiCommentId}_status" style="font-size:10px">${navigator.onLine&&getGroqKey()?t('groq_active'):t('ia_local')}</span></div>
     <div id="${aiCommentId}" style="font-size:13px;line-height:1.55;color:var(--txt2)">${localCmt}</div>
   </div>
 
   <!-- COMPARISON PÉRIODE -->
   <div class="card">
-    <div class="ch">Comparaison — ${pLabels[p]}</div>
+    <div class="ch">${t('cmp_label')} — ${pLabels[p]}</div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:10px">
       <div><div class="tm" style="font-size:10px">${pPrev[p].toUpperCase()}</div><div class="mono fw8" style="font-size:16px">${fmtFull(prevExp)}</div></div>
       <div style="text-align:center;padding:0 6px">
@@ -2282,8 +2628,8 @@ function renderAnalytics(){
     </div>
     <div style="height:1px;background:var(--surf3);margin:8px 0"></div>
     <div style="display:flex;justify-content:space-between;font-size:12px">
-      <div>Revenus: <span style="color:var(--grn);font-weight:700">${fmtFull(curInc)}</span> <span style="color:${incDelta>=0?'var(--grn)':'var(--red)'};font-size:10px">(${incDelta>=0?'+':''}${incDpct}%)</span></div>
-      <div>Solde: <span style="color:${curInc-curExp>=0?'var(--grn)':'var(--red)'};font-weight:700">${fmtFull(curInc-curExp)}</span></div>
+      <div>${t('recv')}: <span style="color:var(--grn);font-weight:700">${fmtFull(curInc)}</span> <span style="color:${incDelta>=0?'var(--grn)':'var(--red)'};font-size:10px">(${incDelta>=0?'+':''}${incDpct}%)</span></div>
+      <div>${t('solde')}: <span style="color:${curInc-curExp>=0?'var(--grn)':'var(--red)'};font-weight:700">${fmtFull(curInc-curExp)}</span></div>
     </div>
   </div>
 
@@ -2291,7 +2637,7 @@ function renderAnalytics(){
 
   <!-- HEATMAP ADAPTATIVE -->
   <div class="card">
-    <div class="ch">${heatTitle} <span class="tm">cliquable</span></div>
+    <div class="ch">${heatTitle} <span class="tm">${t('clickable')}</span></div>
     <div class="hg" style="grid-template-columns:repeat(${p==='year'?6:p==='week'?7:7},1fr)">
       ${heat.cells.map((c,i)=>{
         const ratio=heat.max>0?c.amt/heat.max:0;
@@ -2302,9 +2648,9 @@ function renderAnalytics(){
       }).join('')}
     </div>
     <div style="font-size:10px;color:var(--mut);margin-top:8px;display:flex;align-items:center;gap:6px">
-      <span>Faible</span>
+      <span>${t('intensity_low')}</span>
       <span style="flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,${intensityColor(.05)},${intensityColor(.3)},${intensityColor(.6)},${intensityColor(.95)})"></span>
-      <span>Intense</span>
+      <span>${t('intensity_high')}</span>
     </div>
   </div>
 
@@ -2323,12 +2669,12 @@ function renderAnalytics(){
         </div>`;
       }).join('')}
     </div>
-    ${subData.some(v=>v>0)?`<div style="font-size:11px;color:var(--mut);margin-top:6px">Pic: <span class="ta">${subLabels[subPeak].replace('\n',' ')}</span> — ${fmtFull(subData[subPeak])}</div>`:`<div class="tm" style="font-size:11px;margin-top:6px">${t('no_data_period')} (${periodLabel(p)})</div>`}
+    ${subData.some(v=>v>0)?`<div style="font-size:11px;color:var(--mut);margin-top:6px">${t('peak_label')}: <span class="ta">${subLabels[subPeak].replace('\n',' ')}</span> — ${fmtFull(subData[subPeak])}</div>`:`<div class="tm" style="font-size:11px;margin-top:6px">${t('no_data_period')} (${periodLabel(p)})</div>`}
   </div>
 
   <!-- TOP DÉPENSES ADAPTATIF -->
   <div class="card">
-    <div class="ch">Top dépenses ${periodLabel(p)}</div>
+    <div class="ch">${t('top_exp')} ${periodLabel(p)}</div>
     ${catEntries.map(([id,v])=>{
       const cat=catById(id);const pct=Math.round((v/maxCat)*100);const sharePct=catSum?Math.round(v/catSum*100):0;
       return`<div style="margin-bottom:11px;cursor:pointer" onclick="openCategoryModal('${id}','${p}')">
@@ -2344,13 +2690,13 @@ function renderAnalytics(){
 
   <!-- SCORE FINANCIER ADAPTATIF -->
   <div class="card">
-    <div class="ch">Score financier — ${periodLabel(p)}</div>
+    <div class="ch">${t('score_fin')} — ${periodLabel(p)}</div>
     <div class="flex" style="justify-content:space-around;padding:8px 0">
-      ${scoreRing(periodDiscipline,'Discipline',periodDiscipline>75?'var(--grn)':periodDiscipline>50?'var(--ylw)':'var(--red)')}
-      ${scoreRing(stabilityP,'Stabilité',stabilityP>70?'var(--grn)':stabilityP>40?'var(--ylw)':'var(--red)')}
-      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),'Sécurité',kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
+      ${scoreRing(periodDiscipline,t('an_discipline'),periodDiscipline>75?'var(--grn)':periodDiscipline>50?'var(--ylw)':'var(--red)')}
+      ${scoreRing(stabilityP,t('an_stability'),stabilityP>70?'var(--grn)':stabilityP>40?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),t('an_security'),kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
     </div>
-    <div style="font-size:11px;color:var(--mut);margin-top:4px;text-align:center">Discipline & stabilité recalculées sur ${periodLabel(p)}. Sécurité = jours de réserve globaux.</div>
+    <div style="font-size:11px;color:var(--mut);margin-top:4px;text-align:center">${t('discipline_help').replace('{p}',periodLabel(p))}</div>
   </div>
   `;
 }
@@ -2446,10 +2792,10 @@ function renderTrendChartAdaptive(p,ptxs){
   const avg=buckets.reduce((s,p)=>s+p.exp,0)/n;
   const yAvg=ys(avg);
   return`<div class="card">
-    <div class="ch">📊 Tendance — ${periodLabel(p)} <span class="tm" style="font-weight:600">moy ${fmtFull(avg)}</span></div>
+    <div class="ch">📊 ${t('trend_label')} — ${periodLabel(p)} <span class="tm" style="font-weight:600">${t('an_avg')} ${fmtFull(avg)}</span></div>
     <div style="display:flex;gap:14px;font-size:10px;color:var(--mut);margin-bottom:6px;font-weight:700;text-transform:uppercase">
-      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>Sorties</span>
-      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>Entrées</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>${t('an_sorties')}</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>${t('an_entrees')}</span>
     </div>
     <svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:150px">
       <defs><linearGradient id="trendGrad" x1="0" x2="0" y1="0" y2="1">
@@ -2471,7 +2817,7 @@ function renderTrendChartAdaptive(p,ptxs){
 
 function renderCategoryBarsAdaptive(p,ptxs){
   const exp=ptxs.filter(t=>t.type==='expense');
-  if(!exp.length) return `<div class="card"><div class="ch">🍰 Où va ton argent · ${periodLabel(p)}</div><div class="tm" style="font-size:12px">Aucune dépense ${periodLabel(p)}.</div></div>`;
+  if(!exp.length) return `<div class="card"><div class="ch">🍰 ${t('where_money').replace('{p}',periodLabel(p))}</div><div class="tm" style="font-size:12px">${t('no_exp_period').replace('{p}',periodLabel(p))}</div></div>`;
   const totals={};
   exp.forEach(t=>{const c=catById(t.categoryId);const k=c.icon+' '+c.name;totals[k]=(totals[k]||0)+t.amount});
   const sum=Object.values(totals).reduce((s,v)=>s+v,0);
@@ -2576,8 +2922,8 @@ function renderTrendChart(){
   return`<div class="card">
     <div class="ch">📊 14 derniers jours <span class="tm" style="font-weight:600">moy ${fmtFull(avg)}/j</span></div>
     <div style="display:flex;gap:14px;font-size:10px;color:var(--mut);margin-bottom:6px;font-weight:700;text-transform:uppercase">
-      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>Sorties</span>
-      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>Entrées</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--acc3);vertical-align:middle;margin-right:4px"></span>${t('an_sorties')}</span>
+      <span><span style="display:inline-block;width:10px;height:3px;background:var(--grn);vertical-align:middle;margin-right:4px"></span>${t('an_entrees')}</span>
     </div>
     <svg class="trend-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:150px">
       <defs><linearGradient id="trendGrad" x1="0" x2="0" y1="0" y2="1">
@@ -2660,7 +3006,7 @@ function renderAI(){
     <div class="ch">Indicateurs comportementaux</div>
     <div class="flex" style="justify-content:space-around;padding:8px 0">
       ${scoreRing(kpi.retention!==null?Math.min(100,Math.max(0,kpi.retention)):0,'Rétention',kpi.retention>=25?'var(--grn)':kpi.retention>=0?'var(--ylw)':'var(--red)')}
-      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),'Sécurité',kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),t('an_security'),kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
       ${scoreRing(Math.max(0,100-kpi.dopamineIdx),'Maîtrise',kpi.dopamineIdx<40?'var(--grn)':kpi.dopamineIdx<65?'var(--ylw)':'var(--red)')}
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
@@ -2697,9 +3043,9 @@ function renderAI(){
 
   <!-- QUICK Q -->
   <div class="card">
-    <div class="ch">Questions rapides</div>
+    <div class="ch">${t('home_quick_q')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px">
-      ${['Mes triggers de dépense ?','Comportement nocturne ?','Effet domino détecté ?','Mon taux d\'évaporation ?','Dopamine vs investissement ?','Que couper en premier ?'].map(q=>`<button class="btn btn-ghost btn-sm" onclick="quickAsk('${q}')">${q}</button>`).join('')}
+      ${['ai_q1','ai_q2','ai_q3','ai_q4','ai_q5','ai_q6'].map(k=>{const q=t(k);return `<button class="btn btn-ghost btn-sm" onclick="quickAsk(\`${q}\`)">${q}</button>`}).join('')}
     </div>
   </div>
   `;
@@ -2734,7 +3080,7 @@ function renderSettings(){
     <div class="ch">🏦 ${t('cfg_accounts')} <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">${t('cfg_new_acc')}</button></div>
     ${accs.map(a=>`<div class="ach">
       <span style="font-size:20px">${a.icon}</span>
-      <div style="flex:1"><div style="font-size:13px;font-weight:700">${a.name}</div><div style="font-size:10px;color:var(--mut)">${a.type}</div></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${displayAcc(a).name}</div><div style="font-size:10px;color:var(--mut)">${a.type}</div></div>
       <div class="mono fw8 ${a.balance<0?'tr':'tg'}">${fmtFull(a.balance)}</div>
       <button onclick="openEditAccountModal('${a.id}')" style="background:none;border:none;color:var(--mut);cursor:pointer;font-size:14px;padding:4px">✏️</button>
     </div>`).join('')}
@@ -2745,7 +3091,7 @@ function renderSettings(){
     <div class="ch">🏷️ ${t('cfg_categories')} <button class="btn btn-ghost btn-sm" onclick="openAddCatModal()">${t('cfg_new_cat')}</button></div>
     <div style="font-size:12px;color:var(--mut);margin-bottom:10px">${t('cfg_cat_hint2')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px">
-      ${cats.map(c=>`<button class="btn btn-ghost btn-sm" onclick="openEditCatModal('${c.id}')">${c.icon} ${c.name}</button>`).join('')}
+      ${cats.map(c=>`<button class="btn btn-ghost btn-sm" onclick="openEditCatModal('${c.id}')">${c.icon} ${displayCat(c).name}</button>`).join('')}
     </div>
   </div>
 
@@ -2764,20 +3110,20 @@ function renderSettings(){
         <div class="gh">
           <div class="gn">${g.icon||'🎯'} ${g.name}</div>
           <div class="flex" style="gap:6px">
-            <button class="btn btn-ghost btn-sm" onclick="openDepositModal('${g.id}')">+ Épargner</button>
+            <button class="btn btn-ghost btn-sm" onclick="openDepositModal('${g.id}')">${t('add_save')}</button>
             <button onclick="delGoal('${g.id}')" style="background:none;border:none;color:var(--mut);cursor:pointer">🗑️</button>
           </div>
         </div>
         <div class="bar"><div class="bf" style="width:${pct}%;background:${pct>=100?'var(--grn)':enRetard?'var(--red)':'var(--acc2)'}"></div></div>
         <div class="flex sb" style="font-size:11px;color:var(--mut);margin-top:3px">
           <span class="mono">${fmtFull(g.saved)} / ${fmtFull(g.target)}</span>
-          ${joursDeadline!==null?`<span style="color:${enRetard?'var(--red)':'var(--mut)'}">deadline: ${joursDeadline}j</span>`:''}
+          ${joursDeadline!==null?`<span style="color:${enRetard?'var(--red)':'var(--mut)'}">${t('deadline')}: ${joursDeadline}j</span>`:''}
         </div>
-        ${enRetard?`<div class="geta" style="color:var(--red)">⚠️ En retard — il te faut ${joursNecessaires}j au rythme actuel</div>`
-          :joursNecessaires?`<div class="geta" style="color:var(--grn)">✅ Sur la trajectoire — objectif dans ~${joursNecessaires}j</div>`:''}
+        ${enRetard?`<div class="geta" style="color:var(--red)">${t('goal_late_full').replace('{n}',joursNecessaires)}</div>`
+          :joursNecessaires?`<div class="geta" style="color:var(--grn)">${t('goal_track_full').replace('{n}',joursNecessaires)}</div>`:''}
         ${g.gp?`<div class="geta">${g.gp}</div>`:''}
       </div>`;
-    }).join(''):'<div class="tm" style="font-size:12px">Aucun objectif.</div>'}
+    }).join(''):`<div class="tm" style="font-size:12px">${t('no_goals_msg')}</div>`}
   </div>
 
   <!-- NOTIFICATIONS -->

@@ -1,23 +1,17 @@
-# Finance AI OS · v4.7 (Android 17 / iOS bubble polish + i18n complet + onboarding)
+# Finance AI OS — v4.8
 
-PWA brutaliste de gestion financière — autonome, offline-first, zéro dépendance serveur.
-
-## Nouveautés v4.7
-
-- **Design Android 17 / iOS bubble** : couches CSS additionnelles (sans toucher aux couleurs ni à la structure) — coins plus ronds (squircle), animations springy (cubic-bezier `.34,1.56,.64,1`), bulles actives sur la nav, glassmorphism raffiné, FAB qui se déforme, modales avec spring-up sheet, inputs plus larges et plus doux.
-- **i18n complet** : toutes les sections de la page Paramètres (Comptes, Catégories, Objectifs, Notifications, Groq, Vie & Prévisions, Devise, Langue, Virement, Google Drive, Sauvegarde locale, Zone dangereuse) passent par `t()`. Les noms par défaut des comptes et catégories sont traduits dynamiquement (FR / EN / ES / PT).
-- **Onboarding au premier lancement** : modale plein écran avec choix de la langue + devise (XOF, XAF, EUR, USD, GBP, CAD, MAD, NGN ou personnalisée). Persistance dans `localStorage` + DB IndexedDB.
-- **Aucune logique modifiée** : KPIs, IA, Drive, calculs, navigation — tout fonctionne comme avant.
+## Changements v4.8
+- **i18n complète** : tous les écrans (Accueil, Analyse, Réglages, IA, Alertes) traduits FR/EN/ES/PT.
+- **Comptes & catégories par défaut** affichés dans la langue choisie partout (Réglages inclus).
+- **IA online (Groq) + offline (locale)** répondent toujours dans la langue active.
+- **Manifest fullscreen** + `display_override` → l'app s'ouvre sans barre Chrome (PWA Builder OK).
+- **Service Worker v4.8** (nouveau cache, anciens nettoyés).
 
 ## Déploiement
+1. Pousser `index.html`, `sw.js`, `manifest.json`, `icon-96.png`, `icon-192.png`, `icon-512.png` à la racine du repo GitHub.
+2. Netlify rebuild auto.
+3. Désinstaller l'ancienne PWA sur le téléphone, recharger le site, réinstaller (sinon l'ancien manifest reste épinglé).
+4. Google Cloud Console → OAuth → Origines JavaScript autorisées : `https://financeai2.netlify.app`.
 
-1. Pousse ces fichiers à la racine du repo (Netlify / GitHub Pages).
-2. Aucun build, site statique.
-3. Origine OAuth Google déjà autorisée pour `https://financeai2.netlify.app`.
-
-## Fichiers
-
-- `index.html` — app complète
-- `sw.js` — service worker
-- `manifest.json` — PWA manifest + raccourcis
-- `icon-96.png`, `icon-192.png`, `icon-512.png` — icônes
+## Google OAuth
+Client ID intégré : `548605771267-a8nskjhah481vb3n60t6liibl8i7ia6h.apps.googleusercontent.com`

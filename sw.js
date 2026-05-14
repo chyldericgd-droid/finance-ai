@@ -1,5 +1,5 @@
-// Finance AI Service Worker v4.5
-const CACHE = 'finance-ai-v4.5';
+// Finance AI Service Worker v4.8
+const CACHE = 'finance-ai-v4.8';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
