@@ -693,7 +693,14 @@ const I18N={
     def_cat_bills:'Factures',def_cat_unforeseen:'Imprévus',def_cat_other_exp:'Autre dépense',
     new_tx:'Nouvelle transaction',mood_label:"État d'esprit (Ivy en a besoin)",
     tx_btn_save:'✓ Enregistrer',
-
+    chat_default:'Données chargées. Pose une question sur ta situation financière.',
+    ai_data_local:'Données 100% locales',ai_via_groq:'Analyse via Groq',ai_via_local:'Analyse locale active',
+    gloss_dopamine_t:'🎯 Dopamine',gloss_dopamine_d:"C'est la \"molécule du plaisir court\". Quand tu achètes quelque chose de fun, ton cerveau libère de la dopamine et tu te sens bien… 5 minutes. Plus tu cèdes, plus le seuil monte. Trop de dopamine = beaucoup d'achats inutiles.",
+    gloss_fatigue_t:'🌙 Fatigue décisionnelle',gloss_fatigue_d:"Le cerveau a une \"réserve\" de bonnes décisions par jour. Le soir elle est vide — tu dis oui à des trucs que tu refuserais le matin. C'est pour ça que beaucoup de mauvais achats se font tard.",
+    gloss_evap_t:'💸 Évaporation post-revenu',gloss_evap_d:"Quand un revenu arrive, le cerveau voit \"abondance\" et relâche le contrôle. Résultat : une grosse partie part dans les 48 heures sans qu'on s'en rende compte. C'est l'effet \"argent qui brûle\".",
+    gloss_domino_t:'🌀 Effet domino',gloss_domino_d:"Une grosse dépense en déclenche d'autres (\"tant qu'à faire…\"). C'est pour ça qu'on observe souvent une rafale d'achats après un gros craquage.",
+    gloss_security_t:'🛡️ Sécurité (jours)',gloss_security_d:"Combien de jours tu peux vivre sans nouveau revenu, à ton rythme actuel. C'est ton vrai indicateur de stress financier.",
+    gloss_pressure_t:'📊 Pression 7 jours',gloss_pressure_d:"Compare cette semaine à ton habitude des 30 derniers jours. +20% = tu accélères. -20% = tu freines. Le cerveau ne sent pas la différence en temps réel — d'où l'importance de la mesurer.",
   },
   en:{
     // === extra v4.8 ===,
@@ -909,7 +916,14 @@ const I18N={
     def_cat_bills:'Bills',def_cat_unforeseen:'Unforeseen',def_cat_other_exp:'Other expense',
     new_tx:'New transaction',mood_label:'Mindset (Ivy needs it)',
     tx_btn_save:'✓ Save',
-
+    chat_default:'Data loaded. Ask a question about your financial situation.',
+    ai_data_local:'100% local data',ai_via_groq:'Analyzed via Groq',ai_via_local:'Local analysis active',
+    gloss_dopamine_t:'🎯 Dopamine',gloss_dopamine_d:'The "short-pleasure molecule". When you buy something fun, your brain releases dopamine and you feel good… for 5 minutes. The more you give in, the higher the threshold. Too much dopamine = many useless purchases.',
+    gloss_fatigue_t:'🌙 Decision fatigue',gloss_fatigue_d:'Your brain has a daily "reserve" of good decisions. By evening it is empty — you say yes to things you would refuse in the morning. That is why many bad purchases happen late.',
+    gloss_evap_t:'💸 Post-income evaporation',gloss_evap_d:'When income arrives, the brain sees "abundance" and loosens control. Result: a big chunk vanishes in the next 48 hours without notice. The classic "money burning" effect.',
+    gloss_domino_t:'🌀 Domino effect',gloss_domino_d:'One big expense triggers others ("might as well…"). That is why we often see a burst of purchases after a major slip.',
+    gloss_security_t:'🛡️ Security (days)',gloss_security_d:'How many days you can live without new income at your current pace. Your real financial-stress indicator.',
+    gloss_pressure_t:'📊 7-day pressure',gloss_pressure_d:'Compares this week with your 30-day habit. +20% = you are speeding up. -20% = you are braking. The brain does not feel the difference in real time — that is why measuring it matters.',
   },
   es:{
     // === extra v4.8 ===,
@@ -1116,7 +1130,14 @@ const I18N={
     def_cat_bills:'Facturas',def_cat_unforeseen:'Imprevistos',def_cat_other_exp:'Otro gasto',
     new_tx:'Nueva transacción',mood_label:'Estado de ánimo (Ivy lo necesita)',
     tx_btn_save:'✓ Guardar',
-
+    chat_default:'Datos cargados. Haz una pregunta sobre tu situación financiera.',
+    ai_data_local:'Datos 100% locales',ai_via_groq:'Análisis vía Groq',ai_via_local:'Análisis local activo',
+    gloss_dopamine_t:'🎯 Dopamina',gloss_dopamine_d:'Es la "molécula del placer corto". Cuando compras algo divertido, tu cerebro libera dopamina y te sientes bien… 5 minutos. Cuanto más cedes, más sube el umbral. Demasiada dopamina = muchas compras inútiles.',
+    gloss_fatigue_t:'🌙 Fatiga de decisión',gloss_fatigue_d:'El cerebro tiene una "reserva" diaria de buenas decisiones. Por la noche está vacía — dices sí a cosas que rechazarías por la mañana. Por eso muchas malas compras ocurren tarde.',
+    gloss_evap_t:'💸 Evaporación post-ingreso',gloss_evap_d:'Cuando llega un ingreso, el cerebro ve "abundancia" y suelta el control. Resultado: una gran parte se va en 48 horas sin que te des cuenta. Es el efecto "dinero que se quema".',
+    gloss_domino_t:'🌀 Efecto dominó',gloss_domino_d:'Un gran gasto desencadena otros ("ya que estamos…"). Por eso suele aparecer una ráfaga de compras tras un gran desliz.',
+    gloss_security_t:'🛡️ Seguridad (días)',gloss_security_d:'Cuántos días puedes vivir sin nuevos ingresos a tu ritmo actual. Es tu verdadero indicador de estrés financiero.',
+    gloss_pressure_t:'📊 Presión 7 días',gloss_pressure_d:'Compara esta semana con tu hábito de 30 días. +20% = aceleras. -20% = frenas. El cerebro no siente la diferencia en tiempo real — por eso importa medirla.',
   },
   pt:{
     // === extra v4.8 ===,
@@ -1323,7 +1344,14 @@ const I18N={
     def_cat_bills:'Contas',def_cat_unforeseen:'Imprevistos',def_cat_other_exp:'Outra despesa',
     new_tx:'Nova transação',mood_label:'Estado de espírito (Ivy precisa)',
     tx_btn_save:'✓ Guardar',
-
+    chat_default:'Dados carregados. Faz uma pergunta sobre a tua situação financeira.',
+    ai_data_local:'Dados 100% locais',ai_via_groq:'Análise via Groq',ai_via_local:'Análise local ativa',
+    gloss_dopamine_t:'🎯 Dopamina',gloss_dopamine_d:'É a "molécula do prazer curto". Quando compras algo divertido, o cérebro liberta dopamina e sentes-te bem… 5 minutos. Quanto mais cedes, mais o limiar sobe. Demasiada dopamina = muitas compras inúteis.',
+    gloss_fatigue_t:'🌙 Fadiga decisional',gloss_fatigue_d:'O cérebro tem uma "reserva" diária de boas decisões. À noite está vazia — dizes sim a coisas que recusarias de manhã. Por isso muitas más compras acontecem tarde.',
+    gloss_evap_t:'💸 Evaporação pós-receita',gloss_evap_d:'Quando entra dinheiro, o cérebro vê "abundância" e larga o controlo. Resultado: uma grande parte desaparece em 48h sem dares conta. É o efeito "dinheiro a arder".',
+    gloss_domino_t:'🌀 Efeito dominó',gloss_domino_d:'Uma grande despesa desencadeia outras ("já que estamos…"). Por isso vê-se muitas vezes uma rajada de compras depois de um grande deslize.',
+    gloss_security_t:'🛡️ Segurança (dias)',gloss_security_d:'Quantos dias podes viver sem nova receita ao ritmo atual. É o teu verdadeiro indicador de stress financeiro.',
+    gloss_pressure_t:'📊 Pressão 7 dias',gloss_pressure_d:'Compara esta semana com o teu hábito de 30 dias. +20% = aceleras. -20% = travas. O cérebro não sente a diferença em tempo real — daí ser importante medir.',
   },
 };
 
@@ -2992,45 +3020,40 @@ function renderAI(){
   const kpi=computeKPIs(),alerts=getAlerts(kpi);
   const isOnline=navigator.onLine;
   return`
-  <div class="stitle">Conseiller IA</div>
-  <div class="ssub" style="color:${isOnline?'var(--grn)':'var(--org)'}">● ${isOnline?'Groq AI actif':'Mode local — hors ligne'}</div>
+  <div class="stitle">${t('ai_title')}</div>
+  <div class="ssub" style="color:${isOnline?'var(--grn)':'var(--org)'}">● ${isOnline?t('ai_online'):t('ai_offline')}</div>
 
   <!-- AUTO INSIGHTS -->
   <div class="card">
-    <div class="ch">🧠 Analyse automatique</div>
+    <div class="ch">${t('ai_auto')}</div>
     ${alerts.map(a=>`<div class="al al-${a.t}">${a.m}</div>`).join('')}
   </div>
 
   <!-- SCORES COMPORTEMENTAUX -->
   <div class="card">
-    <div class="ch">Indicateurs comportementaux</div>
+    <div class="ch">${t('ai_indicators')}</div>
     <div class="flex" style="justify-content:space-around;padding:8px 0">
-      ${scoreRing(kpi.retention!==null?Math.min(100,Math.max(0,kpi.retention)):0,'Rétention',kpi.retention>=25?'var(--grn)':kpi.retention>=0?'var(--ylw)':'var(--red)')}
-      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),t('an_security'),kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
-      ${scoreRing(Math.max(0,100-kpi.dopamineIdx),'Maîtrise',kpi.dopamineIdx<40?'var(--grn)':kpi.dopamineIdx<65?'var(--ylw)':'var(--red)')}
+      ${scoreRing(kpi.retention!==null?Math.min(100,Math.max(0,kpi.retention)):0,t('ai_retention'),kpi.retention>=25?'var(--grn)':kpi.retention>=0?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.min(100,kpi.safetyDays===9999?100:kpi.safetyDays*3),t('ai_security'),kpi.safetyDays>20?'var(--grn)':kpi.safetyDays>10?'var(--ylw)':'var(--red)')}
+      ${scoreRing(Math.max(0,100-kpi.dopamineIdx),t('ai_maitrise'),kpi.dopamineIdx<40?'var(--grn)':kpi.dopamineIdx<65?'var(--ylw)':'var(--red)')}
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-      <div class="kt"><div class="kl">Pression 7j</div><div class="kv" style="color:${kpi.pressureIdx>20?'var(--red)':kpi.pressureIdx>0?'var(--org)':'var(--grn)'}">${kpi.pressureIdx>0?'+':''}${kpi.pressureIdx}%</div><div class="ks">vs habitude 30j</div></div>
-      <div class="kt"><div class="kl">Évaporation</div><div class="kv" style="color:${kpi.evaporationRate>50?'var(--red)':kpi.evaporationRate>25?'var(--org)':'var(--grn)'}">${kpi.evaporationRate}%</div><div class="ks">post-revenu 48h</div></div>
-      <div class="kt"><div class="kl">Nocturn.</div><div class="kv" style="color:${kpi.nightPct>20?'var(--red)':kpi.nightPct>10?'var(--org)':'var(--grn)'}">${kpi.nightPct}%</div><div class="ks">dépenses 21h-5h</div></div>
-      <div class="kt"><div class="kl">Dopamine</div><div class="kv" style="color:${kpi.dopamineIdx>60?'var(--red)':kpi.dopamineIdx>35?'var(--org)':'var(--grn)'}">${kpi.dopamineIdx}%</div><div class="ks">impulsion / total</div></div>
+      <div class="kt"><div class="kl">${t('ai_pressure')}</div><div class="kv" style="color:${kpi.pressureIdx>20?'var(--red)':kpi.pressureIdx>0?'var(--org)':'var(--grn)'}">${kpi.pressureIdx>0?'+':''}${kpi.pressureIdx}%</div><div class="ks">${t('ai_pressure_sub')}</div></div>
+      <div class="kt"><div class="kl">${t('ai_evap')}</div><div class="kv" style="color:${kpi.evaporationRate>50?'var(--red)':kpi.evaporationRate>25?'var(--org)':'var(--grn)'}">${kpi.evaporationRate}%</div><div class="ks">${t('ai_evap_sub')}</div></div>
+      <div class="kt"><div class="kl">${t('ai_nocturne')}</div><div class="kv" style="color:${kpi.nightPct>20?'var(--red)':kpi.nightPct>10?'var(--org)':'var(--grn)'}">${kpi.nightPct}%</div><div class="ks">${t('ai_nocturne_sub')}</div></div>
+      <div class="kt"><div class="kl">${t('ai_dopamine')}</div><div class="kv" style="color:${kpi.dopamineIdx>60?'var(--red)':kpi.dopamineIdx>35?'var(--org)':'var(--grn)'}">${kpi.dopamineIdx}%</div><div class="ks">${t('ai_dopamine_sub')}</div></div>
     </div>
   </div>
 
   <!-- COMPRENDRE — glossaire neuroscience -->
   <div class="card">
-    <div class="ch">📖 Comprendre ces mots</div>
-    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🎯 Dopamine</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">C'est la "molécule du plaisir court". Quand tu achètes quelque chose de fun, ton cerveau libère de la dopamine et tu te sens bien… 5 minutes. Plus tu cèdes, plus le seuil monte. Trop de dopamine = beaucoup d'achats inutiles.</div></details>
-    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🌙 Fatigue décisionnelle</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Le cerveau a une "réserve" de bonnes décisions par jour. Le soir elle est vide — tu dis oui à des trucs que tu refuserais le matin. C'est pour ça que beaucoup de mauvais achats se font tard.</div></details>
-    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">💸 Évaporation post-revenu</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Quand un revenu arrive, le cerveau voit "abondance" et relâche le contrôle. Résultat : une grosse partie part dans les 48 heures sans qu'on s'en rende compte. C'est l'effet "argent qui brûle".</div></details>
-    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🌀 Effet domino</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Une grosse dépense en déclenche d'autres ("tant qu'à faire…"). C'est pour ça qu'on observe souvent une rafale d'achats après un gros craquage.</div></details>
-    <details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">🛡️ Sécurité (jours)</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Combien de jours tu peux vivre sans nouveau revenu, à ton rythme actuel. C'est ton vrai indicateur de stress financier.</div></details>
-    <details><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">📊 Pression 7 jours</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">Compare cette semaine à ton habitude des 30 derniers jours. +20% = tu accélères. -20% = tu freines. Le cerveau ne sent pas la différence en temps réel — d'où l'importance de la mesurer.</div></details>
+    <div class="ch">${t('ai_glossary')}</div>
+    ${[['gloss_dopamine_t','gloss_dopamine_d'],['gloss_fatigue_t','gloss_fatigue_d'],['gloss_evap_t','gloss_evap_d'],['gloss_domino_t','gloss_domino_d'],['gloss_security_t','gloss_security_d'],['gloss_pressure_t','gloss_pressure_d']].map(([tk,dk])=>`<details style="margin-bottom:6px"><summary style="cursor:pointer;font-size:13px;font-weight:700;padding:6px 0">${t(tk)}</summary><div style="font-size:12px;color:var(--txt2);line-height:1.55;padding:4px 0 8px">${t(dk)}</div></details>`).join('')}
   </div>
   <div class="card">
-    <div class="ch">Chat IA <span class="pill" style="color:${isOnline?'var(--grn)':'var(--org)'}">${isOnline?'Groq AI':'Local'}</span></div>
+    <div class="ch">${t('ai_chat')} <span class="pill" style="color:${isOnline?'var(--grn)':'var(--org)'}">${isOnline?'Groq AI':t('ai_local')}</span></div>
     <div class="chat" id="chatArea">
-      ${aiMsgs.length===0?'<div class="bub bai">Données chargées. Pose une question sur ta situation financière.</div>':''}
+      ${aiMsgs.length===0?`<div class="bub bai">${t('chat_default')}</div>`:''}
       ${aiMsgs.map(m=>`<div class="bub ${m.r==='ai'?'bai':'bus'}">${m.c.replace(/\n/g,'<br>')}${m.src&&m.r==='ai'?`<div style="font-size:9px;color:var(--mut);margin-top:4px">${m.src}</div>`:''}</div>`).join('')}
       ${aiTyping?'<div class="bub bai ald"><div class="add"></div><div class="add"></div><div class="add"></div></div>':''}
     </div>
@@ -3038,7 +3061,7 @@ function renderAI(){
       <input type="text" id="chatInput" class="fi" placeholder="${t('chat_ph')}" autocomplete="off">
       <button class="sbtn" id="sendBtn"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
-    <div style="font-size:10px;color:var(--mut);margin-top:7px;text-align:center">Données 100% locales · ${isOnline?'Analyse via Groq':'Analyse locale active'}</div>
+    <div style="font-size:10px;color:var(--mut);margin-top:7px;text-align:center">${t('ai_data_local')} · ${isOnline?t('ai_via_groq'):t('ai_via_local')}</div>
   </div>
 
   <!-- QUICK Q -->
