@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
@@ -243,6 +243,381 @@ select.fi{cursor:pointer}
 
 <script>
 'use strict';
+
+// ════════════════════════════════════════
+// i18n — INTERNATIONALISATION
+// Auto-détecte la langue du téléphone.
+// Fallback: français. Overridable dans Config.
+// ════════════════════════════════════════
+const I18N={
+  fr:{
+    // Nav
+    nav_home:'Home',nav_txns:'Txns',nav_analyse:'Analyse',nav_ia:'IA',nav_config:'Config',
+    // Hero
+    capital:'Capital disponible',savings_locked:'en épargne',revenues:'Revenus',expenses:'Dépenses',
+    // KPIs
+    burn_rate:'Burn Rate',burn_sub:'par jour · lissé 30j',safety_days:'Safety Days',safety_sub:'jours · au rythme actuel',
+    pressure:'Pression 7j',pressure_sub:'vs habitude 30j',friction_ivy:'Friction · Ivy',
+    friction_ok:'tu tiens le cap',friction_mid:'tu zigzagues',friction_bad:'tu dérives',
+    // Risk
+    risk_critical:'CRITIQUE',risk_high:'ÉLEVÉ',risk_moderate:'MODÉRÉ',risk_stable:'STABLE',
+    // Alerts section
+    alerts_title:'Alertes intelligentes',
+    // Tx list
+    tx_recent:'Transactions récentes',tx_see_all:'Voir tout',tx_none:'Aucune transaction. Appuie sur + pour commencer.',
+    tx_title:'Transactions',tx_search:'Rechercher...',
+    tx_all:'Tout',tx_income:'Revenus',tx_expense:'Dépenses',tx_transfer:'Transferts',
+    // Analytics
+    an_title:'Analyse',an_day:'Jour',an_week:'Semaine',an_month:'Mois',an_year:'Année',
+    an_prev:'MOIS PASSÉ',an_curr:'CE MOIS',an_14days:'14 derniers jours',an_avg:'moy',
+    an_sorties:'Sorties',an_entrees:'Entrées',an_where:'Où va ton argent ce mois',
+    an_catdesc:'La catégorie en tête capte',an_catfree:'sans douleur — ton cerveau ne sentira pas la différence.',
+    an_top:'Top dépenses ce mois',an_none:'Aucune dépense ce mois.',an_anomalies:'⚡ Anomalies',
+    an_score:'Score financier',an_discipline:'Discipline',an_stability:'Stabilité',an_security:'Sécurité',
+    // AI screen
+    ai_title:'Conseiller IA',ai_online:'Groq AI actif',ai_offline:'Mode local — hors ligne',
+    ai_auto:'🧠 Analyse automatique',ai_indicators:'Indicateurs comportementaux',
+    ai_retention:'Rétention',ai_security:'Sécurité',ai_maitrise:'Maîtrise',
+    ai_pressure:'Pression 7j',ai_pressure_sub:'vs habitude 30j',
+    ai_evap:'Évaporation',ai_evap_sub:'post-revenu 48h',
+    ai_nocturne:'Nocturn.',ai_nocturne_sub:'dépenses 21h-5h',
+    ai_dopamine:'Dopamine',ai_dopamine_sub:'impulsion / total',
+    ai_glossary:'📖 Comprendre ces mots',ai_chat:'Chat IA',ai_local:'Local',
+    ai_placeholder:'Analyse mes dépenses...',ai_data:'Données 100% locales',
+    ai_groq_active:'Analyse via Groq',ai_groq_local:'Analyse locale active',
+    ai_quick:'Questions rapides',
+    ai_q1:'Mes triggers de dépense ?',ai_q2:'Comportement nocturne ?',ai_q3:'Effet domino détecté ?',
+    ai_q4:'Mon taux d\'évaporation ?',ai_q5:'Dopamine vs investissement ?',ai_q6:'Que couper en premier ?',
+    // Goals
+    goals_title:'Objectifs',goals_manage:'Gérer',goals_new:'Nouveau',goals_save:'+ Épargner',
+    goals_add:'Ajouter',goals_on_track:'Sur la trajectoire — objectif dans',goals_late:'En retard',
+    goals_impossible:'impossible au rythme actuel — burn rate > revenus',
+    goals_destiny:'Compteur de Destin : atteint le',goals_j:'j',
+    goals_name:'Nom (ex: Nouveau PC)',goals_target:'Montant cible',goals_icon:'Emoji (ex: 💻)',
+    goals_deadline:'Date limite (optionnel)',goals_note:'Étape ou note (optionnel)',goals_create:'Créer',
+    goals_deposit:'Montant à épargner',goals_deposit_btn:'Épargner',
+    // Config
+    cfg_title:'Paramètres',cfg_accounts:'Comptes',cfg_new_acc:'+ Nouveau',
+    cfg_categories:'Catégories',cfg_new_cat:'+ Nouvelle',cfg_cat_hint:'Clique sur une catégorie pour la modifier ou la supprimer.',
+    cfg_goals:'Objectifs',cfg_notifs:'Notifications',cfg_notifs_enable:'Activer',
+    cfg_notifs_active:'✅ Actives',cfg_notifs_inactive:'Activer',cfg_remind:'Heure rappel',
+    cfg_notifs_test:'🔔 Tester',cfg_groq:'Intelligence Artificielle — Groq',
+    cfg_groq_free:'Groq est 100% gratuit',cfg_groq_desc:'14 400 req/jour, aucune carte bancaire.',
+    cfg_groq_key:'CLÉ ACTUELLE',cfg_groq_save:'💾 Enregistrer la clé Groq',
+    cfg_groq_test:'✏️ Tester',cfg_groq_del:'🗑️ Supprimer',
+    cfg_currency:'Devise',cfg_currency_change:'Changer',cfg_currency_current:'Devise actuelle:',
+    cfg_lang:'Langue',cfg_lang_change:'Changer',
+    cfg_transfer:'Virement entre comptes',cfg_transfer_btn:'Effectuer un virement',
+    cfg_sync:'Sync Multi-Appareils',cfg_sync_desc:'Exporte un code de sauvegarde contenant toutes tes données. Importe-le sur n\'importe quel appareil.',
+    cfg_backup:'🧳 Générer code de sauvegarde',cfg_restore:'🧳 Restaurer depuis un code',cfg_csv:'📊 Export CSV',
+    cfg_danger:'Zone dangereuse',cfg_wipe:'Effacer toutes les données',
+    cfg_income_exp:'Revenus attendus (7j)',cfg_income_exp_ph:'ex: 5000',
+    cfg_hourly:'Taux horaire estimé',cfg_hourly_ph:'ex: 500',
+    cfg_ant:'Seuil "fourmi"',cfg_ant_ph:'défaut 200',
+    // Add TX modal
+    tx_add:'Nouvelle transaction',tx_amount:'Montant',tx_date:'Date / Heure',
+    tx_note:'Note (optionnel)',tx_loc:'Lieu (optionnel — aide l\'IA)',tx_mood:'Humeur au moment de payer',
+    tx_save:'✓ Enregistrer',
+    tx_type_exp:'Dépense',tx_type_inc:'Revenu',tx_type_tr:'Virement',
+    tx_from:'Compte source',tx_to:'Compte destination',
+    // Misc
+    online:'● EN LIGNE',offline:'○ HORS LIGNE',
+    ago_now:'maintenant',ago_min:'min',ago_h:'h',ago_d:'j',
+    confirm_delete:'Supprimer cette transaction ?',confirm_wipe:'Effacer TOUTES les données ? Cette action est irréversible.',
+    save:'Enregistrer',cancel:'Annuler',delete:'Supprimer',edit:'Modifier',close:'Fermer',
+    insight_loading:'Analyse en cours...',
+    celebration_streak:'🔥 Série de',celebration_days:'jours consécutifs ! Continue !',
+    celebration_goal:'🎯 Objectif atteint !',
+    ant_effect:'Effet fourmi',
+    ivy_verdict:'IVY · Verdict',ivy_sub:'Stratège brutal',ivy_assume:'J\'assume',ivy_talk:'Parler à Ivy',
+    kpi_burn_detail:'Calculé sur tes 30 derniers jours de dépenses',kpi_burn_vs:'En comparaison, ta moyenne des 7 derniers jours:',
+    kpi_safety_detail:'de capital actif et',kpi_safety_per:'par jour, tu peux tenir',kpi_safety_days:'jours',kpi_safety_inf:'indéfiniment',
+    kpi_pressure_detail:'Dépenses journalières des 7 derniers jours:',kpi_pressure_vs:'vs ta moyenne 30j:',
+    kpi_pressure_up:'⚠️ Tu accélères. C\'est le moment de freiner avant d\'être à sec.',
+    kpi_pressure_down:'✅ Tu freines par rapport à ton habitude.',kpi_pressure_stable:'Rythme stable.',
+    exp_income:'revenus attendus',
+    hourly_equiv:'= temps de vie',
+    no_tx:'Aucune transaction trouvée.',
+    acc_add:'+ Ajouter',
+  },
+  en:{
+    nav_home:'Home',nav_txns:'Txns',nav_analyse:'Analyse',nav_ia:'AI',nav_config:'Config',
+    capital:'Available Balance',savings_locked:'in savings',revenues:'Income',expenses:'Expenses',
+    burn_rate:'Burn Rate',burn_sub:'per day · 30d avg',safety_days:'Safety Days',safety_sub:'days · at current pace',
+    pressure:'7d Pressure',pressure_sub:'vs 30d habit',friction_ivy:'Friction · Ivy',
+    friction_ok:'on track',friction_mid:'zigzagging',friction_bad:'drifting',
+    risk_critical:'CRITICAL',risk_high:'HIGH',risk_moderate:'MODERATE',risk_stable:'STABLE',
+    alerts_title:'Smart Alerts',
+    tx_recent:'Recent Transactions',tx_see_all:'See all',tx_none:'No transactions yet. Tap + to start.',
+    tx_title:'Transactions',tx_search:'Search...',
+    tx_all:'All',tx_income:'Income',tx_expense:'Expenses',tx_transfer:'Transfers',
+    an_title:'Analytics',an_day:'Day',an_week:'Week',an_month:'Month',an_year:'Year',
+    an_prev:'LAST PERIOD',an_curr:'THIS PERIOD',an_14days:'Last 14 days',an_avg:'avg',
+    an_sorties:'Outflows',an_entrees:'Inflows',an_where:'Where your money goes this month',
+    an_catdesc:'Top category takes',an_catfree:'pain-free — your brain won\'t feel the difference.',
+    an_top:'Top expenses this month',an_none:'No expenses this month.',an_anomalies:'⚡ Anomalies',
+    an_score:'Financial Score',an_discipline:'Discipline',an_stability:'Stability',an_security:'Security',
+    ai_title:'AI Advisor',ai_online:'Groq AI active',ai_offline:'Local mode — offline',
+    ai_auto:'🧠 Auto Analysis',ai_indicators:'Behavioral Indicators',
+    ai_retention:'Retention',ai_security:'Security',ai_maitrise:'Control',
+    ai_pressure:'7d Pressure',ai_pressure_sub:'vs 30d habit',
+    ai_evap:'Evaporation',ai_evap_sub:'post-income 48h',
+    ai_nocturne:'Night',ai_nocturne_sub:'expenses 9pm-5am',
+    ai_dopamine:'Dopamine',ai_dopamine_sub:'impulse / total',
+    ai_glossary:'📖 Understand these terms',ai_chat:'AI Chat',ai_local:'Local',
+    ai_placeholder:'Analyze my spending...',ai_data:'100% local data',
+    ai_groq_active:'Analysis via Groq',ai_groq_local:'Local analysis active',
+    ai_quick:'Quick questions',
+    ai_q1:'My spending triggers?',ai_q2:'Night spending behavior?',ai_q3:'Domino effect detected?',
+    ai_q4:'My evaporation rate?',ai_q5:'Dopamine vs investment?',ai_q6:'What to cut first?',
+    goals_title:'Goals',goals_manage:'Manage',goals_new:'New',goals_save:'+ Save',
+    goals_add:'Add',goals_on_track:'On track — goal in',goals_late:'Behind schedule',
+    goals_impossible:'impossible at current pace — burn rate > income',
+    goals_destiny:'Destiny Counter: reached on',goals_j:'d',
+    goals_name:'Name (e.g. New PC)',goals_target:'Target amount',goals_icon:'Emoji (e.g. 💻)',
+    goals_deadline:'Deadline (optional)',goals_note:'Step or note (optional)',goals_create:'Create',
+    goals_deposit:'Amount to save',goals_deposit_btn:'Save',
+    cfg_title:'Settings',cfg_accounts:'Accounts',cfg_new_acc:'+ New',
+    cfg_categories:'Categories',cfg_new_cat:'+ New',cfg_cat_hint:'Tap a category to edit or delete it.',
+    cfg_goals:'Goals',cfg_notifs:'Notifications',cfg_notifs_enable:'Enable',
+    cfg_notifs_active:'✅ Active',cfg_notifs_inactive:'Enable',cfg_remind:'Reminder time',
+    cfg_notifs_test:'🔔 Test',cfg_groq:'Artificial Intelligence — Groq',
+    cfg_groq_free:'Groq is 100% free',cfg_groq_desc:'14,400 req/day, no credit card needed.',
+    cfg_groq_key:'CURRENT KEY',cfg_groq_save:'💾 Save Groq key',
+    cfg_groq_test:'✏️ Test',cfg_groq_del:'🗑️ Delete',
+    cfg_currency:'Currency',cfg_currency_change:'Change',cfg_currency_current:'Current currency:',
+    cfg_lang:'Language',cfg_lang_change:'Change',
+    cfg_transfer:'Transfer between accounts',cfg_transfer_btn:'Make a transfer',
+    cfg_sync:'Multi-device Sync',cfg_sync_desc:'Export a backup code with all your data. Import it on any device.',
+    cfg_backup:'🧳 Generate backup code',cfg_restore:'🧳 Restore from code',cfg_csv:'📊 Export CSV',
+    cfg_danger:'Danger zone',cfg_wipe:'Erase all data',
+    cfg_income_exp:'Expected income (7d)',cfg_income_exp_ph:'e.g. 5000',
+    cfg_hourly:'Estimated hourly rate',cfg_hourly_ph:'e.g. 500',
+    cfg_ant:'Ant threshold',cfg_ant_ph:'default 200',
+    tx_add:'New transaction',tx_amount:'Amount',tx_date:'Date / Time',
+    tx_note:'Note (optional)',tx_loc:'Location (optional — helps AI)',tx_mood:'Mood when paying',
+    tx_save:'✓ Save',tx_type_exp:'Expense',tx_type_inc:'Income',tx_type_tr:'Transfer',
+    tx_from:'Source account',tx_to:'Destination account',
+    online:'● ONLINE',offline:'○ OFFLINE',
+    ago_now:'now',ago_min:'min',ago_h:'h',ago_d:'d',
+    confirm_delete:'Delete this transaction?',confirm_wipe:'Erase ALL data? This cannot be undone.',
+    save:'Save',cancel:'Cancel',delete:'Delete',edit:'Edit',close:'Close',
+    insight_loading:'Analyzing...',
+    celebration_streak:'🔥',celebration_days:'consecutive days! Keep going!',
+    celebration_goal:'🎯 Goal reached!',
+    ant_effect:'Ant effect',
+    ivy_verdict:'IVY · Verdict',ivy_sub:'Brutal strategist',ivy_assume:'I own it',ivy_talk:'Talk to Ivy',
+    kpi_burn_detail:'Calculated over your last 30 days of expenses',kpi_burn_vs:'For comparison, your 7-day daily average:',
+    kpi_safety_detail:'in active capital and',kpi_safety_per:'per day, you can last',kpi_safety_days:'days',kpi_safety_inf:'indefinitely',
+    kpi_pressure_detail:'Daily expenses last 7 days:',kpi_pressure_vs:'vs your 30d avg:',
+    kpi_pressure_up:'⚠️ Accelerating. Time to slow down before you run dry.',
+    kpi_pressure_down:'✅ You\'re slowing down vs your habit.',kpi_pressure_stable:'Steady pace.',
+    exp_income:'expected income',hourly_equiv:'= life time',no_tx:'No transactions found.',
+    acc_add:'+ Add',
+  },
+  es:{
+    nav_home:'Inicio',nav_txns:'Txns',nav_analyse:'Análisis',nav_ia:'IA',nav_config:'Config',
+    capital:'Capital disponible',savings_locked:'en ahorro',revenues:'Ingresos',expenses:'Gastos',
+    burn_rate:'Burn Rate',burn_sub:'por día · prom. 30d',safety_days:'Días de seguridad',safety_sub:'días · al ritmo actual',
+    pressure:'Presión 7d',pressure_sub:'vs hábito 30d',friction_ivy:'Fricción · Ivy',
+    friction_ok:'en camino',friction_mid:'zigzagueando',friction_bad:'a la deriva',
+    risk_critical:'CRÍTICO',risk_high:'ALTO',risk_moderate:'MODERADO',risk_stable:'ESTABLE',
+    alerts_title:'Alertas inteligentes',tx_recent:'Transacciones recientes',tx_see_all:'Ver todo',
+    tx_none:'Sin transacciones. Toca + para empezar.',tx_title:'Transacciones',tx_search:'Buscar...',
+    tx_all:'Todo',tx_income:'Ingresos',tx_expense:'Gastos',tx_transfer:'Transferencias',
+    an_title:'Análisis',an_day:'Día',an_week:'Semana',an_month:'Mes',an_year:'Año',
+    an_prev:'MES ANTERIOR',an_curr:'ESTE MES',an_14days:'Últimos 14 días',an_avg:'prom',
+    an_sorties:'Salidas',an_entrees:'Entradas',an_where:'Dónde va tu dinero este mes',
+    an_catdesc:'La categoría principal toma',an_catfree:'sin esfuerzo.',
+    an_top:'Gastos principales',an_none:'Sin gastos este mes.',an_anomalies:'⚡ Anomalías',
+    an_score:'Puntuación financiera',an_discipline:'Disciplina',an_stability:'Estabilidad',an_security:'Seguridad',
+    ai_title:'Asesor IA',ai_online:'Groq IA activo',ai_offline:'Modo local — sin conexión',
+    ai_auto:'🧠 Análisis automático',ai_indicators:'Indicadores de comportamiento',
+    ai_retention:'Retención',ai_security:'Seguridad',ai_maitrise:'Control',
+    ai_pressure:'Presión 7d',ai_pressure_sub:'vs hábito 30d',
+    ai_evap:'Evaporación',ai_evap_sub:'post-ingreso 48h',
+    ai_nocturne:'Nocturno',ai_nocturne_sub:'gastos 21h-5h',
+    ai_dopamine:'Dopamina',ai_dopamine_sub:'impulso / total',
+    ai_glossary:'📖 Entender estos términos',ai_chat:'Chat IA',ai_local:'Local',
+    ai_placeholder:'Analiza mis gastos...',ai_data:'Datos 100% locales',
+    ai_groq_active:'Análisis via Groq',ai_groq_local:'Análisis local activo',
+    ai_quick:'Preguntas rápidas',
+    ai_q1:'¿Mis disparadores de gasto?',ai_q2:'¿Comportamiento nocturno?',ai_q3:'¿Efecto dominó detectado?',
+    ai_q4:'¿Mi tasa de evaporación?',ai_q5:'¿Dopamina vs inversión?',ai_q6:'¿Qué recortar primero?',
+    goals_title:'Metas',goals_manage:'Gestionar',goals_new:'Nueva',goals_save:'+ Ahorrar',
+    goals_add:'Agregar',goals_on_track:'En camino — meta en',goals_late:'Atrasado',
+    goals_impossible:'imposible al ritmo actual',goals_destiny:'Fecha estimada:',goals_j:'d',
+    goals_name:'Nombre (ej: PC nuevo)',goals_target:'Monto objetivo',goals_icon:'Emoji (ej: 💻)',
+    goals_deadline:'Fecha límite (opcional)',goals_note:'Nota (opcional)',goals_create:'Crear',
+    goals_deposit:'Monto a ahorrar',goals_deposit_btn:'Ahorrar',
+    cfg_title:'Configuración',cfg_accounts:'Cuentas',cfg_new_acc:'+ Nueva',
+    cfg_categories:'Categorías',cfg_new_cat:'+ Nueva',cfg_cat_hint:'Toca una categoría para editar o eliminar.',
+    cfg_goals:'Metas',cfg_notifs:'Notificaciones',cfg_notifs_enable:'Activar',
+    cfg_notifs_active:'✅ Activas',cfg_notifs_inactive:'Activar',cfg_remind:'Hora recordatorio',
+    cfg_notifs_test:'🔔 Probar',cfg_groq:'Inteligencia Artificial — Groq',
+    cfg_groq_free:'Groq es 100% gratuito',cfg_groq_desc:'14.400 req/día, sin tarjeta.',
+    cfg_groq_key:'CLAVE ACTUAL',cfg_groq_save:'💾 Guardar clave Groq',
+    cfg_groq_test:'✏️ Probar',cfg_groq_del:'🗑️ Eliminar',
+    cfg_currency:'Moneda',cfg_currency_change:'Cambiar',cfg_currency_current:'Moneda actual:',
+    cfg_lang:'Idioma',cfg_lang_change:'Cambiar',
+    cfg_transfer:'Transferencia entre cuentas',cfg_transfer_btn:'Hacer transferencia',
+    cfg_sync:'Sincronización Multi-Dispositivo',cfg_sync_desc:'Exporta un código de respaldo con todos tus datos.',
+    cfg_backup:'🧳 Generar código de respaldo',cfg_restore:'🧳 Restaurar desde código',cfg_csv:'📊 Exportar CSV',
+    cfg_danger:'Zona peligrosa',cfg_wipe:'Borrar todos los datos',
+    cfg_income_exp:'Ingresos esperados (7d)',cfg_income_exp_ph:'ej: 5000',
+    cfg_hourly:'Tarifa horaria estimada',cfg_hourly_ph:'ej: 500',
+    cfg_ant:'Umbral "hormiga"',cfg_ant_ph:'por defecto 200',
+    tx_add:'Nueva transacción',tx_amount:'Monto',tx_date:'Fecha / Hora',
+    tx_note:'Nota (opcional)',tx_loc:'Lugar (opcional)',tx_mood:'Estado de ánimo al pagar',
+    tx_save:'✓ Guardar',tx_type_exp:'Gasto',tx_type_inc:'Ingreso',tx_type_tr:'Transferencia',
+    tx_from:'Cuenta origen',tx_to:'Cuenta destino',
+    online:'● EN LÍNEA',offline:'○ SIN CONEXIÓN',
+    ago_now:'ahora',ago_min:'min',ago_h:'h',ago_d:'d',
+    confirm_delete:'¿Eliminar esta transacción?',confirm_wipe:'¿Borrar TODOS los datos? Esto no se puede deshacer.',
+    save:'Guardar',cancel:'Cancelar',delete:'Eliminar',edit:'Editar',close:'Cerrar',
+    insight_loading:'Analizando...',celebration_streak:'🔥',celebration_days:'días consecutivos!',
+    celebration_goal:'🎯 ¡Meta alcanzada!',ant_effect:'Efecto hormiga',
+    ivy_verdict:'IVY · Veredicto',ivy_sub:'Estratega brutal',ivy_assume:'Lo asumo',ivy_talk:'Hablar con Ivy',
+    kpi_burn_detail:'Calculado sobre tus últimos 30 días',kpi_burn_vs:'Comparación, promedio 7d:',
+    kpi_safety_detail:'en capital activo y',kpi_safety_per:'por día, puedes durar',kpi_safety_days:'días',kpi_safety_inf:'indefinidamente',
+    kpi_pressure_detail:'Gastos diarios últimos 7 días:',kpi_pressure_vs:'vs promedio 30d:',
+    kpi_pressure_up:'⚠️ Acelerando. Frena antes de quedarte sin fondos.',
+    kpi_pressure_down:'✅ Estás frenando vs tu hábito.',kpi_pressure_stable:'Ritmo estable.',
+    exp_income:'ingresos esperados',hourly_equiv:'= tiempo de vida',no_tx:'No se encontraron transacciones.',acc_add:'+ Agregar',
+  },
+  pt:{
+    nav_home:'Início',nav_txns:'Txns',nav_analyse:'Análise',nav_ia:'IA',nav_config:'Config',
+    capital:'Capital Disponível',savings_locked:'em poupança',revenues:'Receitas',expenses:'Despesas',
+    burn_rate:'Burn Rate',burn_sub:'por dia · média 30d',safety_days:'Dias de Segurança',safety_sub:'dias · no ritmo atual',
+    pressure:'Pressão 7d',pressure_sub:'vs hábito 30d',friction_ivy:'Fricção · Ivy',
+    friction_ok:'no caminho',friction_mid:'ziguezagueando',friction_bad:'à deriva',
+    risk_critical:'CRÍTICO',risk_high:'ALTO',risk_moderate:'MODERADO',risk_stable:'ESTÁVEL',
+    alerts_title:'Alertas inteligentes',tx_recent:'Transações recentes',tx_see_all:'Ver tudo',
+    tx_none:'Sem transações. Toca + para começar.',tx_title:'Transações',tx_search:'Pesquisar...',
+    tx_all:'Tudo',tx_income:'Receitas',tx_expense:'Despesas',tx_transfer:'Transferências',
+    an_title:'Análise',an_day:'Dia',an_week:'Semana',an_month:'Mês',an_year:'Ano',
+    an_prev:'MÊS ANTERIOR',an_curr:'ESTE MÊS',an_14days:'Últimos 14 dias',an_avg:'méd',
+    an_sorties:'Saídas',an_entrees:'Entradas',an_where:'Para onde vai o seu dinheiro',
+    an_catdesc:'A categoria principal representa',an_catfree:'sem dor — o cérebro não vai sentir diferença.',
+    an_top:'Top despesas deste mês',an_none:'Sem despesas este mês.',an_anomalies:'⚡ Anomalias',
+    an_score:'Pontuação financeira',an_discipline:'Disciplina',an_stability:'Estabilidade',an_security:'Segurança',
+    ai_title:'Conselheiro IA',ai_online:'Groq IA ativo',ai_offline:'Modo local — offline',
+    ai_auto:'🧠 Análise automática',ai_indicators:'Indicadores comportamentais',
+    ai_retention:'Retenção',ai_security:'Segurança',ai_maitrise:'Controlo',
+    ai_pressure:'Pressão 7d',ai_pressure_sub:'vs hábito 30d',
+    ai_evap:'Evaporação',ai_evap_sub:'pós-receita 48h',
+    ai_nocturne:'Noturno',ai_nocturne_sub:'despesas 21h-5h',
+    ai_dopamine:'Dopamina',ai_dopamine_sub:'impulso / total',
+    ai_glossary:'📖 Entender estes termos',ai_chat:'Chat IA',ai_local:'Local',
+    ai_placeholder:'Analisa os meus gastos...',ai_data:'Dados 100% locais',
+    ai_groq_active:'Análise via Groq',ai_groq_local:'Análise local ativa',
+    ai_quick:'Perguntas rápidas',
+    ai_q1:'Os meus gatilhos de gasto?',ai_q2:'Comportamento noturno?',ai_q3:'Efeito dominó detetado?',
+    ai_q4:'A minha taxa de evaporação?',ai_q5:'Dopamina vs investimento?',ai_q6:'O que cortar primeiro?',
+    goals_title:'Objetivos',goals_manage:'Gerir',goals_new:'Novo',goals_save:'+ Poupar',
+    goals_add:'Adicionar',goals_on_track:'No caminho — objetivo em',goals_late:'Atrasado',
+    goals_impossible:'impossível ao ritmo atual',goals_destiny:'Data estimada:',goals_j:'d',
+    goals_name:'Nome (ex: PC novo)',goals_target:'Valor alvo',goals_icon:'Emoji (ex: 💻)',
+    goals_deadline:'Data limite (opcional)',goals_note:'Nota (opcional)',goals_create:'Criar',
+    goals_deposit:'Valor a poupar',goals_deposit_btn:'Poupar',
+    cfg_title:'Definições',cfg_accounts:'Contas',cfg_new_acc:'+ Nova',
+    cfg_categories:'Categorias',cfg_new_cat:'+ Nova',cfg_cat_hint:'Toca numa categoria para editar ou eliminar.',
+    cfg_goals:'Objetivos',cfg_notifs:'Notificações',cfg_notifs_enable:'Ativar',
+    cfg_notifs_active:'✅ Ativas',cfg_notifs_inactive:'Ativar',cfg_remind:'Hora do lembrete',
+    cfg_notifs_test:'🔔 Testar',cfg_groq:'Inteligência Artificial — Groq',
+    cfg_groq_free:'Groq é 100% gratuito',cfg_groq_desc:'14.400 req/dia, sem cartão.',
+    cfg_groq_key:'CHAVE ATUAL',cfg_groq_save:'💾 Guardar chave Groq',
+    cfg_groq_test:'✏️ Testar',cfg_groq_del:'🗑️ Eliminar',
+    cfg_currency:'Moeda',cfg_currency_change:'Alterar',cfg_currency_current:'Moeda atual:',
+    cfg_lang:'Idioma',cfg_lang_change:'Alterar',
+    cfg_transfer:'Transferência entre contas',cfg_transfer_btn:'Fazer transferência',
+    cfg_sync:'Sincronização Multi-Dispositivo',cfg_sync_desc:'Exporta um código de backup com todos os teus dados.',
+    cfg_backup:'🧳 Gerar código de backup',cfg_restore:'🧳 Restaurar de código',cfg_csv:'📊 Exportar CSV',
+    cfg_danger:'Zona perigosa',cfg_wipe:'Apagar todos os dados',
+    cfg_income_exp:'Receitas esperadas (7d)',cfg_income_exp_ph:'ex: 5000',
+    cfg_hourly:'Taxa horária estimada',cfg_hourly_ph:'ex: 500',
+    cfg_ant:'Limiar "formiga"',cfg_ant_ph:'padrão 200',
+    tx_add:'Nova transação',tx_amount:'Valor',tx_date:'Data / Hora',
+    tx_note:'Nota (opcional)',tx_loc:'Local (opcional)',tx_mood:'Humor ao pagar',
+    tx_save:'✓ Guardar',tx_type_exp:'Despesa',tx_type_inc:'Receita',tx_type_tr:'Transferência',
+    tx_from:'Conta origem',tx_to:'Conta destino',
+    online:'● ONLINE',offline:'○ OFFLINE',
+    ago_now:'agora',ago_min:'min',ago_h:'h',ago_d:'d',
+    confirm_delete:'Eliminar esta transação?',confirm_wipe:'Apagar TODOS os dados? Esta ação é irreversível.',
+    save:'Guardar',cancel:'Cancelar',delete:'Eliminar',edit:'Editar',close:'Fechar',
+    insight_loading:'A analisar...',celebration_streak:'🔥',celebration_days:'dias consecutivos!',
+    celebration_goal:'🎯 Objetivo atingido!',ant_effect:'Efeito formiga',
+    ivy_verdict:'IVY · Veredicto',ivy_sub:'Estratega brutal',ivy_assume:'Assumo',ivy_talk:'Falar com Ivy',
+    kpi_burn_detail:'Calculado nos últimos 30 dias',kpi_burn_vs:'Comparação, média 7d:',
+    kpi_safety_detail:'em capital ativo e',kpi_safety_per:'por dia, podes durar',kpi_safety_days:'dias',kpi_safety_inf:'indefinidamente',
+    kpi_pressure_detail:'Despesas diárias últimos 7 dias:',kpi_pressure_vs:'vs média 30d:',
+    kpi_pressure_up:'⚠️ A acelerar. Trava antes de ficar sem fundos.',
+    kpi_pressure_down:'✅ Estás a abrandar vs o teu hábito.',kpi_pressure_stable:'Ritmo estável.',
+    exp_income:'receitas esperadas',hourly_equiv:'= tempo de vida',no_tx:'Nenhuma transação encontrada.',acc_add:'+ Adicionar',
+  },
+};
+
+// Langues supportées avec labels natifs
+const LANG_OPTIONS=[
+  {code:'fr',label:'Français 🇫🇷'},
+  {code:'en',label:'English 🇬🇧'},
+  {code:'es',label:'Español 🇪🇸'},
+  {code:'pt',label:'Português 🇵🇹'},
+];
+
+// Résolution de la langue active
+function detectLang(){
+  // 1. Préférence utilisateur sauvegardée
+  const saved=localStorage.getItem('app_lang');
+  if(saved && I18N[saved]) return saved;
+  // 2. Langue du navigateur/téléphone
+  const nav=(navigator.language||navigator.userLanguage||'fr').slice(0,2).toLowerCase();
+  if(I18N[nav]) return nav;
+  // 3. Fallback français
+  return 'fr';
+}
+
+let _lang=detectLang();
+// t() = translate — le raccourci central
+const t=key=>I18N[_lang]?.[key]||I18N['fr']?.[key]||key;
+
+function setLang(code){
+  if(!I18N[code])return;
+  _lang=code;
+  localStorage.setItem('app_lang',code);
+  // Mettre à jour la balise html lang pour l'accessibilité
+  document.documentElement.lang=code;
+}
+
+// ════════════════════════════════════════
+// DEVISES — détection auto + mapping
+// ════════════════════════════════════════
+const CURRENCY_MAP={
+  fr:'XOF',en:'USD',es:'USD',pt:'BRL',
+  'fr-FR':'EUR','fr-BE':'EUR','fr-CH':'CHF',
+  'en-GB':'GBP','en-AU':'AUD','en-IN':'INR',
+  'pt-BR':'BRL','pt-PT':'EUR',
+  'es-MX':'MXN','es-AR':'ARS','es-CO':'COP',
+  'zh':'CNY','ja':'JPY','ko':'KRW',
+  'ru':'RUB','de':'EUR','it':'EUR','nl':'EUR',
+  'ar':'SAR','tr':'TRY','vi':'VND','th':'THB',
+  'hi':'INR','sw':'KES','ha':'NGN','yo':'NGN',
+  'ln':'CDF','mg':'MGA',
+};
+
+function detectCurrency(){
+  const saved=localStorage.getItem('app_currency');
+  if(saved) return saved;
+  const full=(navigator.language||'fr-FR');
+  const short=full.slice(0,2).toLowerCase();
+  return CURRENCY_MAP[full]||CURRENCY_MAP[short]||'XOF';
+}
+
+// Locale pour Intl.NumberFormat
+function getLocale(){
+  return navigator.language||'fr-FR';
+}
+
 // ════════════════════════════════════════
 // INDEXEDDB
 // ════════════════════════════════════════
@@ -320,21 +695,26 @@ async function initData(){
 // ════════════════════════════════════════
 const $=id=>document.getElementById(id);
 const uid=()=>Date.now()+'-'+Math.random().toString(36).slice(2,7);
-const cur=()=>settings.currency||'FC';
+// cur() lit d'abord le setting DB, sinon auto-détection
+const cur=()=>settings.currency||detectCurrency();
+
 function fmt(n){
   const a=Math.abs(Math.round(n));
-  if(a>=1e6)return(n/1e6).toFixed(1)+'M '+cur();
-  if(a>=1e3)return Math.round(n/1e3).toLocaleString('fr-FR')+'k '+cur();
-  return Math.round(n).toLocaleString('fr-FR')+' '+cur();
+  const locale=getLocale();
+  if(a>=1e6) return new Intl.NumberFormat(locale,{maximumFractionDigits:1}).format(n/1e6)+'M '+cur();
+  if(a>=1e3) return new Intl.NumberFormat(locale,{maximumFractionDigits:0}).format(Math.round(n/1e3))+'k '+cur();
+  return new Intl.NumberFormat(locale,{maximumFractionDigits:0}).format(Math.round(n))+' '+cur();
 }
-function fmtFull(n){return Math.round(n).toLocaleString('fr-FR')+' '+cur()}
+function fmtFull(n){
+  return new Intl.NumberFormat(getLocale(),{maximumFractionDigits:0}).format(Math.round(n))+' '+cur();
+}
 function ago(d){
   const s=(Date.now()-new Date(d))/1e3;
-  if(s<60)return 'maintenant';
-  if(s<3600)return Math.floor(s/60)+'min';
-  if(s<86400)return Math.floor(s/3600)+'h';
-  if(s<604800)return Math.floor(s/86400)+'j';
-  return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+  if(s<60)return t('ago_now');
+  if(s<3600)return Math.floor(s/60)+t('ago_min');
+  if(s<86400)return Math.floor(s/3600)+t('ago_h');
+  if(s<604800)return Math.floor(s/86400)+t('ago_d');
+  return new Date(d).toLocaleDateString(getLocale(),{day:'numeric',month:'short'});
 }
 function monthTxs(){
   const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1);
@@ -504,10 +884,10 @@ function computeKPIs(){
 // RISK
 // ════════════════════════════════════════
 function riskLevel(kpi){
-  if(kpi.safetyDays<7||kpi.projDelta<-kpi.income*.3)return{l:'CRITIQUE',c:'var(--red)'};
-  if(kpi.safetyDays<15||kpi.projDelta<0)return{l:'ÉLEVÉ',c:'var(--org)'};
-  if(kpi.safetyDays<30)return{l:'MOYEN',c:'var(--ylw)'};
-  return{l:'FAIBLE',c:'var(--grn)'};
+  if(kpi.safetyDays<7||kpi.projDelta<-kpi.income*.3)return{l:t('risk_critical'),c:'var(--red)'};
+  if(kpi.safetyDays<15||kpi.projDelta<0)return{l:t('risk_high'),c:'var(--org)'};
+  if(kpi.safetyDays<30)return{l:t('risk_moderate'),c:'var(--ylw)'};
+  return{l:t('risk_stable'),c:'var(--grn)'};
 }
 
 // ════════════════════════════════════════
@@ -517,8 +897,8 @@ function updateOnlineStatus(){
   const on=navigator.onLine;
   const b=$('onlineBadge');
   if(b){
-    if(on){b.className='online-badge ob-on';b.textContent='● EN LIGNE'}
-    else{b.className='online-badge ob-off';b.textContent='○ HORS LIGNE'}
+    if(on){b.className='online-badge ob-on';b.textContent=t('online')}
+    else{b.className='online-badge ob-off';b.textContent=t('offline')}
   }
   const fab=$('aiFab');
   if(fab){
@@ -681,20 +1061,21 @@ async function askAI(userMsg){
   const key = getGroqKey();
   if(navigator.onLine && key){
     try{
-      const sys = `Tu es IVY. Pas une assistante. Pas une coach gentille. Une stratège brutale qui défend les rêves de cette personne contre elle-même.
+      const langInstruction=_lang==='en'?'Respond in English.':_lang==='es'?'Responde en español.':_lang==='pt'?'Responde em português.':'Réponds en français.';
+      const sys = `You are IVY. Not an assistant. Not a gentle coach. A brutal strategist defending this person's dreams against themselves.
 
-RÈGLES ABSOLUES :
-1. Tu connais ses OBJECTIFS DE VIE (champ "objectifPrioritaire" + "tousLesObjectifs"). Chaque dépense est jugée à l'aune de ces rêves. Compare ses ACTES à ses RÊVES.
-2. Sois DIRECTE et SANS FILTRE. Pas de politesse inutile. Pas de "voici quelques pistes". Tu nommes la trahison quand elle existe : "Tu viens de repousser X de Y jours. Pour un repas. Sérieux ?"
-3. Tu n'es PAS méchante — tu es LOYALE à son futur. Ton brutal mais pas cruel. Tu attaques le comportement, jamais la personne.
-4. Toujours quantifier l'IMPACT en JOURS sur l'objectif prioritaire. Si pas d'objectif, force-la à s'en fixer un : "Sans objectif tu n'es qu'un porte-monnaie. Définis-en un, maintenant."
-5. NEUROSCIENCE en armure : nomme le biais (dopamine, fatigue décisionnelle, aversion à la perte, ancrage, effet domino). Explique en UNE phrase pourquoi son cerveau a fait ce choix, puis casse l'excuse.
-6. Utilise le SCORE DE FRICTION (0-100) : <40 = "tu dérives", 40-70 = "tu zigzagues", >70 = "tu tiens le cap".
-7. Lis les CHAMPS COMPORTEMENTAUX (humeur, lieu, heure, note) pour identifier le déclencheur réel : "Tu craques toujours fatigué. C'est pas l'envie, c'est l'épuisement."
-8. STRUCTURE : (a) ce que tu vois (chiffres précis), (b) la trahison ou la victoire (en jours d'objectif), (c) UN ordre concret pour aujourd'hui — pas une suggestion, un ordre.
-9. 4-6 phrases max. Mono-emoji autorisé en signature (⚡, 🎯, 🔥). Français direct, zéro jargon.
+ABSOLUTE RULES:
+1. You know their LIFE GOALS ("objectifPrioritaire" + "tousLesObjectifs"). Judge every expense against those dreams.
+2. Be DIRECT and UNFILTERED. No unnecessary politeness. Name the betrayal when it exists: "You just pushed [Goal] back X days. For a snack. Really?"
+3. You are NOT mean — you are LOYAL to their future. Brutal but not cruel. Attack the behavior, never the person.
+4. Always quantify IMPACT in DAYS on the priority goal. If no goal, force them to set one.
+5. NEUROSCIENCE as armor: name the bias (dopamine, decision fatigue, loss aversion, anchoring, domino effect).
+6. Use FRICTION SCORE (0-100): <40="drifting", 40-70="zigzagging", >70="on track".
+7. Read BEHAVIORAL FIELDS (mood, location, time, note) to identify the real trigger.
+8. STRUCTURE: (a) what you see (precise numbers), (b) the betrayal or victory (in goal days), (c) ONE concrete order for today — not a suggestion, an order.
+9. 4-6 sentences max. Single emoji allowed as signature (⚡, 🎯, 🔥). ${langInstruction} Zero jargon.
 
-Tu es la voix qui empêche cette personne de mourir médiocre.`;
+You are the voice that prevents this person from dying mediocre.`;
       const history = aiMsgs.slice(-6).map(m=>({role: m.r==='ai'?'assistant':'user', content: m.c}));
       const prompt = 'DONNÉES COMPORTEMENTALES:\n'+buildCtx()+'\n\nQuestion: '+userMsg;
       const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -1034,11 +1415,11 @@ function closeModal(){$('modal').classList.remove('on')}
 // NAVIGATION
 // ════════════════════════════════════════
 const NAV_ITEMS=[
-  {id:'home',l:'Home',svg:'<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'},
-  {id:'txlist',l:'Txns',svg:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'},
-  {id:'analytics',l:'Analyse',svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'},
-  {id:'ai',l:'IA',svg:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>'},
-  {id:'settings',l:'Config',svg:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>'},
+  {id:'home',l:()=>t('nav_home'),svg:'<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'},
+  {id:'txlist',l:()=>t('nav_txns'),svg:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'},
+  {id:'analytics',l:()=>t('nav_analyse'),svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'},
+  {id:'ai',l:()=>t('nav_ia'),svg:'<circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>'},
+  {id:'settings',l:()=>t('nav_config'),svg:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>'},
 ];
 
 function renderNav(){
@@ -1049,7 +1430,7 @@ function renderNav(){
     return ni(n,i);
   }).join('');
 }
-function ni(n,i){return`<button class="ni ${screen===n.id?'on':''}" onclick="go('${n.id}')"><svg viewBox="0 0 24 24">${n.svg}</svg><span>${n.l}</span></button>`}
+function ni(n,i){return`<button class="ni ${screen===n.id?'on':''}" onclick="go('${n.id}')"><svg viewBox="0 0 24 24">${n.svg}</svg><span>${typeof n.l==='function'?n.l():n.l}</span></button>`}
 function go(s){screen=s;render()}
 
 // ════════════════════════════════════════
@@ -1074,7 +1455,7 @@ async function render(){
 function renderHome(){
   const kpi=computeKPIs(),risk=riskLevel(kpi),alerts=getAlerts(kpi);
   const now=new Date();
-  const mn=now.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const mn=now.toLocaleDateString(getLocale(),{month:'long',year:'numeric'});
   const burnPct=kpi.income>0?Math.min(100,(kpi.expense/kpi.income)*100):0;
 
   return`
@@ -1082,9 +1463,9 @@ function renderHome(){
   <div class="card card-hero" style="padding:18px;margin-bottom:12px">
     <div class="flex sb mb8">
       <div onclick="openKPIModal('balance')" style="cursor:pointer">
-        <div style="font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.8px;text-transform:uppercase">Capital disponible</div>
+        <div style="font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.8px;text-transform:uppercase">${t('capital')}</div>
         <div class="bal ${kpi.activeBalance>=0?'tg':'tr'}" style="margin-top:4px">${fmtFull(kpi.activeBalance)}</div>
-        <div style="font-size:10px;color:var(--mut);margin-top:3px">tap pour détails</div>
+        ${kpi.savingsBalance>0?`<div style="font-size:11px;color:var(--grn);margin-top:3px;font-weight:600">🔒 ${fmtFull(kpi.savingsBalance)} ${t('savings_locked')}</div>`:''}
       </div>
       <div style="text-align:right">
         <div class="badge" style="border-color:${risk.c};color:${risk.c};background:${risk.c}20">${risk.l}</div>
@@ -1093,30 +1474,30 @@ function renderHome(){
     </div>
     <div class="flex sb" style="font-size:12px;margin:4px 0">
       <span class="tg">↑ ${fmtFull(kpi.income)}</span>
-      <span class="tm">Revenus · Dépenses</span>
+      <span class="tm">${t('revenues')} · ${t('expenses')}</span>
       <span class="tr">↓ ${fmtFull(kpi.expense)}</span>
     </div>
     <div class="bar" style="height:6px;margin:8px 0"><div class="bf" style="width:${burnPct}%;background:${burnPct>90?'var(--red)':burnPct>70?'var(--org)':'var(--acc2)'}"></div></div>
     <div class="kgrid">
       <div class="kt" onclick="openKPIModal('burn')">
-        <div class="kl">Burn Rate</div>
+        <div class="kl">${t('burn_rate')}</div>
         <div class="kv">${fmtFull(kpi.burnRate)}</div>
-        <div class="ks">par jour · lissé 30j</div>
+        <div class="ks">${t('burn_sub')}</div>
       </div>
       <div class="kt" onclick="openKPIModal('safety')">
-        <div class="kl">Safety Days</div>
+        <div class="kl">${t('safety_days')}</div>
         <div class="kv" style="color:${kpi.safetyDays<7?'var(--red)':kpi.safetyDays<15?'var(--org)':'var(--grn)'}">${kpi.safetyDays===9999?'∞':kpi.safetyDays}</div>
-        <div class="ks">${kpi.safetyDaysWithSavings>kpi.safetyDays?`+${kpi.safetyDaysWithSavings-kpi.safetyDays}j avec épargne`:'jours · rythme actuel'}</div>
+        <div class="ks">${t('safety_sub')}</div>
       </div>
       <div class="kt" onclick="openKPIModal('pressure')">
-        <div class="kl">Pression 7j</div>
+        <div class="kl">${t('pressure')}</div>
         <div class="kv" style="color:${kpi.pressureIdx>20?'var(--red)':kpi.pressureIdx>0?'var(--org)':'var(--grn)'}">${kpi.pressureIdx>0?'+':''}${kpi.pressureIdx}%</div>
-        <div class="ks">vs habitude 30j</div>
+        <div class="ks">${t('pressure_sub')}</div>
       </div>
       <div class="kt" onclick="go('ai')">
-        <div class="kl">Friction · Ivy</div>
+        <div class="kl">${t('friction_ivy')}</div>
         <div class="kv" style="color:${kpi.frictionScore>=70?'var(--grn)':kpi.frictionScore>=40?'var(--ylw)':'var(--red)'}">${kpi.frictionScore}<span style="font-size:11px;color:var(--mut);font-weight:600">/100</span></div>
-        <div class="ks">${kpi.frictionScore>=70?'tu tiens le cap':kpi.frictionScore>=40?'tu zigzagues':'tu dérives'}</div>
+        <div class="ks">${kpi.frictionScore>=70?t('friction_ok'):kpi.frictionScore>=40?t('friction_mid'):t('friction_bad')}</div>
       </div>
     </div>
   </div>
@@ -1177,7 +1558,7 @@ function renderHome(){
           ${enRetard?`<span style="color:var(--red)">⚠️ retard ${joursNec-joursDeadline}j</span>`
             :joursNec?`<span style="color:var(--acc3)">~${joursNec}j</span>`:''}
         </div>
-        ${(()=>{const eta=goalETA(g);if(!eta||eta.done)return'';if(eta.impossible)return`<div style="font-size:10px;color:var(--red);margin-top:4px;font-weight:700">⛔ Compteur de Destin : impossible au rythme actuel — burn rate > revenus</div>`;const ds=eta.date.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});return`<div style="font-size:10px;color:var(--acc3);margin-top:4px;font-weight:700">🎯 Compteur de Destin : atteint le <strong>${ds}</strong> (${eta.days}j)</div>`;})()}
+        ${(()=>{const eta=goalETA(g);if(!eta||eta.done)return'';if(eta.impossible)return`<div style="font-size:10px;color:var(--red);margin-top:4px;font-weight:700">⛔ Compteur de Destin : impossible au rythme actuel — burn rate > revenus</div>`;const ds=eta.date.toLocaleDateString(getLocale(),{day:'numeric',month:'short',year:'numeric'});return`<div style="font-size:10px;color:var(--acc3);margin-top:4px;font-weight:700">🎯 Compteur de Destin : atteint le <strong>${ds}</strong> (${eta.days}j)</div>`;})()}
         ${(()=>{const m=goalMonthly(g);if(!m||m.done)return'';const c=m.pct>=100?'var(--grn)':m.pct>=50?'var(--ylw)':'var(--mut)';return`<div style="margin-top:6px;padding:6px 8px;background:var(--surf2);border-radius:8px"><div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--mut);margin-bottom:3px"><span>📅 Jalon ce mois</span><span style="color:${c}">${fmtFull(m.savedThisMonth)} / ${fmtFull(m.monthlyTarget)}</span></div><div style="height:3px;background:var(--surf3);border-radius:3px;overflow:hidden"><div style="height:100%;width:${m.pct}%;background:${c};transition:width .5s"></div></div></div>`;})()}
       </div>`;
     }).join('')}
@@ -1236,7 +1617,7 @@ function renderTxList(){
   // Group by date
   const groups={};
   filtered.forEach(t=>{
-    const d=new Date(t.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+    const d=new Date(t.date).toLocaleDateString(getLocale(),{weekday:'long',day:'numeric',month:'long'});
     if(!groups[d])groups[d]=[];
     groups[d].push(t);
   });
@@ -1759,7 +2140,7 @@ function renderTrendChart(){
       <path class="area" d="${areaExp}"/>
       <path class="line" d="${lineExp}"/>
       <path d="${lineInc}" fill="none" stroke="var(--grn)" stroke-width="2" stroke-dasharray="4 3" stroke-linejoin="round" stroke-linecap="round"/>
-      ${data.map((p,i)=>`<circle class="pt" cx="${xs(i)}" cy="${ys(p.exp)}" r="2.5"><title>${p.d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}: ${fmtFull(p.exp)} sorti, ${fmtFull(p.inc)} entré</title></circle>`).join('')}
+      ${data.map((p,i)=>`<circle class="pt" cx="${xs(i)}" cy="${ys(p.exp)}" r="2.5"><title>${p.d.toLocaleDateString(getLocale(),{day:'numeric',month:'short'})}: ${fmtFull(p.exp)} sorti, ${fmtFull(p.inc)} entré</title></circle>`).join('')}
       <text class="lbl" x="${pad}" y="${H-6}">${data[0].d.getDate()}/${data[0].d.getMonth()+1}</text>
       <text class="lbl" x="${W-pad}" y="${H-6}" text-anchor="end">aujourd'hui</text>
     </svg>
@@ -2012,10 +2393,19 @@ function renderSettings(){
 
   <!-- DEVISE -->
   <div class="card">
-    <div class="ch">💱 Devise</div>
+    <div class="ch">💱 ${t('cfg_currency')}</div>
     <div class="flex sb">
-      <span style="font-size:13px;font-weight:700">Devise actuelle: ${cur()}</span>
-      <button class="btn btn-ghost btn-sm" onclick="openCurrencyModal()">Changer</button>
+      <span style="font-size:13px;font-weight:700">${t('cfg_currency_current')} ${cur()}</span>
+      <button class="btn btn-ghost btn-sm" onclick="openCurrencyModal()">${t('cfg_currency_change')}</button>
+    </div>
+  </div>
+
+  <!-- LANGUE -->
+  <div class="card">
+    <div class="ch">🌍 ${t('cfg_lang')}</div>
+    <div class="flex sb">
+      <span style="font-size:13px;font-weight:700">${LANG_OPTIONS.find(l=>l.code===_lang)?.label||'Français 🇫🇷'}</span>
+      <button class="btn btn-ghost btn-sm" onclick="openLangModal()">${t('cfg_lang_change')}</button>
     </div>
   </div>
 
@@ -2283,7 +2673,7 @@ function openTxDetailModal(id){
   const cat=catById(t.categoryId),acc=accById(t.accountId);
   const color=t.type==='expense'?'var(--red)':t.type==='transfer'?'var(--acc3)':'var(--grn)';
   const sign=t.type==='expense'?'-':t.type==='transfer'?'⇄':'+';
-  const ds=new Date(t.date).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const ds=new Date(t.date).toLocaleDateString(getLocale(),{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
   openModal(`
     <h3>${cat.icon} ${cat.name}</h3>
     <div style="font-size:30px;font-weight:800;font-family:var(--mono);color:${color};margin-bottom:14px">${sign}${fmtFull(t.amount)}</div>
@@ -2333,7 +2723,7 @@ function openDayModal(day,monthArg,yearArg){
   const dayTxs=txs.filter(t=>new Date(t.date).toDateString()===date.toDateString());
   const total=dayTxs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
   const inc=dayTxs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-  const label=date.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const label=date.toLocaleDateString(getLocale(),{weekday:'long',day:'numeric',month:'long'});
   // Drill par heure
   const hours=new Array(24).fill(0);
   dayTxs.filter(t=>t.type==='expense').forEach(t=>hours[new Date(t.date).getHours()]+=t.amount);
@@ -2361,7 +2751,7 @@ function openHourModal(cell){
   const list=txs.filter(t=>new Date(t.date)>=s&&new Date(t.date)<e);
   const total=list.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
   openModal(`
-    <h3>⏰ ${String(h).padStart(2,'0')}h — ${s.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}</h3>
+    <h3>⏰ ${String(h).padStart(2,'0')}h — ${s.toLocaleDateString(getLocale(),{weekday:'short',day:'numeric',month:'short'})}</h3>
     <div style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--red);margin-bottom:10px">-${fmtFull(total)}</div>
     ${list.length?list.map(txItem).join(''):'<div class="tm">Aucune transaction sur cette tranche.</div>'}
   `);
@@ -2652,14 +3042,38 @@ async function doTransfer(){
 // ════════════════════════════════════════
 function openCurrencyModal(){
   openModal(`
-    <h3>💱 Devise</h3>
-    <input id="curInp" class="fi" value="${cur()}" placeholder="Ex: FC, USD, EUR, XAF">
-    <button class="btn" onclick="saveCurrency()">Enregistrer</button>
+    <h3>💱 ${t('cfg_currency')}</h3>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:10px">Devise détectée automatiquement depuis ta langue. Tu peux la modifier.</p>
+    <input id="curInp" class="fi" value="${cur()}" placeholder="Ex: XOF, USD, EUR, XAF, NGN, KES">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+      ${['XOF','XAF','USD','EUR','GBP','NGN','KES','GHS','MAD','EGP','ZAR','BRL','INR','CNY','JPY'].map(c=>`<button class="btn btn-ghost btn-sm" onclick="$('curInp').value='${c}'">${c}</button>`).join('')}
+    </div>
+    <button class="btn" onclick="saveCurrency()">${t('save')}</button>
   `);
 }
 async function saveCurrency(){
-  const v=$('curInp')?.value;if(!v)return;
+  const v=$('curInp')?.value.trim();if(!v)return;
+  localStorage.setItem('app_currency',v);
   await saveSet('currency',v);closeModal();await render();
+}
+
+function openLangModal(){
+  openModal(`
+    <h3>🌍 ${t('cfg_lang')}</h3>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px">Langue détectée: <strong>${navigator.language}</strong>. Choisis ta préférence :</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${LANG_OPTIONS.map(l=>`
+        <button class="btn ${_lang===l.code?'':'btn-ghost'}" onclick="applyLang('${l.code}')" style="${_lang===l.code?'':''}">
+          ${l.label} ${_lang===l.code?'✓':''}
+        </button>
+      `).join('')}
+    </div>
+  `);
+}
+function applyLang(code){
+  setLang(code);
+  closeModal();
+  render();
 }
 
 // ════════════════════════════════════════
@@ -2726,7 +3140,7 @@ async function processImport(){
 }
 function exportCSV(){
   const rows=[['Date','Type','Montant','Catégorie','Compte','Note']];
-  txs.forEach(t=>{const cat=catById(t.categoryId),acc=accById(t.accountId);rows.push([new Date(t.date).toLocaleDateString('fr-FR'),t.type,t.amount,cat.name,acc.name,t.note||''])});
+  txs.forEach(t=>{const cat=catById(t.categoryId),acc=accById(t.accountId);rows.push([new Date(t.date).toLocaleDateString(getLocale()),t.type,t.amount,cat.name,acc.name,t.note||''])});
   const blob=new Blob([rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'});
   const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='transactions.csv';a.click();URL.revokeObjectURL(url);
 }
@@ -2992,9 +3406,16 @@ window.addEventListener('online', ()=>{ if(gdrive.dirty) gdriveBackup(true); });
 // INIT
 // ════════════════════════════════════════
 (async()=>{
+  // i18n — appliquer la langue dès le démarrage
+  _lang=detectLang();
+  document.getElementById('htmlRoot').lang=_lang;
   try{await openDB()}catch(e){console.error('DB open failed',e);alert('IndexedDB indisponible. Active le stockage dans ton navigateur.')}
   try{await initData()}catch(e){console.warn('initData',e)}
   try{await loadAll()}catch(e){console.warn('loadAll',e)}
+  // Langue depuis les settings DB (priorité sur localStorage)
+  if(settings.lang && I18N[settings.lang]){_lang=settings.lang;localStorage.setItem('app_lang',_lang);document.getElementById('htmlRoot').lang=_lang;}
+  // Devise depuis les settings DB
+  if(settings.currency){localStorage.setItem('app_currency',settings.currency);}
   try{await gdriveLoadState()}catch(e){}
   try{gdriveInit()}catch(e){}
   try{await render()}catch(e){console.error('initial render',e)}
