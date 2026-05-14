@@ -1,34 +1,23 @@
-# Finance AI OS · v4.6 (design violet Android-17 + Google Drive)
+# Finance AI OS · v4.7 (Android 17 / iOS bubble polish + i18n complet + onboarding)
 
-PWA brutaliste de gestion financière. Design violet/indigo restauré (≈2800 lignes, tous les paramètres conservés) + nouveau module **Sauvegarde Google Drive** importé depuis la version verte v4.5.
+PWA brutaliste de gestion financière — autonome, offline-first, zéro dépendance serveur.
 
-## ✨ Ce qui a changé vs ta dernière version
+## Nouveautés v4.7
 
-- **Design** : ton design violet Android-17 d'origine est restauré à 100 % (couleurs `--acc:#8b5cf6`, `--bg:#09090f`, etc., toutes les cards/onglets/objectifs/KPIs intacts).
-- **Réglages → Sauvegarde** :
-  - 🆕 Carte **☁️ Sauvegarde Google Drive** : connexion GIS Token Client, sauvegarde manuelle, restauration, déconnexion.
-  - 💾 Carte **Sauvegarde locale** : ton ancien export/import base64 + CSV.
-- **Auto-backup** : 3 s après chaque écriture IndexedDB (`dbPut`/`dbDel`/`dbClear`) si tu es connecté à Drive et en ligne.
-- **Reprise après offline** : un `online` listener relance la sauvegarde si du retard s'est accumulé.
-- **PWA** : favicon + apple-touch-icon ajoutés, script `gsi/client` chargé en `async defer`.
+- **Design Android 17 / iOS bubble** : couches CSS additionnelles (sans toucher aux couleurs ni à la structure) — coins plus ronds (squircle), animations springy (cubic-bezier `.34,1.56,.64,1`), bulles actives sur la nav, glassmorphism raffiné, FAB qui se déforme, modales avec spring-up sheet, inputs plus larges et plus doux.
+- **i18n complet** : toutes les sections de la page Paramètres (Comptes, Catégories, Objectifs, Notifications, Groq, Vie & Prévisions, Devise, Langue, Virement, Google Drive, Sauvegarde locale, Zone dangereuse) passent par `t()`. Les noms par défaut des comptes et catégories sont traduits dynamiquement (FR / EN / ES / PT).
+- **Onboarding au premier lancement** : modale plein écran avec choix de la langue + devise (XOF, XAF, EUR, USD, GBP, CAD, MAD, NGN ou personnalisée). Persistance dans `localStorage` + DB IndexedDB.
+- **Aucune logique modifiée** : KPIs, IA, Drive, calculs, navigation — tout fonctionne comme avant.
 
-## 🚀 Déploiement
+## Déploiement
 
-1. Pousse les fichiers à la racine du repo (Netlify ou GitHub Pages).
-2. URL exacte : `https://financeai2.netlify.app` (déjà autorisée dans Google OAuth).
-3. Aucune build, site statique.
+1. Pousse ces fichiers à la racine du repo (Netlify / GitHub Pages).
+2. Aucun build, site statique.
+3. Origine OAuth Google déjà autorisée pour `https://financeai2.netlify.app`.
 
-## 🔑 Google Drive (déjà câblé)
-
-- **Client ID** : `548605771267-a8nskjhah481vb3n60t6liibl8i7ia6h.apps.googleusercontent.com`
-- **Origine autorisée** : `https://financeai2.netlify.app`
-- **Scope** : `drive.file` (l'app n'accède qu'au fichier `finance-ai-backup.json` qu'elle crée)
-- Pas de `client_secret` côté navigateur (flux Token Client GIS).
-
-## 📁 Fichiers
+## Fichiers
 
 - `index.html` — app complète
-- `sw.js` — service worker (cache shell, network-first)
+- `sw.js` — service worker
 - `manifest.json` — PWA manifest + raccourcis
-- `icon-192.png`, `icon-512.png` — icônes
-- `README.md` — ce fichier
+- `icon-96.png`, `icon-192.png`, `icon-512.png` — icônes

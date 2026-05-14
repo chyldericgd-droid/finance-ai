@@ -229,6 +229,215 @@ select.fi{cursor:pointer}
 .search-box input{flex:1;background:none;border:none;color:var(--txt);font-size:14px;outline:none;font-family:var(--font)}
 .search-box input::placeholder{color:var(--mut)}
 .search-box svg{stroke:var(--mut);width:16px;height:16px;flex-shrink:0;fill:none;stroke-width:2}
+
+/* ════════════════════════════════════════
+   ANDROID 17 / iOS BUBBLE POLISH (overlay)
+   Couleurs/structure inchangées — uniquement
+   bordures plus rondes, ressort, glassmorphism
+   raffiné, touch targets élargis.
+   ════════════════════════════════════════ */
+:root{
+  --r:24px; --r2:18px; --r3:32px;
+  --spring: cubic-bezier(.34,1.56,.64,1);
+  --ease-out-quart: cubic-bezier(.25,1,.5,1);
+}
+@supports (font-variation-settings: normal){
+  body{font-feature-settings:"cv11","ss01","ss03";letter-spacing:-.01em}
+}
+
+/* Cards — softer depth, inner highlight, hover lift */
+.card{
+  border-radius:26px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), transparent 30%),
+    linear-gradient(180deg,var(--surf),var(--surf2));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 0 0 1px rgba(255,255,255,.02) inset,
+    0 12px 32px -18px rgba(0,0,0,.7);
+  transition:transform .35s var(--ease-out-quart), box-shadow .35s var(--ease-out-quart);
+}
+.card:active{transform:scale(.992)}
+.card-hero{
+  border-radius:30px;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(139,92,246,.10), transparent 55%),
+    radial-gradient(100% 80% at 100% 100%, rgba(6,182,212,.08), transparent 55%),
+    linear-gradient(160deg,#100f24,#0a0a16);
+}
+
+/* Bottom navigation bar — pill bubble, springy active state */
+.nav{
+  height:68px;
+  border-radius:34px;
+  background:rgba(18,18,28,.78);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:
+    0 18px 48px -16px rgba(0,0,0,.7),
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    0 1px 0 rgba(255,255,255,.06) inset;
+}
+.ni{
+  position:relative;
+  border-radius:18px;
+  padding:8px 12px;
+  transition:color .25s, transform .25s var(--spring);
+}
+.ni.on{color:var(--acc3)}
+.ni.on::before{
+  content:"";position:absolute;inset:4px 6px;border-radius:14px;
+  background:linear-gradient(160deg, rgba(139,92,246,.22), rgba(6,182,212,.14));
+  border:1px solid rgba(139,92,246,.35);
+  z-index:-1;
+  animation:bubbleIn .35s var(--spring);
+}
+.ni:active{transform:scale(.92)}
+@keyframes bubbleIn{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* FAB — squircle morph, deeper glow */
+.fab{
+  border-radius:22px;
+  width:60px;height:60px;
+  margin-top:-26px;
+  box-shadow:
+    0 12px 32px -6px var(--acc-glow),
+    0 0 0 5px rgba(139,92,246,.10),
+    0 1px 0 rgba(255,255,255,.18) inset;
+  transition:transform .25s var(--spring), border-radius .25s var(--spring);
+}
+.fab:active{transform:scale(.88) rotate(8deg);border-radius:30px}
+
+/* Modals — taller drag handle, spring-up sheet */
+.mb{
+  border-radius:36px 36px 0 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%),
+    linear-gradient(180deg,var(--surf2),var(--surf));
+  box-shadow:0 -28px 80px -8px rgba(0,0,0,.78);
+  animation:sheetIn .42s var(--spring);
+}
+@keyframes sheetIn{
+  from{transform:translateY(100%)}
+  to{transform:translateY(0)}
+}
+.mh{width:42px;height:5px;border-radius:10px;background:rgba(255,255,255,.18)}
+
+/* Inputs — softer, larger touch zone */
+.fi{
+  border-radius:18px;
+  padding:14px 16px;
+  font-size:15px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);
+  transition:border-color .2s, background .2s, box-shadow .2s;
+}
+.fi:focus{
+  background:rgba(139,92,246,.06);
+  border-color:var(--acc);
+  box-shadow:0 0 0 4px rgba(139,92,246,.12);
+}
+
+/* Buttons — pill, inner highlight */
+.btn{
+  border-radius:22px;
+  padding:16px;
+  box-shadow:
+    0 6px 18px -4px var(--acc-glow),
+    0 1px 0 rgba(255,255,255,.18) inset;
+  transition:transform .18s var(--spring), box-shadow .25s, opacity .2s;
+}
+.btn:active{transform:scale(.965)}
+.btn-ghost{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset;
+}
+.btn-sm{border-radius:22px;padding:9px 16px}
+
+/* Type tabs (Dépense/Revenu/Transfert) — bubble look */
+.tt{border-radius:16px;padding:13px 10px;font-size:13.5px}
+
+/* Filter pills */
+.ftab{border-radius:22px;padding:8px 16px;transition:all .25s var(--spring)}
+.ftab.on{box-shadow:0 4px 14px -4px var(--acc-glow)}
+
+/* Account chips — softer, wider */
+.ach{border-radius:20px;padding:13px 15px;transition:transform .25s var(--spring), border-color .25s}
+.ach:active{transform:scale(.98)}
+
+/* Transaction rows — tighter divider, bubble icon */
+.txic{
+  width:42px;height:42px;border-radius:14px;
+  background:linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.05);
+}
+.txi{padding:12px 0;border-bottom-color:rgba(255,255,255,.04)}
+
+/* KPI tiles */
+.kt{
+  border-radius:20px;padding:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 60%), var(--surf2);
+  transition:transform .25s var(--spring), border-color .25s;
+}
+.kt:active{transform:scale(.97)}
+
+/* Chat bubbles — iOS-style */
+.bub{border-radius:20px;padding:11px 15px;font-size:13px}
+.bai{border-bottom-left-radius:5px}
+.bus{border-bottom-right-radius:5px}
+
+/* Online badge — pill polish */
+.online-badge{
+  border-radius:24px;padding:6px 13px;
+  background:rgba(18,18,28,.7);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+}
+.ob-on{background:rgba(16,185,129,.18)}
+.ob-off{background:rgba(244,63,94,.18)}
+
+/* Section title — tighter */
+.stitle{font-size:24px;letter-spacing:-.6px;font-weight:800;margin-bottom:8px}
+
+/* AI floating button — spring */
+.aifab{transition:transform .3s var(--spring), box-shadow .3s}
+.aifab:active{transform:scale(.86)}
+
+/* Heatmap cells */
+.hd{border-radius:8px;transition:transform .25s var(--spring)}
+.hd:active{transform:scale(.82)}
+
+/* Pills */
+.pill{border-radius:22px;padding:4px 12px}
+
+/* Onboarding overlay */
+#onbOv{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:flex-end;justify-content:center;animation:fi .3s ease}
+#onbBox{
+  width:100%;max-width:600px;
+  background:linear-gradient(180deg,var(--surf2),var(--surf));
+  border-radius:36px 36px 0 0;
+  padding:28px 22px max(28px, calc(env(safe-area-inset-bottom) + 22px));
+  box-shadow:0 -28px 80px -8px rgba(0,0,0,.78);
+  animation:sheetIn .5s var(--spring);
+  max-height:92vh;overflow-y:auto;
+}
+#onbBox h2{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#onbBox .sub{font-size:13px;color:var(--mut);margin-bottom:22px;line-height:1.55}
+#onbBox .label{font-size:11px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.6px;margin:18px 4px 8px}
+#onbBox .opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#onbBox .opt{padding:14px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .22s var(--spring)}
+#onbBox .opt.sel{background:linear-gradient(160deg, rgba(139,92,246,.22), rgba(6,182,212,.12));border-color:var(--acc);color:var(--txt)}
+#onbBox .opt:active{transform:scale(.96)}
+#onbBox .curRow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:6px}
+#onbBox .curOpt{padding:11px 6px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);font-size:12px;font-weight:700;cursor:pointer;text-align:center;transition:all .22s var(--spring);font-family:var(--mono)}
+#onbBox .curOpt.sel{background:linear-gradient(160deg, rgba(139,92,246,.22), rgba(6,182,212,.12));border-color:var(--acc)}
+#onbBox .curInp{margin-top:8px}
+#onbBox .startBtn{margin-top:24px}
+
+
 </style>
 </head>
 <body>
@@ -338,7 +547,69 @@ const I18N={
     exp_income:'revenus attendus',
     hourly_equiv:'= temps de vie',
     no_tx:'Aucune transaction trouvée.',
+    // Clés manquantes — modals et strings hardcodées
+    acc_name_ph:'Nom du compte',acc_icon_ph:'Emoji (ex: 💳)',acc_bal_ph:'Solde initial',
+    acc_type_ph:'Type (optionnel)',acc_edit_title:'Modifier le compte',acc_new_title:'Nouveau compte',
+    cat_name_ph:'Nom',cat_icon_ph:'Emoji',cat_new_title:'Nouvelle catégorie',cat_edit_title:'Modifier la catégorie',
+    cat_type:'Type',cat_budget:'Budget mensuel',
+    goal_new_title:'Nouvel objectif',goal_deposit_title:'Épargner',goal_withdraw_title:'Reprendre des fonds',
+    goal_withdraw_ph:'Montant à reprendre',goal_withdraw_btn:'Reprendre',
+    transfer_title:'Virement entre comptes',transfer_from:'Compte source',transfer_to:'Compte destination',
+    transfer_amt_ph:'Montant',transfer_note_ph:'Note (optionnel)',
+    currency_title:'Changer la devise',currency_ph:'Ex: XOF, USD, EUR, XAF',
+    lang_detected:'Langue détectée',lang_choose:'Choisis ta préférence :',
+    backup_title:'Sauvegarde & restauration',backup_import_ph:'Colle ton code ici...',
+    tx_note_ph:'Note ou description (optionnel)',tx_loc_ph:'📍 Lieu (ex: Centre-ville...)',
+    tx_filter_all:'Tout',tx_filter_inc:'Revenus',tx_filter_exp:'Dépenses',tx_filter_tr:'Transferts',
+    no_tx_day:'Aucune transaction ce jour.',no_tx_hour:'Aucune transaction sur cette tranche.',
+    no_data_period:'Aucune donnée pour cette période. Saisis tes mouvements.',
+    an_no_cat:'Aucune dépense cette période.',
+    an_pic:'Pic',an_solde:'Solde',an_comparison:'Comparaison',
+    groq_no_key:'⚠️ Aucune clé — IA désactivée',groq_step3:'3. Colle la clé ci-dessous',
+    groq_key_ph:'gsk_...',groq_delete_confirm:'Supprimer la clé Groq?',
+    notif_daily:'✋ Aucune transaction aujourd\'hui. Mets à jour.',
+    quick_ai_ph:"Ex: J'ai trop dépensé ?",chat_ph:'Analyse mes dépenses...',
+    err_back:'Retour accueil',inc_exp_ph:'ex: 5000',hourly_ph:'ex: 500',ant_ph:'défaut 200',
+    drive_no_backup:'Aucune sauvegarde trouvée sur Drive.',
+    delete_key_label:'Supprimer la clé',
+    wipe_accounts:'Effacer tous les comptes ?',
+    acc_add_balance:'Solde initial',
+    period_insight_no_data:'Aucune donnée {p}. Saisis tes mouvements pour activer l\'analyse.',
+    over_budget:'Tu dépenses plus que tu ne gagnes',over_budget_neg:'Solde négatif',
     acc_add:'+ Ajouter',
+
+    // ── Onboarding & Settings — additions ──
+    onb_title:'Bienvenue 👋',onb_sub:'Choisis ta langue et ta devise. Tu pourras les changer à tout moment dans les Paramètres.',
+    onb_lang:'Langue',onb_currency:'Devise',onb_currency_other:'Autre devise (ex: GBP)',onb_start:'Démarrer',
+    cfg_cat_hint2:'Clique sur une catégorie pour la modifier ou la supprimer.',
+    cfg_groq_step1:'1. Va sur',cfg_groq_step2:'2. Crée un compte → API Keys → Create API Key',cfg_groq_step3:'3. Colle la clé ci-dessous',
+    cfg_groq_test_btn:'🧪 Tester',cfg_groq_del_btn:'🗑️ Supprimer',cfg_groq_current:'Clé actuelle',
+    cfg_life:'Vie & prévisions',cfg_life_desc:"Deux chiffres qui changent comment l'app pense.",
+    cfg_inc7:'Revenus attendus 7j',cfg_inc7_help:"Argent que tu sais que tu vas recevoir cette semaine. Recalcule le Safety Days et l'IA arrête de paniquer.",
+    cfg_hourly_label:'Ton taux horaire',cfg_hourly_help:'Convertit chaque dépense en temps de vie : "= 4h de travail". Laisse vide pour désactiver.',
+    cfg_ant_label:'Seuil "Effet Fourmi"',cfg_ant_help:'Toute dépense sous ce montant est considérée "petite" et cumulée séparément.',
+    cfg_drive:'Sauvegarde Google Drive',cfg_drive_desc:'Sauvegarde automatique chiffrée dans ton Google Drive (scope drive.file). Auto 3s après chaque modification.',
+    cfg_drive_disconnected:'Non connecté',cfg_drive_connected:'✓ Connecté',cfg_drive_connect:'🔗 Connecter Google Drive',
+    cfg_drive_backup:'⤴︎ Sauvegarder maintenant',cfg_drive_restore:'⤵︎ Restaurer depuis Drive',cfg_drive_disconnect:'Déconnecter',
+    cfg_local:'Sauvegarde locale',cfg_local_desc:'Code base64 contenant toutes tes données.',
+    cfg_currency_help:'Devise détectée automatiquement depuis ta langue. Tu peux la modifier.',
+    settings_title:'Paramètres',
+    notif_enable:'Activer',notif_active:'✅ Actives',notif_test:'🔔 Tester',notif_remind_hour:'Heure rappel',
+    transfer_btn:'Effectuer un virement',
+    err_title:'Erreur',
+    cat_cur_label:'Catégories',acc_cur_label:'Comptes',
+    onb_choose_cur:'Choisis ta devise principale',
+    // Default account names
+    def_acc_main:'Compte principal',def_acc_savings:'Épargne',def_acc_cash:'Espèces',def_acc_mobile:'Mobile Money',
+    // Default category names
+    def_cat_salary:'Salaire',def_cat_youtube:'YouTube',def_cat_freelance:'Freelance',def_cat_business:'Business',
+    def_cat_invest_inc:'Investissement',def_cat_other_inc:'Autre revenu',
+    def_cat_food:'Alimentation',def_cat_transport:'Transport',def_cat_housing:'Logement',def_cat_health:'Santé',
+    def_cat_tech:'Tech & Prod.',def_cat_studies:'Études',def_cat_leisure:'Loisirs',def_cat_clothes:'Vêtements',
+    def_cat_bills:'Factures',def_cat_unforeseen:'Imprévus',def_cat_other_exp:'Autre dépense',
+    new_tx:'Nouvelle transaction',mood_label:"État d'esprit (Ivy en a besoin)",
+    tx_btn_save:'✓ Enregistrer',
+
   },
   en:{
     nav_home:'Home',nav_txns:'Txns',nav_analyse:'Analyse',nav_ia:'AI',nav_config:'Config',
@@ -413,7 +684,64 @@ const I18N={
     kpi_pressure_up:'⚠️ Accelerating. Time to slow down before you run dry.',
     kpi_pressure_down:'✅ You\'re slowing down vs your habit.',kpi_pressure_stable:'Steady pace.',
     exp_income:'expected income',hourly_equiv:'= life time',no_tx:'No transactions found.',
+    acc_name_ph:'Account name',acc_icon_ph:'Emoji (e.g. 💳)',acc_bal_ph:'Initial balance',
+    acc_type_ph:'Type (optional)',acc_edit_title:'Edit account',acc_new_title:'New account',
+    cat_name_ph:'Name',cat_icon_ph:'Emoji',cat_new_title:'New category',cat_edit_title:'Edit category',
+    cat_type:'Type',cat_budget:'Monthly budget',
+    goal_new_title:'New goal',goal_deposit_title:'Save',goal_withdraw_title:'Withdraw funds',
+    goal_withdraw_ph:'Amount to withdraw',goal_withdraw_btn:'Withdraw',
+    transfer_title:'Transfer between accounts',transfer_from:'Source account',transfer_to:'Destination account',
+    transfer_amt_ph:'Amount',transfer_note_ph:'Note (optional)',
+    currency_title:'Change currency',currency_ph:'e.g. XOF, USD, EUR',
+    lang_detected:'Detected language',lang_choose:'Choose your preference:',
+    backup_title:'Backup & restore',backup_import_ph:'Paste your code here...',
+    tx_note_ph:'Note or description (optional)',tx_loc_ph:'📍 Location (e.g. Downtown...)',
+    tx_filter_all:'All',tx_filter_inc:'Income',tx_filter_exp:'Expenses',tx_filter_tr:'Transfers',
+    no_tx_day:'No transactions this day.',no_tx_hour:'No transactions in this range.',
+    no_data_period:'No data for this period. Add your transactions.',
+    an_no_cat:'No expenses this period.',
+    an_pic:'Peak',an_solde:'Balance',an_comparison:'Comparison',
+    groq_no_key:'⚠️ No key — AI disabled',groq_step3:'3. Paste the key below',
+    groq_key_ph:'gsk_...',groq_delete_confirm:'Delete Groq key?',
+    notif_daily:'✋ No transaction today. Update now.',
+    quick_ai_ph:'e.g. Did I overspend?',chat_ph:'Analyze my spending...',
+    err_back:'Back home',inc_exp_ph:'e.g. 5000',hourly_ph:'e.g. 500',ant_ph:'default 200',
+    drive_no_backup:'No backup found on Drive.',
+    delete_key_label:'Delete key',wipe_accounts:'Delete all accounts?',
+    acc_add_balance:'Initial balance',
+    period_insight_no_data:'No data for {p}. Add transactions to activate analysis.',
+    over_budget:'You spend more than you earn',over_budget_neg:'Negative balance',
     acc_add:'+ Add',
+
+    onb_title:'Welcome 👋',onb_sub:'Pick your language and currency. You can change them anytime in Settings.',
+    onb_lang:'Language',onb_currency:'Currency',onb_currency_other:'Other currency (e.g. GBP)',onb_start:'Start',
+    cfg_cat_hint2:'Tap a category to edit or delete it.',
+    cfg_groq_step1:'1. Go to',cfg_groq_step2:'2. Create account → API Keys → Create API Key',cfg_groq_step3:'3. Paste the key below',
+    cfg_groq_test_btn:'🧪 Test',cfg_groq_del_btn:'🗑️ Delete',cfg_groq_current:'Current key',
+    cfg_life:'Life & forecasts',cfg_life_desc:'Two numbers that change how the app thinks.',
+    cfg_inc7:'Expected income (7d)',cfg_inc7_help:'Money you know is coming this week. Recomputes Safety Days so the AI stops panicking.',
+    cfg_hourly_label:'Your hourly rate',cfg_hourly_help:'Converts every expense into life-time: "= 4h of work". Leave blank to disable.',
+    cfg_ant_label:'"Ant effect" threshold',cfg_ant_help:'Any expense below this is treated as "small" and cumulated separately.',
+    cfg_drive:'Google Drive backup',cfg_drive_desc:'Encrypted auto-backup to your own Drive (scope drive.file). Triggers 3s after each change.',
+    cfg_drive_disconnected:'Not connected',cfg_drive_connected:'✓ Connected',cfg_drive_connect:'🔗 Connect Google Drive',
+    cfg_drive_backup:'⤴︎ Backup now',cfg_drive_restore:'⤵︎ Restore from Drive',cfg_drive_disconnect:'Disconnect',
+    cfg_local:'Local backup',cfg_local_desc:'Base64 code containing all your data.',
+    cfg_currency_help:'Currency auto-detected from your language. You can change it.',
+    settings_title:'Settings',
+    notif_enable:'Enable',notif_active:'✅ Active',notif_test:'🔔 Test',notif_remind_hour:'Reminder hour',
+    transfer_btn:'Make a transfer',
+    err_title:'Error',
+    cat_cur_label:'Categories',acc_cur_label:'Accounts',
+    onb_choose_cur:'Pick your main currency',
+    def_acc_main:'Main account',def_acc_savings:'Savings',def_acc_cash:'Cash',def_acc_mobile:'Mobile Money',
+    def_cat_salary:'Salary',def_cat_youtube:'YouTube',def_cat_freelance:'Freelance',def_cat_business:'Business',
+    def_cat_invest_inc:'Investment',def_cat_other_inc:'Other income',
+    def_cat_food:'Food',def_cat_transport:'Transport',def_cat_housing:'Housing',def_cat_health:'Health',
+    def_cat_tech:'Tech & Prod.',def_cat_studies:'Studies',def_cat_leisure:'Leisure',def_cat_clothes:'Clothes',
+    def_cat_bills:'Bills',def_cat_unforeseen:'Unforeseen',def_cat_other_exp:'Other expense',
+    new_tx:'New transaction',mood_label:'Mindset (Ivy needs it)',
+    tx_btn_save:'✓ Save',
+
   },
   es:{
     nav_home:'Inicio',nav_txns:'Txns',nav_analyse:'Análisis',nav_ia:'IA',nav_config:'Config',
@@ -483,7 +811,60 @@ const I18N={
     kpi_pressure_detail:'Gastos diarios últimos 7 días:',kpi_pressure_vs:'vs promedio 30d:',
     kpi_pressure_up:'⚠️ Acelerando. Frena antes de quedarte sin fondos.',
     kpi_pressure_down:'✅ Estás frenando vs tu hábito.',kpi_pressure_stable:'Ritmo estable.',
-    exp_income:'ingresos esperados',hourly_equiv:'= tiempo de vida',no_tx:'No se encontraron transacciones.',acc_add:'+ Agregar',
+    exp_income:'ingresos esperados',hourly_equiv:'= tiempo de vida',no_tx:'No se encontraron transacciones.',
+    acc_name_ph:'Nombre de la cuenta',acc_icon_ph:'Emoji (ej: 💳)',acc_bal_ph:'Saldo inicial',
+    acc_type_ph:'Tipo (opcional)',acc_edit_title:'Editar cuenta',acc_new_title:'Nueva cuenta',
+    cat_name_ph:'Nombre',cat_icon_ph:'Emoji',cat_new_title:'Nueva categoría',cat_edit_title:'Editar categoría',
+    cat_type:'Tipo',cat_budget:'Presupuesto mensual',
+    goal_new_title:'Nueva meta',goal_deposit_title:'Ahorrar',goal_withdraw_title:'Retirar fondos',
+    goal_withdraw_ph:'Monto a retirar',goal_withdraw_btn:'Retirar',
+    transfer_title:'Transferencia entre cuentas',transfer_from:'Cuenta origen',transfer_to:'Cuenta destino',
+    transfer_amt_ph:'Monto',transfer_note_ph:'Nota (opcional)',
+    currency_title:'Cambiar moneda',currency_ph:'ej: XOF, USD, EUR',
+    lang_detected:'Idioma detectado',lang_choose:'Elige tu preferencia:',
+    backup_title:'Copia de seguridad',backup_import_ph:'Pega tu código aquí...',
+    tx_note_ph:'Nota o descripción (opcional)',tx_loc_ph:'📍 Lugar (ej: Centro...)',
+    tx_filter_all:'Todo',tx_filter_inc:'Ingresos',tx_filter_exp:'Gastos',tx_filter_tr:'Transferencias',
+    no_tx_day:'Sin transacciones este día.',no_tx_hour:'Sin transacciones en este rango.',
+    no_data_period:'Sin datos para este período.',
+    an_no_cat:'Sin gastos este período.',an_pic:'Pico',an_solde:'Saldo',an_comparison:'Comparación',
+    groq_no_key:'⚠️ Sin clave — IA desactivada',groq_step3:'3. Pega la clave abajo',
+    groq_key_ph:'gsk_...',groq_delete_confirm:'¿Eliminar clave Groq?',
+    notif_daily:'✋ Sin transacciones hoy. Actualiza.',
+    quick_ai_ph:'ej: ¿Gasté demasiado?',chat_ph:'Analiza mis gastos...',
+    err_back:'Volver',inc_exp_ph:'ej: 5000',hourly_ph:'ej: 500',ant_ph:'por defecto 200',
+    drive_no_backup:'Sin respaldo en Drive.',delete_key_label:'Eliminar clave',
+    over_budget:'Gastas más de lo que ganas',over_budget_neg:'Saldo negativo',
+        acc_add:'+ Agregar',
+    onb_title:'Bienvenido 👋',onb_sub:'Elige tu idioma y moneda. Puedes cambiarlos en cualquier momento.',
+    onb_lang:'Idioma',onb_currency:'Moneda',onb_currency_other:'Otra moneda (ej: GBP)',onb_start:'Empezar',
+    cfg_cat_hint2:'Toca una categoría para editar o eliminar.',
+    cfg_groq_step1:'1. Ve a',cfg_groq_step2:'2. Crea cuenta → API Keys → Create API Key',cfg_groq_step3:'3. Pega la clave abajo',
+    cfg_groq_test_btn:'🧪 Probar',cfg_groq_del_btn:'🗑️ Eliminar',cfg_groq_current:'Clave actual',
+    cfg_life:'Vida & previsiones',cfg_life_desc:'Dos cifras que cambian cómo piensa la app.',
+    cfg_inc7:'Ingresos esperados (7d)',cfg_inc7_help:'Dinero que sabes que entrará esta semana.',
+    cfg_hourly_label:'Tu tarifa por hora',cfg_hourly_help:'Convierte cada gasto en tiempo de vida.',
+    cfg_ant_label:'Umbral "efecto hormiga"',cfg_ant_help:'Cualquier gasto bajo este monto se considera "pequeño".',
+    cfg_drive:'Copia Google Drive',cfg_drive_desc:'Copia automática cifrada en tu Drive.',
+    cfg_drive_disconnected:'No conectado',cfg_drive_connected:'✓ Conectado',cfg_drive_connect:'🔗 Conectar Google Drive',
+    cfg_drive_backup:'⤴︎ Respaldar ahora',cfg_drive_restore:'⤵︎ Restaurar desde Drive',cfg_drive_disconnect:'Desconectar',
+    cfg_local:'Copia local',cfg_local_desc:'Código base64 con todos tus datos.',
+    cfg_currency_help:'Moneda auto-detectada desde tu idioma.',
+    settings_title:'Ajustes',
+    notif_enable:'Activar',notif_active:'✅ Activas',notif_test:'🔔 Probar',notif_remind_hour:'Hora del recordatorio',
+    transfer_btn:'Hacer una transferencia',
+    err_title:'Error',
+    cat_cur_label:'Categorías',acc_cur_label:'Cuentas',
+    onb_choose_cur:'Elige tu moneda principal',
+    def_acc_main:'Cuenta principal',def_acc_savings:'Ahorros',def_acc_cash:'Efectivo',def_acc_mobile:'Mobile Money',
+    def_cat_salary:'Salario',def_cat_youtube:'YouTube',def_cat_freelance:'Freelance',def_cat_business:'Negocio',
+    def_cat_invest_inc:'Inversión',def_cat_other_inc:'Otro ingreso',
+    def_cat_food:'Comida',def_cat_transport:'Transporte',def_cat_housing:'Vivienda',def_cat_health:'Salud',
+    def_cat_tech:'Tech & Prod.',def_cat_studies:'Estudios',def_cat_leisure:'Ocio',def_cat_clothes:'Ropa',
+    def_cat_bills:'Facturas',def_cat_unforeseen:'Imprevistos',def_cat_other_exp:'Otro gasto',
+    new_tx:'Nueva transacción',mood_label:'Estado de ánimo (Ivy lo necesita)',
+    tx_btn_save:'✓ Guardar',
+
   },
   pt:{
     nav_home:'Início',nav_txns:'Txns',nav_analyse:'Análise',nav_ia:'IA',nav_config:'Config',
@@ -553,7 +934,60 @@ const I18N={
     kpi_pressure_detail:'Despesas diárias últimos 7 dias:',kpi_pressure_vs:'vs média 30d:',
     kpi_pressure_up:'⚠️ A acelerar. Trava antes de ficar sem fundos.',
     kpi_pressure_down:'✅ Estás a abrandar vs o teu hábito.',kpi_pressure_stable:'Ritmo estável.',
-    exp_income:'receitas esperadas',hourly_equiv:'= tempo de vida',no_tx:'Nenhuma transação encontrada.',acc_add:'+ Adicionar',
+    exp_income:'receitas esperadas',hourly_equiv:'= tempo de vida',no_tx:'Nenhuma transação encontrada.',
+    acc_name_ph:'Nome da conta',acc_icon_ph:'Emoji (ex: 💳)',acc_bal_ph:'Saldo inicial',
+    acc_type_ph:'Tipo (opcional)',acc_edit_title:'Editar conta',acc_new_title:'Nova conta',
+    cat_name_ph:'Nome',cat_icon_ph:'Emoji',cat_new_title:'Nova categoria',cat_edit_title:'Editar categoria',
+    cat_type:'Tipo',cat_budget:'Orçamento mensal',
+    goal_new_title:'Novo objetivo',goal_deposit_title:'Poupar',goal_withdraw_title:'Levantar fundos',
+    goal_withdraw_ph:'Valor a levantar',goal_withdraw_btn:'Levantar',
+    transfer_title:'Transferência entre contas',transfer_from:'Conta origem',transfer_to:'Conta destino',
+    transfer_amt_ph:'Valor',transfer_note_ph:'Nota (opcional)',
+    currency_title:'Alterar moeda',currency_ph:'ex: XOF, USD, EUR',
+    lang_detected:'Idioma detetado',lang_choose:'Escolhe a tua preferência:',
+    backup_title:'Cópia de segurança',backup_import_ph:'Cola o teu código aqui...',
+    tx_note_ph:'Nota ou descrição (opcional)',tx_loc_ph:'📍 Local (ex: Centro...)',
+    tx_filter_all:'Tudo',tx_filter_inc:'Receitas',tx_filter_exp:'Despesas',tx_filter_tr:'Transferências',
+    no_tx_day:'Sem transações neste dia.',no_tx_hour:'Sem transações neste intervalo.',
+    no_data_period:'Sem dados para este período.',
+    an_no_cat:'Sem despesas neste período.',an_pic:'Pico',an_solde:'Saldo',an_comparison:'Comparação',
+    groq_no_key:'⚠️ Sem chave — IA desativada',groq_step3:'3. Cola a chave abaixo',
+    groq_key_ph:'gsk_...',groq_delete_confirm:'Eliminar chave Groq?',
+    notif_daily:'✋ Sem transações hoje. Atualiza.',
+    quick_ai_ph:'ex: Gastei demais?',chat_ph:'Analisa os meus gastos...',
+    err_back:'Voltar',inc_exp_ph:'ex: 5000',hourly_ph:'ex: 500',ant_ph:'padrão 200',
+    drive_no_backup:'Sem backup no Drive.',delete_key_label:'Eliminar chave',
+    over_budget:'Gastas mais do que ganhas',over_budget_neg:'Saldo negativo',
+        acc_add:'+ Adicionar',
+    onb_title:'Bem-vindo 👋',onb_sub:'Escolhe a tua língua e moeda. Podes alterar a qualquer momento.',
+    onb_lang:'Idioma',onb_currency:'Moeda',onb_currency_other:'Outra moeda (ex: GBP)',onb_start:'Começar',
+    cfg_cat_hint2:'Toca numa categoria para editar ou eliminar.',
+    cfg_groq_step1:'1. Vai a',cfg_groq_step2:'2. Cria conta → API Keys → Create API Key',cfg_groq_step3:'3. Cola a chave abaixo',
+    cfg_groq_test_btn:'🧪 Testar',cfg_groq_del_btn:'🗑️ Apagar',cfg_groq_current:'Chave atual',
+    cfg_life:'Vida & previsões',cfg_life_desc:'Dois números que mudam como a app pensa.',
+    cfg_inc7:'Rendimento esperado (7d)',cfg_inc7_help:'Dinheiro que sabes que vai entrar esta semana.',
+    cfg_hourly_label:'A tua tarifa por hora',cfg_hourly_help:'Converte cada despesa em tempo de vida.',
+    cfg_ant_label:'Limite "efeito formiga"',cfg_ant_help:'Qualquer despesa abaixo deste valor é considerada "pequena".',
+    cfg_drive:'Backup Google Drive',cfg_drive_desc:'Backup automático cifrado no teu Drive.',
+    cfg_drive_disconnected:'Não ligado',cfg_drive_connected:'✓ Ligado',cfg_drive_connect:'🔗 Ligar Google Drive',
+    cfg_drive_backup:'⤴︎ Backup agora',cfg_drive_restore:'⤵︎ Restaurar do Drive',cfg_drive_disconnect:'Desligar',
+    cfg_local:'Backup local',cfg_local_desc:'Código base64 com todos os teus dados.',
+    cfg_currency_help:'Moeda auto-detetada a partir do teu idioma.',
+    settings_title:'Definições',
+    notif_enable:'Ativar',notif_active:'✅ Ativas',notif_test:'🔔 Testar',notif_remind_hour:'Hora do lembrete',
+    transfer_btn:'Fazer uma transferência',
+    err_title:'Erro',
+    cat_cur_label:'Categorias',acc_cur_label:'Contas',
+    onb_choose_cur:'Escolhe a tua moeda principal',
+    def_acc_main:'Conta principal',def_acc_savings:'Poupança',def_acc_cash:'Dinheiro',def_acc_mobile:'Mobile Money',
+    def_cat_salary:'Salário',def_cat_youtube:'YouTube',def_cat_freelance:'Freelance',def_cat_business:'Negócio',
+    def_cat_invest_inc:'Investimento',def_cat_other_inc:'Outro rendimento',
+    def_cat_food:'Alimentação',def_cat_transport:'Transporte',def_cat_housing:'Habitação',def_cat_health:'Saúde',
+    def_cat_tech:'Tech & Prod.',def_cat_studies:'Estudos',def_cat_leisure:'Lazer',def_cat_clothes:'Roupa',
+    def_cat_bills:'Contas',def_cat_unforeseen:'Imprevistos',def_cat_other_exp:'Outra despesa',
+    new_tx:'Nova transação',mood_label:'Estado de espírito (Ivy precisa)',
+    tx_btn_save:'✓ Guardar',
+
   },
 };
 
@@ -578,6 +1012,21 @@ function detectLang(){
 }
 
 let _lang=detectLang();
+
+// ── Localised display for default accounts/categories ─────────────
+function displayAcc(a){
+  if(!a) return {icon:'?',name:'?'};
+  const k='def_acc_'+a.id;
+  const tr=I18N[_lang]&&I18N[_lang][k];
+  return tr ? {...a, name: tr} : a;
+}
+function displayCat(c){
+  if(!c) return {icon:'💸',name:'?'};
+  const k='def_cat_'+c.id;
+  const tr=I18N[_lang]&&I18N[_lang][k];
+  return tr ? {...c, name: tr} : c;
+}
+
 // t() = translate — le raccourci central
 const t=key=>I18N[_lang]?.[key]||I18N['fr']?.[key]||key;
 
@@ -720,8 +1169,8 @@ function monthTxs(){
   const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1);
   return txs.filter(t=>new Date(t.date)>=start);
 }
-function catById(id){return cats.find(c=>c.id===id)||{icon:'💸',name:id}}
-function accById(id){return accs.find(a=>a.id===id)||{icon:'?',name:'?'}}
+function catById(id){const c=cats.find(c=>c.id===id);return c?displayCat(c):{icon:'💸',name:id}}
+function accById(id){const a=accs.find(a=>a.id===id);return a?displayAcc(a):{icon:'?',name:'?'}}
 
 // ════════════════════════════════════════
 // KPIs — Modèle Cashflow Dynamique (Rolling)
@@ -1200,7 +1649,7 @@ function openAIQuick(){
     <h3>✨ Assistant IA Rapide</h3>
     <div style="font-size:11px;color:var(--mut);margin-bottom:10px">Pose ta question — réponse instantanée basée sur tes données.</div>
     <div id="quickAIArea" style="min-height:80px;padding:12px;background:var(--surf2);border-radius:12px;margin-bottom:10px;font-size:13px;line-height:1.55"><div style="color:var(--mut);font-size:12px">En attente de ta question...</div></div>
-    <input id="quickAIInput" class="fi" placeholder="Ex: J'ai trop dépensé ?" autocomplete="off">
+    <input id="quickAIInput" class="fi" placeholder="${t('quick_ai_ph')}" autocomplete="off">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
       <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Risque ce mois ?')">Risque ?</button>
       <button class="btn btn-ghost btn-sm" onclick="quickAIAsk('Top dépense ?')">Top dépense ?</button>
@@ -1326,7 +1775,7 @@ function checkNotifs(){
   const rh=parseInt(settings.remindHour||20);
   if(h===rh&&m<5){
     const todayTxs=txs.filter(t=>new Date(t.date).toDateString()===today);
-    if(!todayTxs.length)sendNotif('Finance AI OS','✋ Aucune transaction aujourd\'hui. Mets à jour.','daily');
+    if(!todayTxs.length)sendNotif('Finance AI OS',t('notif_daily'),'daily');
   }
 
   // ── 2. Réserve critique ──────────────────────────────────────
@@ -1523,7 +1972,7 @@ function renderHome(){
   <!-- RECENT TX -->
   <div class="card">
     <div class="ch">Transactions récentes <button class="btn btn-ghost btn-sm" onclick="go('txlist')">Voir tout</button></div>
-    ${txs.slice(0,5).map(txItem).join('')||'<div class="tm" style="font-size:12px;padding:8px 0">Aucune transaction. Appuie sur + pour commencer.</div>'}
+    ${txs.slice(0,5).map(txItem).join('')||`<div class="tm" style="font-size:12px;padding:8px 0">${t('tx_none')}</div>`}
   </div>
 
   <!-- ACCOUNTS -->
@@ -1626,17 +2075,17 @@ function renderTxList(){
   <div class="stitle">Transactions</div>
   <div class="search-box">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input id="searchInput" placeholder="Rechercher..." value="${searchQ}" oninput="searchQ=this.value;render()">
+    <input id="searchInput" placeholder="${t('tx_search')}" value="${searchQ}" oninput="searchQ=this.value;render()">
   </div>
   <div class="ftabs">
-    ${['all','income','expense','transfer'].map(f=>`<button class="ftab ${txFilter===f?'on':''}" onclick="txFilter='${f}';render()">${f==='all'?'Tout':f==='income'?'Revenus':f==='expense'?'Dépenses':'Transferts'}</button>`).join('')}
+    ${['all','income','expense','transfer'].map(f=>`<button class="ftab ${txFilter===f?'on':''}" onclick="txFilter='${f}';render()">${f==='all'?t('tx_filter_all'):f==='income'?t('tx_filter_inc'):f==='expense'?t('tx_filter_exp'):t('tx_filter_tr')}</button>`).join('')}
   </div>
   <div class="card">
     ${Object.keys(groups).length?Object.entries(groups).map(([date,list])=>`
       <div style="font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px;${Object.keys(groups).indexOf(date)===0?'margin-top:0':''}">${date}</div>
       <div style="font-size:11px;color:var(--mut);text-align:right;margin-top:-20px;margin-bottom:6px">${fmtFull(list.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0)||0)}</div>
       ${list.map(txItem).join('')}
-    `).join('') : '<div class="tm" style="font-size:12px;padding:12px 0;text-align:center">Aucune transaction trouvée.</div>'}
+    `).join('') : `<div class="tm" style="font-size:12px;padding:12px 0;text-align:center">${t('no_tx')}</div>`}
   </div>
   `;
 }
@@ -1804,7 +2253,7 @@ function renderAnalytics(){
   const localCmt=localPeriodComment(p,{curExp,curInc,prevExp,prevInc,expDpct,topCat:catEntries[0]});
 
   return`
-  <div class="stitle">Analyse</div>
+  <div class="stitle">${t('an_title')}</div>
 
   <!-- PERIOD SELECTOR -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px">
@@ -1874,7 +2323,7 @@ function renderAnalytics(){
         </div>`;
       }).join('')}
     </div>
-    ${subData.some(v=>v>0)?`<div style="font-size:11px;color:var(--mut);margin-top:6px">Pic: <span class="ta">${subLabels[subPeak].replace('\n',' ')}</span> — ${fmtFull(subData[subPeak])}</div>`:`<div class="tm" style="font-size:11px;margin-top:6px">Aucune donnée pour ${periodLabel(p)}.</div>`}
+    ${subData.some(v=>v>0)?`<div style="font-size:11px;color:var(--mut);margin-top:6px">Pic: <span class="ta">${subLabels[subPeak].replace('\n',' ')}</span> — ${fmtFull(subData[subPeak])}</div>`:`<div class="tm" style="font-size:11px;margin-top:6px">${t('no_data_period')} (${periodLabel(p)})</div>`}
   </div>
 
   <!-- TOP DÉPENSES ADAPTATIF -->
@@ -1888,7 +2337,7 @@ function renderAnalytics(){
         </div>
         <div class="bar"><div class="bf" style="width:${pct}%;background:${intensityColor(pct/100)}"></div></div>
       </div>`;
-    }).join('')||`<div class="tm" style="font-size:12px">Aucune dépense ${periodLabel(p)}.</div>`}
+    }).join('')||`<div class="tm" style="font-size:12px">${t('an_no_cat')}</div>`}
   </div>
 
   ${anomalies.length?`<div class="card"><div class="ch">⚡ Anomalies — ${periodLabel(p)}</div>${anomalies.map(a=>`<div class="al al-w">${a}</div>`).join('')}</div>`:''}
@@ -1908,7 +2357,7 @@ function renderAnalytics(){
 
 function localPeriodComment(p,d){
   const lbl=periodLabel(p),prev=periodPrevLabel(p);
-  if(d.curExp===0&&d.curInc===0) return `Aucune donnée ${lbl}. Saisis tes mouvements pour activer l'analyse.`;
+  if(d.curExp===0&&d.curInc===0) return t('no_data_period').replace('{p}',lbl);
   const parts=[];
   if(d.curExp>0&&d.prevExp>0){
     if(d.expDpct>30) parts.push(`🔥 Dépenses en hausse de <strong>+${d.expDpct}%</strong> vs ${prev}. Le cerveau s'habitue à dépenser plus — c'est l'effet d'inertie.`);
@@ -1917,7 +2366,7 @@ function localPeriodComment(p,d){
   } else if(d.curExp>0){
     parts.push(`${fmtFull(d.curExp)} dépensés ${lbl}.`);
   }
-  if(d.curInc>0&&d.curExp>d.curInc) parts.push(`⚠️ Tu dépenses plus que tu ne gagnes ${lbl}. Solde négatif: ${fmtFull(d.curInc-d.curExp)}.`);
+  if(d.curInc>0&&d.curExp>d.curInc) parts.push(`⚠️ ${t('over_budget')} ${lbl}. ${t('over_budget_neg')}: ${fmtFull(d.curInc-d.curExp)}.`);
   if(d.topCat) parts.push(`Top catégorie: ${catById(d.topCat[0]).icon} <strong>${catById(d.topCat[0]).name}</strong> (${fmtFull(d.topCat[1])}).`);
   return parts.join(' ');
 }
@@ -2057,7 +2506,7 @@ function saveGroqKey(){
   render();
 }
 function clearGroqKey(){
-  if(!confirm('Supprimer la clé Groq?'))return;
+  if(!confirm(t('groq_delete_confirm')))return;
   localStorage.removeItem('groq_api_key');
   render();
 }
@@ -2240,7 +2689,7 @@ function renderAI(){
       ${aiTyping?'<div class="bub bai ald"><div class="add"></div><div class="add"></div><div class="add"></div></div>':''}
     </div>
     <div class="cirow">
-      <input type="text" id="chatInput" class="fi" placeholder="Analyse mes dépenses..." autocomplete="off">
+      <input type="text" id="chatInput" class="fi" placeholder="${t('chat_ph')}" autocomplete="off">
       <button class="sbtn" id="sendBtn"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
     <div style="font-size:10px;color:var(--mut);margin-top:7px;text-align:center">Données 100% locales · ${isOnline?'Analyse via Groq':'Analyse locale active'}</div>
@@ -2278,11 +2727,11 @@ function quickAsk(q){const ci=$('chatInput');if(ci){ci.value=q;$('sendBtn')&&$('
 // ════════════════════════════════════════
 function renderSettings(){
   return`
-  <div class="stitle">Paramètres</div>
+  <div class="stitle">${t('settings_title')}</div>
 
   <!-- ACCOUNTS -->
   <div class="card">
-    <div class="ch">🏦 Comptes <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">+ Nouveau</button></div>
+    <div class="ch">🏦 ${t('cfg_accounts')} <button class="btn btn-ghost btn-sm" onclick="openAddAccountModal()">${t('cfg_new_acc')}</button></div>
     ${accs.map(a=>`<div class="ach">
       <span style="font-size:20px">${a.icon}</span>
       <div style="flex:1"><div style="font-size:13px;font-weight:700">${a.name}</div><div style="font-size:10px;color:var(--mut)">${a.type}</div></div>
@@ -2293,8 +2742,8 @@ function renderSettings(){
 
   <!-- CATEGORIES -->
   <div class="card">
-    <div class="ch">🏷️ Catégories <button class="btn btn-ghost btn-sm" onclick="openAddCatModal()">+ Nouvelle</button></div>
-    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">Clique sur une catégorie pour la modifier ou la supprimer.</div>
+    <div class="ch">🏷️ ${t('cfg_categories')} <button class="btn btn-ghost btn-sm" onclick="openAddCatModal()">${t('cfg_new_cat')}</button></div>
+    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">${t('cfg_cat_hint2')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px">
       ${cats.map(c=>`<button class="btn btn-ghost btn-sm" onclick="openEditCatModal('${c.id}')">${c.icon} ${c.name}</button>`).join('')}
     </div>
@@ -2302,7 +2751,7 @@ function renderSettings(){
 
   <!-- GOALS -->
   <div class="card">
-    <div class="ch">🎯 Objectifs <button class="btn btn-ghost btn-sm" onclick="openAddGoalModal()">+ Nouveau</button></div>
+    <div class="ch">🎯 ${t('cfg_goals')} <button class="btn btn-ghost btn-sm" onclick="openAddGoalModal()">${t('cfg_new_acc')}</button></div>
     ${goals.length?goals.map(g=>{
       const pct=Math.min(100,(g.saved/g.target)*100);
       const kpi=computeKPIs();
@@ -2333,62 +2782,59 @@ function renderSettings(){
 
   <!-- NOTIFICATIONS -->
   <div class="card">
-    <div class="ch">🔔 Notifications</div>
+    <div class="ch">🔔 ${t('cfg_notifs')}</div>
     <div class="flex sb" style="margin-bottom:10px">
-      <span style="font-size:13px;font-weight:700">Activer</span>
-      <button class="btn btn-ghost btn-sm" onclick="toggleNotifs()">${('Notification' in window && Notification.permission==='granted')?'✅ Actives':'Activer'}</button>
+      <span style="font-size:13px;font-weight:700">${t('notif_enable')}</span>
+      <button class="btn btn-ghost btn-sm" onclick="toggleNotifs()">${('Notification' in window && Notification.permission==='granted')?t('notif_active'):t('notif_enable')}</button>
     </div>
     <div class="flex sb" style="margin-bottom:10px">
-      <span style="font-size:12px;color:var(--mut)">Heure rappel</span>
+      <span style="font-size:12px;color:var(--mut)">${t('notif_remind_hour')}</span>
       <select class="fi" style="width:auto;padding:7px 10px;margin:0" onchange="saveSet('remindHour',parseInt(this.value))">
         ${Array.from({length:24},(_,i)=>`<option value="${i}" ${(settings.remindHour||20)===i?'selected':''}>${String(i).padStart(2,'0')}h00</option>`).join('')}
       </select>
     </div>
-    <button class="btn btn-ghost" onclick="testNotif()">🔔 Tester</button>
+    <button class="btn btn-ghost" onclick="testNotif()">${t('notif_test')}</button>
   </div>
 
   <!-- IA CONFIG -->
   <div class="card">
-    <div class="ch">🤖 Intelligence Artificielle — Groq</div>
+    <div class="ch">🤖 ${t('cfg_groq')}</div>
     <div style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.7;padding:10px;background:var(--surf2);border-radius:10px">
-      <strong style="color:var(--acc3)">Groq est 100% gratuit</strong> — 14 400 req/jour, aucune carte bancaire.<br>
-      1. Va sur <strong style="color:var(--acc3)">console.groq.com</strong><br>
-      2. Crée un compte → API Keys → Create API Key<br>
-      3. Colle la clé ci-dessous
+      <strong style="color:var(--acc3)">${t('cfg_groq_free')}</strong> — ${t('cfg_groq_desc')}<br>${t('cfg_groq_step1')} <strong style="color:var(--acc3)">console.groq.com</strong><br>${t('cfg_groq_step2')}<br>${t('cfg_groq_step3')}
     </div>
     <div style="margin-bottom:8px">
-      <div style="font-size:11px;color:var(--mut);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Clé actuelle</div>
+      <div style="font-size:11px;color:var(--mut);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">${t('cfg_groq_current')}</div>
       <div style="font-size:12px;color:var(--mut);word-break:break-all;padding:8px;background:var(--surf2);border-radius:8px;font-family:monospace">
-        ${localStorage.getItem('groq_api_key')?localStorage.getItem('groq_api_key').slice(0,16)+'...':'⚠️ Aucune clé — IA désactivée'}
+        ${localStorage.getItem('groq_api_key')?localStorage.getItem('groq_api_key').slice(0,16)+'...':t('groq_no_key')}
       </div>
     </div>
-    <input id="new-groq-key" class="fi" type="text" placeholder="gsk_..." style="margin-bottom:8px">
+    <input id="new-groq-key" class="fi" type="text" placeholder="${t('groq_key_ph')}" style="margin-bottom:8px">
     <button class="btn" style="width:100%;background:var(--acc);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px" onclick="saveGroqKey()">
-      💾 Enregistrer la clé Groq
+      ${t('cfg_groq_save')}
     </button>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-      <button class="btn btn-ghost" onclick="testGroqKey()">🧪 Tester</button>
-      <button class="btn btn-ghost" onclick="clearGroqKey()">🗑️ Supprimer</button>
+      <button class="btn btn-ghost" onclick="testGroqKey()">${t('cfg_groq_test_btn')}</button>
+      <button class="btn btn-ghost" onclick="clearGroqKey()">${t('cfg_groq_del_btn')}</button>
     </div>
     <div id="groq-test-result" style="font-size:12px;margin-top:8px;padding:10px;border-radius:8px;display:none;line-height:1.5"></div>
   </div>
 
   <!-- VIE & PRÉVISIONS -->
   <div class="card">
-    <div class="ch">⏳ Vie & prévisions</div>
-    <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.55">Deux chiffres qui changent comment l'app pense.</div>
+    <div class="ch">⏳ ${t('cfg_life')}</div>
+    <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.55">${t('cfg_life_desc')}</div>
 
-    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Revenus attendus 7j</label>
-    <input class="fi" id="setExpInc" type="number" inputmode="decimal" placeholder="ex: 5000" value="${settings.expectedIncome7d||''}" onchange="saveSet('expectedIncome7d',parseFloat(this.value)||0).then(render)">
-    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">Argent que tu sais que tu vas recevoir cette semaine. Recalcule le Safety Days et l'IA arrête de paniquer.</div>
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">${t('cfg_inc7')}</label>
+    <input class="fi" id="setExpInc" type="number" inputmode="decimal" placeholder="${t('inc_exp_ph')}" value="${settings.expectedIncome7d||''}" onchange="saveSet('expectedIncome7d',parseFloat(this.value)||0).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">${t('cfg_inc7_help')}</div>
 
-    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Ton taux horaire (${cur()}/h)</label>
-    <input class="fi" id="setHrly" type="number" inputmode="decimal" placeholder="ex: 500" value="${settings.hourlyRate||''}" onchange="saveSet('hourlyRate',parseFloat(this.value)||0).then(render)">
-    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">Convertit chaque dépense en temps de vie : "= 4h de travail". Laisse vide pour désactiver.</div>
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">${t('cfg_hourly_label')} (${cur()}/h)</label>
+    <input class="fi" id="setHrly" type="number" inputmode="decimal" placeholder="${t('hourly_ph')}" value="${settings.hourlyRate||''}" onchange="saveSet('hourlyRate',parseFloat(this.value)||0).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 12px;padding-left:2px">${t('cfg_hourly_help')}</div>
 
-    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">Seuil "Effet Fourmi"</label>
-    <input class="fi" id="setAnt" type="number" inputmode="decimal" placeholder="défaut 200" value="${settings.antThreshold||200}" onchange="saveSet('antThreshold',parseFloat(this.value)||200).then(render)">
-    <div style="font-size:10px;color:var(--mut);margin:-6px 0 4px;padding-left:2px">Toute dépense sous ce montant est considérée "petite" et cumulée séparément.</div>
+    <label style="font-size:11px;color:var(--txt2);font-weight:700;text-transform:uppercase;letter-spacing:.4px">${t('cfg_ant_label')}</label>
+    <input class="fi" id="setAnt" type="number" inputmode="decimal" placeholder="${t('ant_ph')}" value="${settings.antThreshold||200}" onchange="saveSet('antThreshold',parseFloat(this.value)||200).then(render)">
+    <div style="font-size:10px;color:var(--mut);margin:-6px 0 4px;padding-left:2px">${t('cfg_ant_help')}</div>
   </div>
 
   <!-- DEVISE -->
@@ -2411,36 +2857,36 @@ function renderSettings(){
 
   <!-- TRANSFERT -->
   <div class="card">
-    <div class="ch">⇄ Virement entre comptes</div>
-    <button class="btn btn-ghost" onclick="openTransferModal()">Effectuer un virement</button>
+    <div class="ch">⇄ ${t('cfg_transfer')}</div>
+    <button class="btn btn-ghost" onclick="openTransferModal()">${t('transfer_btn')}</button>
   </div>
 
   <!-- GOOGLE DRIVE -->
   <div class="card">
-    <div class="ch">☁️ Sauvegarde Google Drive</div>
-    <p style="font-size:12px;color:var(--mut);margin-bottom:10px;line-height:1.6">Sauvegarde automatique chiffrée dans <b>ton</b> Google Drive (scope <code>drive.file</code> — accès uniquement aux fichiers créés par cette app). Auto 3s après chaque modification quand tu es en ligne.</p>
-    <div id="driveStatus" style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--mut)">Non connecté</div>
-    <button class="btn" id="driveConnectBtn" style="margin-bottom:8px" onclick="gdriveConnect()">🔗 Connecter Google Drive</button>
+    <div class="ch">☁️ ${t('cfg_drive')}</div>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:10px;line-height:1.6">${t('cfg_drive_desc')}</p>
+    <div id="driveStatus" style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--mut)">${t('cfg_drive_disconnected')}</div>
+    <button class="btn" id="driveConnectBtn" style="margin-bottom:8px" onclick="gdriveConnect()">${t('cfg_drive_connect')}</button>
     <div id="driveActions" style="display:none">
-      <button class="btn" style="margin-bottom:8px" onclick="gdriveBackup()">⤴︎ Sauvegarder maintenant</button>
-      <button class="btn btn-ghost" style="margin-bottom:8px" onclick="gdriveRestore()">⤵︎ Restaurer depuis Drive</button>
-      <button class="btn btn-ghost" onclick="gdriveDisconnect()">Déconnecter</button>
+      <button class="btn" style="margin-bottom:8px" onclick="gdriveBackup()">${t('cfg_drive_backup')}</button>
+      <button class="btn btn-ghost" style="margin-bottom:8px" onclick="gdriveRestore()">${t('cfg_drive_restore')}</button>
+      <button class="btn btn-ghost" onclick="gdriveDisconnect()">${t('cfg_drive_disconnect')}</button>
     </div>
   </div>
 
   <!-- SYNC -->
   <div class="card">
-    <div class="ch">💾 Sauvegarde locale</div>
-    <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">Code base64 contenant toutes tes données (transactions, comptes, catégories, objectifs, réglages, budgets).</p>
-    <button class="btn" style="margin-bottom:8px" onclick="doExport()">📤 Générer code de sauvegarde</button>
-    <button class="btn btn-ghost" style="margin-bottom:8px" onclick="doImport()">📥 Restaurer depuis un code</button>
-    <button class="btn btn-ghost" onclick="exportCSV()">📊 Export CSV</button>
+    <div class="ch">💾 ${t('cfg_local')}</div>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">${t('cfg_local_desc')}</p>
+    <button class="btn" style="margin-bottom:8px" onclick="doExport()">${t('cfg_backup')}</button>
+    <button class="btn btn-ghost" style="margin-bottom:8px" onclick="doImport()">${t('cfg_restore')}</button>
+    <button class="btn btn-ghost" onclick="exportCSV()">${t('cfg_csv')}</button>
   </div>
 
   <!-- DANGER -->
   <div class="card">
-    <div class="ch">⚠️ Zone dangereuse</div>
-    <button class="btn btn-red" onclick="confirmClear()">Effacer toutes les données</button>
+    <div class="ch">⚠️ ${t('cfg_danger')}</div>
+    <button class="btn btn-red" onclick="confirmClear()">${t('cfg_wipe')}</button>
   </div>
 
   <div style="text-align:center;padding:16px 0;font-size:10px;color:var(--mut)">Finance AI OS · Offline-First · IndexedDB</div>
@@ -2455,11 +2901,11 @@ function openAddModal(){
   _txType='expense';
   const now=new Date().toISOString().slice(0,16);
   openModal(`
-    <h3>Nouvelle transaction</h3>
+    <h3>${t('new_tx')}</h3>
     <div class="ttabs">
-      <button class="tt te" id="tabE" onclick="switchType('expense')">❌ Dépense</button>
-      <button class="tt" id="tabI" onclick="switchType('income')">✅ Revenu</button>
-      <button class="tt" id="tabT" onclick="switchType('transfer')">⇄ Transfert</button>
+      <button class="tt te" id="tabE" onclick="switchType('expense')">❌ ${t('tx_type_exp')}</button>
+      <button class="tt" id="tabI" onclick="switchType('income')">✅ ${t('tx_type_inc')}</button>
+      <button class="tt" id="tabT" onclick="switchType('transfer')">⇄ ${t('tx_type_tr')}</button>
     </div>
     <!-- AMOUNT BIG -->
     <div style="text-align:center;margin-bottom:12px">
@@ -2468,9 +2914,9 @@ function openAddModal(){
     </div>
     <div id="txFields"></div>
     <input type="datetime-local" id="txDate" class="fi" value="${now}">
-    <input type="text" id="txNote" class="fi" placeholder="Note ou description (optionnel)">
-    <input type="text" id="txLoc" class="fi" placeholder="📍 Lieu (ex: Centre-ville, bureau...)" autocomplete="off">
-    <div style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:6px 2px 4px">État d'esprit (Ivy en a besoin)</div>
+    <input type="text" id="txNote" class="fi" placeholder="${t('tx_note_ph')}">
+    <input type="text" id="txLoc" class="fi" placeholder="${t('tx_loc_ph')}" autocomplete="off">
+    <div style="font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:6px 2px 4px">${t('mood_label')}</div>
     <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
       ${[['😊','calme'],['😐','neutre'],['😫','fatigué'],['😡','stressé'],['🥳','euphorique']].map(([e,l])=>`
         <label style="flex:1;min-width:50px;cursor:pointer">
@@ -2480,7 +2926,7 @@ function openAddModal(){
           </div>
         </label>`).join('')}
     </div>
-    <button class="btn" onclick="saveTx()">✓ Enregistrer</button>
+    <button class="btn" onclick="saveTx()">${t('tx_btn_save')}</button>
   `);
   updateTxFields();
   setTimeout(()=>{$('txAmt')&&$('txAmt').focus()},100);
@@ -2739,7 +3185,7 @@ function openDayModal(day,monthArg,yearArg){
       ${hours.map((v,h)=>`<div title="${h}h: ${fmtFull(v)}" style="height:28px;background:${intensityColor(v/maxH)};border-radius:3px;cursor:pointer" onclick="openHourModal({date:'${date.toISOString()}',hour:${h}})"></div>`).join('')}
     </div>
     <div style="font-size:10px;color:var(--mut);text-align:center;margin-bottom:10px">0h ←→ 23h · clique une barre pour les transactions</div>
-    ${dayTxs.length?dayTxs.map(txItem).join(''):'<div class="tm">Aucune transaction ce jour.</div>'}
+    ${dayTxs.length?dayTxs.map(txItem).join(''):`<div class="tm">${t('no_tx_day')}</div>`}
   `);
 }
 
@@ -2753,7 +3199,7 @@ function openHourModal(cell){
   openModal(`
     <h3>⏰ ${String(h).padStart(2,'0')}h — ${s.toLocaleDateString(getLocale(),{weekday:'short',day:'numeric',month:'short'})}</h3>
     <div style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--red);margin-bottom:10px">-${fmtFull(total)}</div>
-    ${list.length?list.map(txItem).join(''):'<div class="tm">Aucune transaction sur cette tranche.</div>'}
+    ${list.length?list.map(txItem).join(''):`<div class="tm">${t('no_tx_hour')}</div>`}
   `);
 }
 
@@ -2803,8 +3249,8 @@ function openCategoryModal(catId,period){
 function openAddAccountModal(){
   openModal(`
     <h3>Nouveau compte</h3>
-    <input id="accName" class="fi" placeholder="Nom du compte">
-    <input id="accIcon" class="fi" placeholder="Emoji (ex: 💳)">
+    <input id="accName" class="fi" placeholder="${t('acc_name_ph')}">
+    <input id="accIcon" class="fi" placeholder="${t('acc_icon_ph')}">
     <select id="accType" class="fi">
       <option value="main">Principal</option>
       <option value="savings">Épargne</option>
@@ -2812,7 +3258,7 @@ function openAddAccountModal(){
       <option value="mobile">Mobile Money</option>
       <option value="business">Business</option>
     </select>
-    <input id="accBal" class="fi" type="number" placeholder="Solde initial" inputmode="decimal">
+    <input id="accBal" class="fi" type="number" placeholder="${t('acc_bal_ph')}" inputmode="decimal">
     <button class="btn" onclick="saveNewAccount()">Créer</button>
   `);
 }
@@ -2848,8 +3294,8 @@ async function delAccount(id){
 function openAddCatModal(){
   openModal(`
     <h3>Nouvelle catégorie</h3>
-    <input id="catName" class="fi" placeholder="Nom">
-    <input id="catIcon" class="fi" placeholder="Emoji">
+    <input id="catName" class="fi" placeholder="${t('cat_name_ph')}">
+    <input id="catIcon" class="fi" placeholder="${t('cat_icon_ph')}">
     <select id="catType" class="fi">
       <option value="expense">Dépense</option>
       <option value="income">Revenu</option>
@@ -2897,12 +3343,12 @@ async function delCat(id){
 function openAddGoalModal(){
   openModal(`
     <h3>Nouvel objectif</h3>
-    <input id="gName" class="fi" placeholder="Nom (ex: Nouveau PC)">
-    <input id="gTarget" class="fi" type="number" placeholder="Montant cible" inputmode="decimal">
-    <input id="gIcon" class="fi" placeholder="Emoji (ex: 💻)">
+    <input id="gName" class="fi" placeholder="${t('goals_name')}">
+    <input id="gTarget" class="fi" type="number" placeholder="${t('goals_target')}" inputmode="decimal">
+    <input id="gIcon" class="fi" placeholder="${t('goals_icon')}">
     <input id="gDeadline" class="fi" type="date" style="color:var(--txt2)" title="Deadline (optionnel)">
     <div style="font-size:10px;color:var(--mut);margin:-6px 0 8px;padding-left:2px">Date limite (optionnel — active le suivi de trajectoire)</div>
-    <input id="gNote" class="fi" placeholder="Étape ou note (optionnel)">
+    <input id="gNote" class="fi" placeholder="${t('goals_note')}">
     <button class="btn" onclick="saveGoal()">Créer</button>
   `);
 }
@@ -2925,7 +3371,7 @@ function openDepositModal(id){
     <select id="depFrom" class="fi">
       ${sources.map(a=>`<option value="${a.id}">${a.icon} ${a.name} — dispo : ${fmtFull(a.balance)}</option>`).join('')}
     </select>
-    <input id="depAmt" class="fi" type="number" placeholder="Montant à mettre de côté" inputmode="decimal">
+    <input id="depAmt" class="fi" type="number" placeholder="${t('goals_deposit')}" inputmode="decimal">
     <button class="btn" onclick="saveDeposit('${id}')">Mettre de côté</button>
     ${g.saved>0?`<button class="btn btn-ghost" style="margin-top:8px" onclick="openWithdrawGoal('${id}')">↩︎ Reprendre de l'argent de cet objectif</button>`:''}
   `);
@@ -2968,7 +3414,7 @@ function openWithdrawGoal(id){
     <div style="color:var(--mut);font-size:12px;margin-bottom:10px">Disponible sur cet objectif : <b style="color:var(--txt)">${fmtFull(g.saved)}</b></div>
     <div style="font-size:11px;color:var(--mut);margin-bottom:10px;line-height:1.5">L'argent revient depuis l'épargne vers le compte choisi.</div>
     <select id="wdTo" class="fi">${sources.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
-    <input id="wdAmt" class="fi" type="number" placeholder="Montant à reprendre" inputmode="decimal" max="${g.saved}">
+    <input id="wdAmt" class="fi" type="number" placeholder="${t('goal_withdraw_ph')}" inputmode="decimal" max="${g.saved}">
     <button class="btn btn-red" onclick="doWithdrawGoal('${id}')">Reprendre</button>
   `);
 }
@@ -3021,8 +3467,8 @@ function openTransferModal(){
     <select id="tFrom" class="fi">${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name} (${fmtFull(a.balance)})</option>`).join('')}</select>
     <div style="text-align:center;color:var(--mut);margin:-4px 0 4px">↓</div>
     <select id="tTo" class="fi">${accs.map(a=>`<option value="${a.id}">${a.icon} ${a.name}</option>`).join('')}</select>
-    <input id="tAmt" class="fi" type="number" placeholder="Montant" inputmode="decimal">
-    <input id="tNote" class="fi" placeholder="Note (optionnel)">
+    <input id="tAmt" class="fi" type="number" placeholder="${t('transfer_amt_ph')}" inputmode="decimal">
+    <input id="tNote" class="fi" placeholder="${t('transfer_note_ph')}">
     <button class="btn" onclick="doTransfer()">Transférer</button>
   `);
 }
@@ -3043,8 +3489,8 @@ async function doTransfer(){
 function openCurrencyModal(){
   openModal(`
     <h3>💱 ${t('cfg_currency')}</h3>
-    <p style="font-size:12px;color:var(--mut);margin-bottom:10px">Devise détectée automatiquement depuis ta langue. Tu peux la modifier.</p>
-    <input id="curInp" class="fi" value="${cur()}" placeholder="Ex: XOF, USD, EUR, XAF, NGN, KES">
+    <p style="font-size:12px;color:var(--mut);margin-bottom:10px">${t('cfg_currency_help')}</p>
+    <input id="curInp" class="fi" value="${cur()}" placeholder="${t('currency_ph')}">
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
       ${['XOF','XAF','USD','EUR','GBP','NGN','KES','GHS','MAD','EGP','ZAR','BRL','INR','CNY','JPY'].map(c=>`<button class="btn btn-ghost btn-sm" onclick="$('curInp').value='${c}'">${c}</button>`).join('')}
     </div>
@@ -3060,7 +3506,7 @@ async function saveCurrency(){
 function openLangModal(){
   openModal(`
     <h3>🌍 ${t('cfg_lang')}</h3>
-    <p style="font-size:12px;color:var(--mut);margin-bottom:12px">Langue détectée: <strong>${navigator.language}</strong>. Choisis ta préférence :</p>
+    <p style="font-size:12px;color:var(--mut);margin-bottom:12px">${t('lang_detected')}: <strong>${navigator.language}</strong>. ${t('lang_choose')}</p>
     <div style="display:flex;flex-direction:column;gap:8px">
       ${LANG_OPTIONS.map(l=>`
         <button class="btn ${_lang===l.code?'':'btn-ghost'}" onclick="applyLang('${l.code}')" style="${_lang===l.code?'':''}">
@@ -3121,7 +3567,7 @@ function doImport(){
   openModal(`
     <h3>📥 Restaurer</h3>
     <p style="font-size:12px;color:var(--mut);margin-bottom:12px;line-height:1.6">⚠️ Toutes les données actuelles seront remplacées.</p>
-    <textarea id="importCode" class="fi" style="height:120px;resize:none" placeholder="Colle ton code ici..."></textarea>
+    <textarea id="importCode" class="fi" style="height:120px;resize:none" placeholder="${t('backup_import_ph')}"></textarea>
     <button class="btn" onclick="processImport()">Restaurer</button>
   `);
 }
@@ -3342,7 +3788,7 @@ async function gdriveRestore(){
     let fileId = gdrive.fileId;
     if(!fileId){
       const found = await gdriveFindFile();
-      if(!found){ alert('Aucune sauvegarde trouvée sur Drive.'); return; }
+      if(!found){ alert(t('drive_no_backup')); return; }
       fileId = found.id; gdrive.fileId=fileId; await gdriveSaveKV('gdrive_fileId', fileId);
     }
     if(!confirm('⚠️ Restaurer depuis Drive remplacera toutes les données locales. Continuer ?')) return;
@@ -3402,6 +3848,63 @@ dbClear = async function(s){ const r=await _origDbClear(s); gdriveMarkDirty(); r
 window.addEventListener('online', ()=>{ if(gdrive.dirty) gdriveBackup(true); });
 
 
+
+// ════════════════════════════════════════
+// FIRST-LAUNCH ONBOARDING (lang + currency)
+// ════════════════════════════════════════
+const ONB_CURRENCIES=['XOF','XAF','EUR','USD','GBP','CAD','MAD','NGN'];
+let _onbLang=null,_onbCur=null;
+function onboardingNeeded(){
+  return !localStorage.getItem('app_onboarded');
+}
+function showOnboarding(){
+  _onbLang = localStorage.getItem('app_lang') || _lang || 'fr';
+  _onbCur  = localStorage.getItem('app_currency') || detectCurrency() || 'XOF';
+  const ov=document.createElement('div');
+  ov.id='onbOv';
+  ov.innerHTML = onbHTML();
+  document.body.appendChild(ov);
+  ov.addEventListener('click', e=>{ if(e.target===ov){} });
+}
+function onbHTML(){
+  const langBtns = LANG_OPTIONS.map(l=>`<button class="opt ${_onbLang===l.code?'sel':''}" onclick="onbPickLang('${l.code}')">${l.label}</button>`).join('');
+  const curBtns  = ONB_CURRENCIES.map(c=>`<button class="curOpt ${_onbCur===c?'sel':''}" onclick="onbPickCur('${c}')">${c}</button>`).join('');
+  return `<div id="onbBox" role="dialog" aria-modal="true">
+    <h2>${t('onb_title')}</h2>
+    <div class="sub">${t('onb_sub')}</div>
+    <div class="label">${t('onb_lang')}</div>
+    <div class="opts">${langBtns}</div>
+    <div class="label">${t('onb_choose_cur')}</div>
+    <div class="curRow">${curBtns}</div>
+    <input class="fi curInp" id="onbCurInp" placeholder="${t('onb_currency_other')}" value="${ONB_CURRENCIES.includes(_onbCur)?'':_onbCur}" oninput="onbCustomCur(this.value)">
+    <button class="btn startBtn" onclick="onbFinish()">${t('onb_start')} →</button>
+  </div>`;
+}
+function onbRender(){
+  const ov=document.getElementById('onbOv');
+  if(ov) ov.innerHTML=onbHTML();
+}
+function onbPickLang(c){
+  _onbLang=c;
+  setLang(c);
+  onbRender();
+}
+function onbPickCur(c){ _onbCur=c; onbRender(); }
+function onbCustomCur(v){
+  v=(v||'').trim().toUpperCase();
+  if(v) _onbCur=v;
+}
+async function onbFinish(){
+  // Persist choices
+  setLang(_onbLang);
+  localStorage.setItem('app_currency', _onbCur);
+  try{ await dbPut('settings',{key:'lang', value:_onbLang}); }catch(e){}
+  try{ await dbPut('settings',{key:'currency', value:_onbCur}); settings.currency=_onbCur; }catch(e){}
+  localStorage.setItem('app_onboarded','1');
+  const ov=document.getElementById('onbOv'); if(ov) ov.remove();
+  try{ await render(); }catch(e){}
+}
+
 // ════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════
@@ -3420,6 +3923,7 @@ window.addEventListener('online', ()=>{ if(gdrive.dirty) gdriveBackup(true); });
   try{gdriveInit()}catch(e){}
   try{await render()}catch(e){console.error('initial render',e)}
   setTimeout(()=>{try{gdriveUpdateUI()}catch(e){}}, 200);
+  if(onboardingNeeded()){ try{ showOnboarding(); }catch(e){console.warn('onboarding',e)} }
   try{updateOnlineStatus()}catch(e){}
   try{initNotifs()}catch(e){}
   // Background insight refresh every 10 min when online
